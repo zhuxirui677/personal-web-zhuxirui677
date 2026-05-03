@@ -28,11 +28,17 @@ Key features:
 
 ```
 .
-├── index.html   # entire site — HTML, CSS, and JavaScript in one self-contained file
+├── index.html   # bilingual site (中文 default, EN toggle) — for CN job channels
+├── en.html      # English-only version — for US recruiters / LinkedIn / PhD apps
 └── README.md    # this file
 ```
 
-No build tools, no npm, no dependencies. The whole site is one file.
+No build tools, no npm, no dependencies. Each page is a single self-contained file.
+
+| File | Use case |
+|---|---|
+| `index.html` | Boss直聘链接、大厂官网投递、小红书简介、中美双线 |
+| `en.html` | US recruiters, LinkedIn, GitHub Pages default for English audience |
 
 ---
 
