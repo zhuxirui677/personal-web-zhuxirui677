@@ -1,28 +1,44 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/9Yu-ry0Z)
 
-# Xirui Zhu — Personal Website
+# 朱锡瑞 · Personal Website / 个人求职主页
 
-A single-page personal portfolio for job search, PhD applications, and professional networking.  
-Live demo (GitHub Pages): `https://<your-github-username>.github.io/<repo-name>/`
+A bilingual (Chinese / English) single-page personal portfolio focused on **job searching** across the Chinese and US AI/product markets.
+
+**Live demo (GitHub Pages):** enable in repo Settings → Pages → `main` branch → `/ (root)`
 
 ---
 
-## What's inside
+## Purpose / 定位
+
+This site is built for:
+- **国内求职** — Boss直聘、大厂校招官网、小红书 附在个人简介中的作品集链接
+- **US job search** — sharing with recruiters at Google, Microsoft, Meta, OpenAI, etc.
+- **PhD applications** — showcasing research projects (LegalAgentBench, Med Gamma)
+
+Key features:
+- **Language toggle (中文 / EN)** — one click switches the entire page between Chinese and English
+- **Job Target section** — clear role intentions for both CN and US markets, including target companies and recruitment channels
+- **Resume request CTA** — mail-to links that open a pre-filled email to request CN/EN resume PDFs
+- **Market-specific contact info** — phone/WeChat/QQ for China; Gmail for US
+- **Mobile-first** — optimised for Boss直聘 (mobile app) and Xiaohongshu browsing
+
+---
+
+## Project structure
 
 ```
 .
-├── index.html   # entire site — HTML, CSS, and JS in one file
+├── index.html   # entire site — HTML, CSS, and JavaScript in one self-contained file
 └── README.md    # this file
 ```
 
-The site is intentionally dependency-free: no npm, no build step, no frameworks.  
-Everything runs from the single `index.html` file.
+No build tools, no npm, no dependencies. The whole site is one file.
 
 ---
 
 ## How to run
 
-### Option 1 — Open directly in a browser (fastest)
+### Option 1 — Open directly in a browser (zero setup)
 
 ```bash
 # macOS
@@ -35,75 +51,75 @@ start index.html
 xdg-open index.html
 ```
 
-### Option 2 — Local dev server (avoids any browser file:// restrictions)
+### Option 2 — Local dev server (recommended to avoid browser `file://` quirks)
 
-Using Python (comes pre-installed on macOS / Linux):
+**Python** (pre-installed on macOS / Linux):
 
 ```bash
-# Python 3
 python3 -m http.server 8080
-
-# then open http://localhost:8080 in your browser
+# visit http://localhost:8080
 ```
 
-Using Node.js:
+**Node.js:**
 
 ```bash
 npx serve .
-# then open the URL printed in the terminal
+# visit the URL shown in the terminal
 ```
 
 ### Option 3 — GitHub Pages (publish online, free)
 
 1. Push this repo to GitHub.
 2. Go to **Settings → Pages**.
-3. Under *Build and deployment*, set **Source** to `Deploy from a branch` and pick `main` / `(root)`.
-4. Click **Save** — the site will be live at `https://<username>.github.io/<repo>/` within ~60 seconds.
+3. Set Source to **Deploy from a branch** → branch `main` → folder `/ (root)`.
+4. Click **Save**. The site goes live at `https://<username>.github.io/<repo>/` in ~60 s.
 
 ---
 
-## Sections
+## Page sections
 
-| Section | Content |
-|---|---|
-| **Hero** | Name, title, status badge, CTA buttons |
-| **About** | Bio paragraph + key stats |
-| **Education** | UW MS (ML) · Xiamen University BA |
-| **Experience** | Xiaomi HyperTask · TikTok Ops · Qingye AI PM |
-| **Projects** | LegalAgentBench-A2A · Med Gamma · Oops! · 叶限 |
-| **Skills** | Product · Research · AIGC/AI · Design · Engineering |
-| **Contact** | Email, phone, game link |
+| Section | 中文 | English |
+|---|---|---|
+| **Hero** | 姓名、求职状态、目标岗位 chips | Name, open-to-work badge, role chips |
+| **Job Target** | 国内/美国市场分开展示、目标公司、招聘渠道、简历请求 | CN / US market cards, target companies, channels, resume CTA |
+| **Education** | 华盛顿大学 · 厦门大学 | UW · Xiamen University |
+| **Experience** | 小米汽车 HyperTask · TikTok运营 · 青叶AI | Xiaomi HyperTask · TikTok Ops · Qingye AI |
+| **Projects** | LegalAgentBench · Med Gamma · 音游 · 叶限 | LegalAgentBench · Med Gamma · Rhythm Game · Yexian |
+| **Skills** | 产品/用户研究/AIGC/设计/技术/语言 | PM / Research / AIGC / Design / Eng / Languages |
+| **Contact** | 国内（手机/微信/QQ/Boss直聘）+ 美国（Gmail） | CN (WeChat/QQ/Boss) + US (Gmail) |
+
+---
+
+## Customisation
+
+All content is inside `index.html`. Colors use CSS custom properties at the top of `<style>`:
+
+```css
+:root {
+  --accent:  #6366f1;   /* primary color */
+  --accent2: #a78bfa;   /* gradient end / highlights */
+}
+```
+
+Change these two values to retheme the whole site instantly.
 
 ---
 
 ## Tech stack
 
-| Concern | Approach |
+| Concern | Solution |
 |---|---|
 | Markup | Semantic HTML5 |
 | Styling | CSS custom properties, Grid, Flexbox, CSS animations |
-| Interactivity | Vanilla JS — IntersectionObserver for scroll reveals, scroll-spy nav |
-| Fonts | System font stack (no external requests) |
-| Deployment | Any static host — GitHub Pages, Netlify, Vercel, etc. |
+| Language toggle | Vanilla JS — `html[lang]` attribute + CSS selector switching |
+| Scroll effects | IntersectionObserver API for staggered fade-in reveals |
+| Fonts | System font stack (`PingFang SC` / `Inter`) — no external requests |
+| Hosting | Any static host — GitHub Pages, Netlify, Vercel, Cloudflare Pages |
 
 ---
 
-## Customization
+## Author / 作者
 
-All content lives in `index.html`.  
-Colors are defined as CSS variables at the top of the `<style>` block — change `--accent` and `--accent2` to retheme the entire site in two lines.
-
-```css
-:root {
-  --accent:  #818cf8;   /* primary highlight color */
-  --accent2: #c084fc;   /* secondary / gradient end */
-}
-```
-
----
-
-## Author
-
-**Xirui Zhu (朱锡瑞)**  
-MS Technology Innovation (ML) · University of Washington  
-2916552948@qq.com · zhuxirui677@gmail.com
+**朱锡瑞 · Xirui Zhu**  
+M.S. Technology Innovation (ML) · University of Washington  
+📱 133-2878-5031 &nbsp;·&nbsp; ✉ 2916552948@qq.com &nbsp;·&nbsp; 📧 zhuxirui677@gmail.com
