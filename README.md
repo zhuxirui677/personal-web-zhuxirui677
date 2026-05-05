@@ -1,6 +1,6 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/9Yu-ry0Z)
 
-# 朱锡瑞 · Personal Website / 个人求职主页
+# Xirui Zhu — Personal Portfolio Website
 
 A bilingual (Chinese / English) single-page personal portfolio focused on **job searching** across the Chinese and US AI/product markets.
 
@@ -8,27 +8,27 @@ A bilingual (Chinese / English) single-page personal portfolio focused on **job 
 
 ---
 
-## Purpose / 定位
+## Purpose
 
 This site is built for:
-- **国内求职** — Boss直聘、大厂校招官网、小红书 附在个人简介中的作品集链接
-- **US job search** — sharing with recruiters at Google, Microsoft, Meta, OpenAI, etc.
+- **China job search** — linking from Boss Zhipin, major company career pages, and Xiaohongshu profile bio
+- **US job search** — sharing with recruiters at Google, Microsoft, Meta, OpenAI, and US AI startups
 - **PhD applications** — showcasing research projects (LegalAgentBench, Med Gamma)
 
 Key features:
-- **Language toggle (中文 / EN)** — one click switches the entire page between Chinese and English
+- **Language toggle (CN / EN)** — one click switches the entire page between Chinese and English
 - **Job Target section** — clear role intentions for both CN and US markets, including target companies and recruitment channels
-- **Resume request CTA** — mail-to links that open a pre-filled email to request CN/EN resume PDFs
+- **Resume request CTA** — mailto links that open a pre-filled email to request CN/EN resume PDFs
 - **Market-specific contact info** — phone/WeChat/QQ for China; Gmail for US
-- **Mobile-first** — optimised for Boss直聘 (mobile app) and Xiaohongshu browsing
+- **Mobile-first** — optimised for Boss Zhipin (mobile app) and Xiaohongshu browsing
 
 ---
 
-## Project structure
+## Project Structure
 
 ```
 .
-├── index.html   # bilingual site (中文 default, EN toggle) — for CN job channels
+├── index.html   # bilingual site (Chinese default, EN toggle) — for CN job channels
 ├── en.html      # English-only version — for US recruiters / LinkedIn / PhD apps
 └── README.md    # this file
 ```
@@ -37,12 +37,12 @@ No build tools, no npm, no dependencies. Each page is a single self-contained fi
 
 | File | Use case |
 |---|---|
-| `index.html` | Boss直聘链接、大厂官网投递、小红书简介、中美双线 |
-| `en.html` | US recruiters, LinkedIn, GitHub Pages default for English audience |
+| `index.html` | Boss Zhipin links, major company career pages, Xiaohongshu bio, CN/US dual-market |
+| `en.html` | US recruiters, LinkedIn, GitHub Pages default for English-speaking audience |
 
 ---
 
-## How to run
+## How to Run
 
 ### Option 1 — Open directly in a browser (zero setup)
 
@@ -82,23 +82,24 @@ npx serve .
 
 ---
 
-## Page sections
+## Page Sections
 
-| Section | 中文 | English |
-|---|---|---|
-| **Hero** | 姓名、求职状态、目标岗位 chips | Name, open-to-work badge, role chips |
-| **Job Target** | 国内/美国市场分开展示、目标公司、招聘渠道、简历请求 | CN / US market cards, target companies, channels, resume CTA |
-| **Education** | 华盛顿大学 · 厦门大学 | UW · Xiamen University |
-| **Experience** | 小米汽车 HyperTask · TikTok运营 · 青叶AI | Xiaomi HyperTask · TikTok Ops · Qingye AI |
-| **Projects** | LegalAgentBench · Med Gamma · 音游 · 叶限 | LegalAgentBench · Med Gamma · Rhythm Game · Yexian |
-| **Skills** | 产品/用户研究/AIGC/设计/技术/语言 | PM / Research / AIGC / Design / Eng / Languages |
-| **Contact** | 国内（手机/微信/QQ/Boss直聘）+ 美国（Gmail） | CN (WeChat/QQ/Boss) + US (Gmail) |
+| Section | Content |
+|---|---|
+| **Hero** | Name, open-to-work badge, target role chips, CTA buttons |
+| **Job Target** | CN / US market cards, target companies, recruitment channels, resume request |
+| **Education** | University of Washington (MS ML) · Xiamen University (BA) |
+| **Experience** | Xiaomi HyperTask · TikTok Operations · Qingye AI PM |
+| **Projects** | LegalAgentBench-A2A · Med Gamma · Oops! Rhythm Game · Yexian Visual Novel |
+| **Skills** | Product Management / User Research / AIGC & AI / Design / Engineering / Languages |
+| **Contact** | CN (WeChat / QQ / Boss Zhipin) + US (Gmail) |
 
 ---
 
 ## Customisation
 
-All content is inside `index.html`. Colors use CSS custom properties at the top of `<style>`:
+All content lives in `index.html` (bilingual) and `en.html` (English-only).  
+Colors are defined as CSS custom properties at the top of each file's `<style>` block:
 
 ```css
 :root {
@@ -107,11 +108,11 @@ All content is inside `index.html`. Colors use CSS custom properties at the top 
 }
 ```
 
-Change these two values to retheme the whole site instantly.
+Change these two values to retheme the entire site instantly.
 
 ---
 
-## Tech stack
+## Tech Stack
 
 | Concern | Solution |
 |---|---|
@@ -124,8 +125,8 @@ Change these two values to retheme the whole site instantly.
 
 ---
 
-## Author / 作者
+## Author
 
-**朱锡瑞 · Xirui Zhu**  
+**Xirui Zhu (朱锡瑞)**  
 M.S. Technology Innovation (ML) · University of Washington  
-📱 133-2878-5031 &nbsp;·&nbsp; ✉ 2916552948@qq.com &nbsp;·&nbsp; 📧 zhuxirui677@gmail.com
+📱 +86 133-2878-5031 · ✉ 2916552948@qq.com · 📧 zhuxirui677@gmail.com
