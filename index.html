@@ -1,1063 +1,147 @@
 <!DOCTYPE html>
-<html lang="zh-CN" id="html-root">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>朱锡瑞 · AI产品经理求职 | Xirui Zhu · AI PM</title>
-  <meta name="description" content="朱锡瑞 / Xirui Zhu — AI产品经理，华盛顿大学机器学习硕士，求职中 | AI PM, UW MS ML, Open to Work" />
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:       #07070f;
-      --surface:  #0f0f1a;
-      --surface2: #16162a;
-      --border:   #ffffff10;
-      --border2:  #ffffff1e;
-      --accent:   #6366f1;
-      --accent2:  #a78bfa;
-      --green:    #22d3a0;
-      --red:      #f87171;
-      --text:     #eeeef8;
-      --muted:    #6b6a88;
-      --muted2:   #9d9bba;
-      --r:        12px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Inter',system-ui,sans-serif;
-      font-size: 15px;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-    a { color: var(--accent2); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* ambient glow */
-    body::before {
-      content:'';
-      position:fixed; inset:0; pointer-events:none; z-index:0;
-      background:
-        radial-gradient(ellipse 70% 45% at 15% -5%, #3730a322 0%, transparent 55%),
-        radial-gradient(ellipse 55% 35% at 85% 105%, #7c3aed18 0%, transparent 55%);
-    }
-
-    /* ── language toggle ── */
-    .lang-zh { display: block; }
-    .lang-en { display: none; }
-    html[lang="en"] .lang-zh { display: none; }
-    html[lang="en"] .lang-en { display: block; }
-    /* inline variants */
-    span.lang-zh { display: inline; }
-    span.lang-en { display: inline; }
-    html[lang="en"] span.lang-zh { display: none; }
-    html[lang="en"] span.lang-en { display: inline; }
-
-    /* ── Nav ── */
-    #nav {
-      position: fixed; top:0; left:0; right:0; z-index:1000;
-      height: 54px;
-      display: flex; align-items: center;
-      transition: background .3s, border-color .3s;
-    }
-    #nav.scrolled {
-      background: rgba(7,7,15,.88);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      max-width: 960px; margin: 0 auto; padding: 0 20px;
-      width: 100%;
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    }
-    .nav-logo { font-weight:700; font-size:15px; color:var(--text); white-space:nowrap; }
-    .nav-logo span { color:var(--accent2); }
-    .nav-links { display:flex; gap:22px; list-style:none; flex-wrap:nowrap; }
-    .nav-links a { font-size:13px; color:var(--muted2); transition:color .2s; white-space:nowrap; }
-    .nav-links a:hover { color:var(--text); text-decoration:none; }
-    .nav-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
-    .lang-btn {
-      font-size: 12px; font-weight:600; padding: 5px 12px;
-      border-radius: 100px; border: 1px solid var(--border2);
-      background: var(--surface); color:var(--muted2);
-      cursor: pointer; transition: all .2s; white-space:nowrap;
-    }
-    .lang-btn:hover { border-color:var(--accent2); color:var(--accent2); }
-
-    /* ── wrap ── */
-    .wrap { max-width:960px; margin:0 auto; padding:0 20px; position:relative; z-index:1; }
-
-    /* ── sections ── */
-    section { padding: 80px 0; }
-    .sec-label {
-      font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
-      color:var(--accent2); margin-bottom:8px;
-    }
-    .sec-title {
-      font-size: clamp(24px,4vw,32px); font-weight:700; letter-spacing:-.5px;
-      line-height:1.2; margin-bottom:40px;
-    }
-    .sec-title em {
-      font-style:normal;
-      background: linear-gradient(90deg,var(--accent),var(--accent2));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    }
-
-    /* ── HERO ── */
-    #hero {
-      min-height: 100svh;
-      display:flex; align-items:center;
-      padding: 74px 0 48px;
-    }
-    .hero-grid {
-      display:grid; grid-template-columns:1fr auto; gap:40px; align-items:center;
-    }
-    /* open-to-work badge */
-    .otw {
-      display:inline-flex; align-items:center; gap:8px;
-      font-size:12.5px; color:var(--green);
-      background:#22d3a012; border:1px solid #22d3a030;
-      padding:5px 14px; border-radius:100px; margin-bottom:20px;
-    }
-    .otw .dot {
-      width:7px; height:7px; border-radius:50%;
-      background:var(--green); animation:pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-
-    .hero-name {
-      font-size: clamp(36px,6vw,60px);
-      font-weight:800; letter-spacing:-1.5px; line-height:1.05; margin-bottom:8px;
-    }
-    .hero-name .grad {
-      background: linear-gradient(125deg, var(--accent) 0%, var(--accent2) 55%, #f472b6 100%);
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    }
-    .hero-sub { font-size:17px; color:var(--muted2); margin-bottom:18px; letter-spacing:-.1px; }
-    .hero-desc { font-size:14.5px; color:var(--muted2); max-width:500px; line-height:1.8; margin-bottom:28px; }
-    .hero-desc strong { color:var(--text); }
-
-    /* target roles chips */
-    .role-chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px; }
-    .chip {
-      font-size:12px; font-weight:500; padding:4px 13px; border-radius:100px;
-      border:1px solid var(--border2); color:var(--muted2); background:var(--surface);
-    }
-    .chip.hot { border-color:#6366f140; color:var(--accent2); background:#6366f110; }
-
-    /* CTA row */
-    .hero-cta { display:flex; gap:10px; flex-wrap:wrap; }
-    .btn {
-      display:inline-flex; align-items:center; gap:6px;
-      font-size:13px; font-weight:500; padding:9px 18px;
-      border-radius:8px; cursor:pointer; transition:all .2s; border:none;
-    }
-    .btn-primary { background:var(--accent); color:#fff; }
-    .btn-primary:hover { background:#4f46e5; transform:translateY(-1px); box-shadow:0 8px 24px #6366f138; text-decoration:none; }
-    .btn-ghost { background:transparent; color:var(--muted2); border:1px solid var(--border2); }
-    .btn-ghost:hover { color:var(--text); border-color:var(--border2); transform:translateY(-1px); text-decoration:none; }
-    .btn-green { background:#22d3a018; color:var(--green); border:1px solid #22d3a030; }
-    .btn-green:hover { background:#22d3a025; transform:translateY(-1px); text-decoration:none; }
-
-    /* avatar */
-    .hero-avatar-wrap { position:relative; flex-shrink:0; }
-    .hero-avatar-ring {
-      position:absolute; inset:-10px; border-radius:50%;
-      background: conic-gradient(from 180deg, var(--accent), var(--accent2), #f472b6, var(--accent));
-      z-index:0; animation:spin 9s linear infinite; opacity:.55;
-    }
-    .hero-avatar-ring::before {
-      content:''; position:absolute; inset:3px; border-radius:50%; background:var(--bg);
-    }
-    @keyframes spin { to{transform:rotate(360deg)} }
-    .hero-avatar {
-      width:180px; height:180px; border-radius:50%;
-      background: linear-gradient(135deg,#3730a3 0%,#7c3aed 50%,#db2777 100%);
-      display:flex; align-items:center; justify-content:center;
-      font-size:62px; font-weight:800; color:#fff; letter-spacing:-2px;
-      position:relative; z-index:1;
-    }
-
-    /* ── JOB TARGET ── */
-    #target { border-top:1px solid var(--border); padding: 56px 0; }
-    .target-grid {
-      display:grid; grid-template-columns:1fr 1fr; gap:20px;
-    }
-    .market-card {
-      background:var(--surface); border:1px solid var(--border);
-      border-radius:var(--r); padding:24px 26px;
-      transition: border-color .2s, transform .2s;
-    }
-    .market-card:hover { border-color:var(--accent); transform:translateY(-2px); }
-    .market-flag { font-size:22px; margin-bottom:10px; }
-    .market-title { font-size:15px; font-weight:600; margin-bottom:6px; }
-    .market-roles { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; }
-    .market-role {
-      font-size:12px; padding:3px 11px; border-radius:6px;
-      background:#6366f112; border:1px solid #6366f128; color:var(--accent2);
-    }
-    .market-where { font-size:12.5px; color:var(--muted); }
-    .market-where strong { color:var(--muted2); }
-    .avail-row {
-      margin-top:24px;
-      display:flex; flex-wrap:wrap; gap:12px; align-items:center;
-    }
-    .avail-badge {
-      display:inline-flex; align-items:center; gap:7px;
-      font-size:12.5px; color:var(--green);
-      background:#22d3a010; border:1px solid #22d3a028;
-      padding:6px 16px; border-radius:100px;
-    }
-
-    /* ── Education ── */
-    #education { border-top:1px solid var(--border); }
-    .edu-list { display:flex; flex-direction:column; gap:16px; }
-    .edu-card {
-      background:var(--surface); border:1px solid var(--border);
-      border-radius:var(--r); padding:22px 24px;
-      display:flex; align-items:flex-start; gap:18px;
-      transition: border-color .2s, transform .2s;
-    }
-    .edu-card:hover { border-color:var(--accent); transform:translateX(4px); }
-    .edu-icon {
-      width:42px; height:42px; border-radius:10px;
-      background:linear-gradient(135deg,#3730a3,#7c3aed);
-      display:flex; align-items:center; justify-content:center;
-      font-size:19px; flex-shrink:0;
-    }
-    .edu-body { flex:1; }
-    .edu-body h3 { font-size:15px; font-weight:600; margin-bottom:3px; }
-    .edu-degree { font-size:13px; color:var(--muted2); margin-bottom:8px; }
-    .pill-row { display:flex; gap:6px; flex-wrap:wrap; }
-    .pill {
-      font-size:11px; padding:2px 10px; border-radius:100px;
-      border:1px solid var(--border2); color:var(--muted2);
-    }
-    .pill.hi { border-color:#6366f138; color:var(--accent2); background:#6366f110; }
-    .edu-date { font-size:12px; color:var(--muted); white-space:nowrap; margin-top:2px; flex-shrink:0; }
-
-    /* ── Experience ── */
-    #experience { border-top:1px solid var(--border); }
-    .exp-list { display:flex; flex-direction:column; gap:20px; }
-    .exp-card {
-      background:var(--surface); border:1px solid var(--border);
-      border-radius:var(--r); padding:26px;
-      position:relative; overflow:hidden;
-      transition: border-color .2s;
-    }
-    .exp-card::before {
-      content:''; position:absolute; top:0; left:0; bottom:0; width:3px;
-      background:linear-gradient(180deg,var(--accent),var(--accent2));
-      opacity:0; transition:opacity .2s;
-    }
-    .exp-card:hover { border-color:var(--accent); }
-    .exp-card:hover::before { opacity:1; }
-    .exp-header {
-      display:flex; justify-content:space-between; align-items:flex-start;
-      gap:12px; margin-bottom:14px; flex-wrap:wrap;
-    }
-    .exp-co { font-size:12.5px; color:var(--muted); margin-bottom:3px; }
-    .exp-role { font-size:15.5px; font-weight:600; line-height:1.3; }
-    .exp-loc { font-size:12px; color:var(--muted); margin-top:2px; }
-    .exp-date {
-      font-size:11.5px; color:var(--accent2);
-      background:#6366f110; border:1px solid #6366f128;
-      padding:3px 11px; border-radius:100px; white-space:nowrap; flex-shrink:0;
-    }
-    .feat-badge {
-      display:inline-flex; align-items:center; gap:4px;
-      font-size:11px; font-weight:600; color:var(--accent2);
-      background:#a78bfa12; border:1px solid #a78bfa28;
-      padding:2px 9px; border-radius:100px; margin-left:7px; vertical-align:middle;
-    }
-    .exp-body ul { list-style:none; }
-    .exp-body ul li {
-      font-size:13.5px; color:var(--muted2); padding:5px 0 5px 16px;
-      position:relative; line-height:1.7;
-      border-bottom:1px solid var(--border);
-    }
-    .exp-body ul li:last-child { border-bottom:none; }
-    .exp-body ul li::before {
-      content:'▸'; position:absolute; left:0; top:7px;
-      color:var(--accent); font-size:10px;
-    }
-    .exp-body ul li strong { color:var(--text); font-weight:600; }
-
-    /* ── Projects ── */
-    #projects { border-top:1px solid var(--border); }
-    .proj-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
-    .proj-card {
-      background:var(--surface); border:1px solid var(--border);
-      border-radius:var(--r); padding:22px;
-      display:flex; flex-direction:column; gap:10px;
-      transition: border-color .2s, transform .2s, box-shadow .2s;
-    }
-    .proj-card:hover { border-color:var(--accent); transform:translateY(-3px); box-shadow:0 14px 36px #6366f115; }
-    .proj-card.wide { grid-column:1/-1; flex-direction:row; gap:24px; align-items:flex-start; }
-    .proj-icon {
-      width:44px; height:44px; border-radius:11px;
-      display:flex; align-items:center; justify-content:center;
-      font-size:20px; flex-shrink:0;
-    }
-    .p-indigo { background:linear-gradient(135deg,#3730a3,#6d28d9); }
-    .p-teal   { background:linear-gradient(135deg,#0d9488,#0284c7); }
-    .p-pink   { background:linear-gradient(135deg,#be185d,#9333ea); }
-    .p-orange { background:linear-gradient(135deg,#b45309,#d97706); }
-    .proj-name { font-size:14.5px; font-weight:600; line-height:1.3; }
-    .proj-desc { font-size:13px; color:var(--muted2); line-height:1.7; flex:1; }
-    .proj-tags { display:flex; flex-wrap:wrap; gap:5px; }
-    .ptag {
-      font-size:11px; padding:2px 8px; border-radius:5px;
-      background:var(--surface2); border:1px solid var(--border); color:var(--muted2);
-    }
-    .proj-link { font-size:12px; color:var(--accent2); }
-
-    /* ── Skills ── */
-    #skills { border-top:1px solid var(--border); }
-    .sk-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-    .sk-block {
-      background:var(--surface); border:1px solid var(--border);
-      border-radius:var(--r); padding:20px;
-      transition:border-color .2s;
-    }
-    .sk-block:hover { border-color:var(--accent); }
-    .sk-icon { font-size:22px; margin-bottom:10px; }
-    .sk-title { font-size:12.5px; font-weight:600; margin-bottom:12px; color:var(--text); }
-    .sk-tags { display:flex; flex-wrap:wrap; gap:6px; }
-    .stag {
-      font-size:11px; padding:2px 9px; border-radius:6px;
-      background:var(--surface2); border:1px solid var(--border); color:var(--muted2);
-    }
-
-    /* ── Contact ── */
-    #contact { border-top:1px solid var(--border); }
-    .contact-split {
-      display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start;
-    }
-    .contact-intro h2 { font-size:clamp(24px,4vw,34px); font-weight:700; letter-spacing:-.6px; line-height:1.2; margin-bottom:14px; }
-    .contact-intro h2 em {
-      font-style:normal;
-      background:linear-gradient(90deg,var(--accent),var(--accent2));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    }
-    .contact-intro p { font-size:14px; color:var(--muted2); line-height:1.8; }
-    .contact-market { margin-top:20px; }
-    .contact-market-title { font-size:12px; font-weight:600; color:var(--muted); letter-spacing:.06em; text-transform:uppercase; margin-bottom:10px; }
-    .clist { display:flex; flex-direction:column; gap:10px; }
-    .citem {
-      display:flex; align-items:center; gap:12px;
-      padding:14px 16px;
-      background:var(--surface); border:1px solid var(--border);
-      border-radius:var(--r); transition:border-color .2s, transform .2s; color:var(--text);
-    }
-    .citem:hover { border-color:var(--accent); transform:translateX(4px); text-decoration:none; }
-    .cicon {
-      width:36px; height:36px; border-radius:8px;
-      background:var(--surface2); border:1px solid var(--border);
-      display:flex; align-items:center; justify-content:center;
-      font-size:15px; flex-shrink:0;
-    }
-    .clabel { font-size:11px; color:var(--muted); margin-bottom:1px; }
-    .cval { font-size:13.5px; font-weight:500; }
-
-    /* resume download banner */
-    .resume-banner {
-      background: linear-gradient(135deg, #1e1e38, #2a1a4a);
-      border: 1px solid #6366f128;
-      border-radius: var(--r);
-      padding: 20px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-top: 28px;
-    }
-    .resume-banner-text h3 { font-size:14.5px; font-weight:600; margin-bottom:3px; }
-    .resume-banner-text p { font-size:12.5px; color:var(--muted2); }
-    .resume-btns { display:flex; gap:10px; flex-wrap:wrap; }
-
-    /* ── Footer ── */
-    footer {
-      border-top:1px solid var(--border); padding:28px 0;
-      text-align:center; color:var(--muted); font-size:12.5px;
-    }
-
-    /* ── Reveal animation ── */
-    .reveal { opacity:0; transform:translateY(20px); transition:opacity .55s ease, transform .55s ease; }
-    .reveal.visible { opacity:1; transform:translateY(0); }
-
-    /* ── Responsive ── */
-    @media (max-width:700px) {
-      .hero-grid { grid-template-columns:1fr; }
-      .hero-avatar-wrap { display:none; }
-      .target-grid { grid-template-columns:1fr; }
-      .proj-grid { grid-template-columns:1fr; }
-      .proj-card.wide { flex-direction:column; }
-      .sk-grid { grid-template-columns:1fr 1fr; }
-      .contact-split { grid-template-columns:1fr; }
-      .nav-links { display:none; }
-    }
-    @media (max-width:480px) {
-      .sk-grid { grid-template-columns:1fr; }
-      section { padding:60px 0; }
-      .hero-name { font-size:34px; }
-    }
-  </style>
+  <title>朱锡瑞 | AI 产品经理作品集</title>
+  <meta name="description" content="朱锡瑞的AI产品经理作品集，展示大模型内容治理、智能任务编排、AI Agent评测与具身智能项目。" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="project.css" />
 </head>
 <body>
-
-<!-- ── NAV ── -->
-<nav id="nav">
-  <div class="nav-inner">
-    <div class="nav-logo">Xirui<span>.</span></div>
-    <ul class="nav-links">
-      <li><a href="#target"><span class="lang-zh">求职意向</span><span class="lang-en">Job Target</span></a></li>
-      <li><a href="#experience"><span class="lang-zh">经历</span><span class="lang-en">Experience</span></a></li>
-      <li><a href="#projects"><span class="lang-zh">项目</span><span class="lang-en">Projects</span></a></li>
-      <li><a href="#skills"><span class="lang-zh">技能</span><span class="lang-en">Skills</span></a></li>
-      <li><a href="#contact"><span class="lang-zh">联系</span><span class="lang-en">Contact</span></a></li>
-    </ul>
-    <div class="nav-right">
-      <button class="lang-btn" onclick="toggleLang()" id="lang-toggle">EN</button>
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top">Xirui<span>.</span>AI PM</a>
+      <ul class="nav-links">
+        <li><a href="#experience">经历</a></li>
+        <li><a href="#projects">项目演示</a></li>
+        <li><a href="#method">方法</a></li>
+        <li><a href="#contact">联系</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="btn" href="en.html">EN</a>
+        <a class="btn primary" href="#projects">查看作品</a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- ── HERO ── -->
-<section id="hero">
-  <div class="wrap">
-    <div class="hero-grid">
+  <header class="hero portfolio-hero" id="top">
+    <div class="wrap hero-grid">
       <div>
-        <div class="otw">
-          <span class="dot"></span>
-          <span class="lang-zh">求职中 · 2025届 · 中美双线</span>
-          <span class="lang-en">Open to Work · 2025 · CN &amp; US</span>
+        <div class="eyebrow">2027届 · AI产品经理 · Agent与评测</div>
+        <h1>把模型能力变成可靠、可解释、可评测的产品。</h1>
+        <p class="hero-sub">华盛顿大学技术创新硕士，机器学习与机器人方向。经历覆盖快手大模型内容治理、小米汽车任务编排、海外运营AI Skills，以及法律Agent和具身智能评测。</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#projects">打开项目演示</a>
+          <a class="btn accent" href="output/pdf/朱锡瑞_AI成果应用案例集.pdf">下载案例集</a>
+          <a class="btn" href="mailto:2916552948@qq.com?subject=AI产品经理交流">联系我</a>
         </div>
-
-        <h1 class="hero-name">
-          <span class="lang-zh">朱锡瑞<br><span class="grad">AI 产品经理</span></span>
-          <span class="lang-en">Xirui Zhu<br><span class="grad">AI Product Manager</span></span>
-        </h1>
-
-        <p class="hero-sub">
-          <span class="lang-zh">华盛顿大学 · 机器学习硕士 · 英语流利</span>
-          <span class="lang-en">UW MS · Machine Learning · Bilingual CN/EN</span>
-        </p>
-
-        <p class="hero-desc">
-          <span class="lang-zh">
-            三段 AI 产品经理实习经历，主导过<strong>小米 HyperTask 智能座舱 AI</strong> 从0到1设计，
-            构建过法律大模型 Agent 评测系统与医疗 AI 量化部署方案。
-            擅长把 AI 技术能力转化为真实可落地的产品。
-          </span>
-          <span class="lang-en">
-            3+ AI PM internships including <strong>Xiaomi HyperTask</strong> (smart cockpit, 0→1),
-            legal LLM agent evaluation, and medical AI quantization.
-            I translate AI capabilities into real, shippable products.
-          </span>
-        </p>
-
-        <div class="role-chips">
-          <span class="chip hot">
-            <span class="lang-zh">AI 产品经理</span><span class="lang-en">AI Product Manager</span>
-          </span>
-          <span class="chip hot">
-            <span class="lang-zh">AIGC 产品</span><span class="lang-en">AIGC Product</span>
-          </span>
-          <span class="chip hot">
-            <span class="lang-zh">大模型应用产品</span><span class="lang-en">LLM Application PM</span>
-          </span>
-          <span class="chip">
-            <span class="lang-zh">智能硬件产品</span><span class="lang-en">Intelligent Hardware PM</span>
-          </span>
-          <span class="chip">
-            <span class="lang-zh">AI Research Engineer</span><span class="lang-en">AI Research Engineer</span>
-          </span>
-        </div>
-
-        <div class="hero-cta">
-          <a class="btn btn-primary" href="#contact">
-            <span class="lang-zh">联系我 →</span><span class="lang-en">Contact me →</span>
-          </a>
-          <a class="btn btn-ghost" href="#experience">
-            <span class="lang-zh">查看经历</span><span class="lang-en">View experience</span>
-          </a>
-          <a class="btn btn-green" href="#target">
-            <span class="lang-zh">📋 求职意向</span><span class="lang-en">📋 Job target</span>
-          </a>
+        <div class="chip-row">
+          <span class="chip teal">LLM 产品化</span>
+          <span class="chip blue">Agent Workflow</span>
+          <span class="chip red">模型评测与安全</span>
+          <span class="chip green">具身智能</span>
         </div>
       </div>
-
-      <div class="hero-avatar-wrap">
-        <div class="hero-avatar-ring"></div>
-        <div class="hero-avatar">朱</div>
+      <div class="hero-proof" aria-label="能力摘要">
+        <div><strong>3</strong><span>可交互项目演示</span></div>
+        <div><strong>300</strong><span>Agent评测任务</span></div>
+        <div><strong>37</strong><span>工具与原子能力</span></div>
+        <div><strong>62</strong><span>机器人基线试验</span></div>
       </div>
     </div>
-  </div>
-</section>
+  </header>
 
-<!-- ── JOB TARGET ── -->
-<section id="target">
-  <div class="wrap">
-    <div class="sec-label">
-      <span class="lang-zh">求职意向</span><span class="lang-en">Job Target</span>
-    </div>
-    <h2 class="sec-title">
-      <span class="lang-zh">我在找什么<em>岗位</em></span>
-      <span class="lang-en">What I'm <em>Looking For</em></span>
-    </h2>
-
-    <div class="target-grid reveal">
-
-      <!-- China -->
-      <div class="market-card">
-        <div class="market-flag">🇨🇳</div>
-        <div class="market-title">
-          <span class="lang-zh">国内市场</span><span class="lang-en">China Market</span>
+  <main>
+    <section id="experience">
+      <div class="wrap">
+        <div class="section-head">
+          <div><div class="section-kicker">Experience</div><h2>从风险识别到任务执行，我关注AI系统如何真正上线。</h2></div>
+          <p class="section-note">每段经历按问题、方案、评测和落地呈现；企业项目仅展示脱敏后的公开信息。</p>
         </div>
-        <div class="market-roles">
-          <span class="market-role">AI 产品经理</span>
-          <span class="market-role">AIGC 产品</span>
-          <span class="market-role">大模型应用产品</span>
-          <span class="market-role">智能座舱产品</span>
-        </div>
-        <div class="market-where">
-          <strong>
-            <span class="lang-zh">目标公司：</span><span class="lang-en">Target companies: </span>
-          </strong>
-          <span class="lang-zh">字节跳动 · 阿里 · 腾讯 · 小米 · 百度 · 华为 · 美团 · 滴滴 · 智谱 · MiniMax 等大厂/AI独角兽</span>
-          <span class="lang-en">ByteDance · Alibaba · Tencent · Xiaomi · Baidu · Huawei · Meituan · DiDi · Zhipu · MiniMax</span>
-        </div>
-        <div class="market-where" style="margin-top:8px;">
-          <strong>
-            <span class="lang-zh">招聘渠道：</span><span class="lang-en">Channels: </span>
-          </strong>
-          <span class="lang-zh">Boss直聘 · 大厂校招官网 · 小红书岗位</span>
-          <span class="lang-en">Boss Zhipin · Official career pages · Xiaohongshu</span>
-        </div>
-        <div class="market-where" style="margin-top:8px;">
-          <strong>
-            <span class="lang-zh">地点：</span><span class="lang-en">Location: </span>
-          </strong>
-          <span class="lang-zh">北京 / 上海 / 杭州 / 深圳 均可</span>
-          <span class="lang-en">Beijing / Shanghai / Hangzhou / Shenzhen</span>
-        </div>
-      </div>
-
-      <!-- US -->
-      <div class="market-card">
-        <div class="market-flag">🇺🇸</div>
-        <div class="market-title">
-          <span class="lang-zh">美国市场</span><span class="lang-en">US Market</span>
-        </div>
-        <div class="market-roles">
-          <span class="market-role">AI PM</span>
-          <span class="market-role">Product Manager</span>
-          <span class="market-role">ML Research Engineer</span>
-          <span class="market-role">AI Research Intern</span>
-        </div>
-        <div class="market-where">
-          <strong>
-            <span class="lang-zh">目标公司：</span><span class="lang-en">Target companies: </span>
-          </strong>
-          <span class="lang-zh">Google · Microsoft · Meta · Apple · Amazon · OpenAI · Anthropic · AI 初创公司</span>
-          <span class="lang-en">Google · Microsoft · Meta · Apple · Amazon · OpenAI · Anthropic · AI startups</span>
-        </div>
-        <div class="market-where" style="margin-top:8px;">
-          <strong>
-            <span class="lang-zh">地点：</span><span class="lang-en">Location: </span>
-          </strong>
-          <span class="lang-zh">西雅图 / 旧金山湾区 / 远程</span>
-          <span class="lang-en">Seattle / SF Bay Area / Remote</span>
-        </div>
-        <div class="market-where" style="margin-top:8px;">
-          <strong>
-            <span class="lang-zh">身份：</span><span class="lang-en">Work Auth: </span>
-          </strong>
-          <span class="lang-zh">F-1 学生签证，OPT/CPT 可用</span>
-          <span class="lang-en">F-1 Student Visa, OPT/CPT eligible</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="avail-row reveal">
-      <div class="avail-badge">
-        <span class="dot" style="background:var(--green);width:7px;height:7px;border-radius:50%;animation:pulse 2s ease-in-out infinite;"></span>
-        <span class="lang-zh">随时入职 · 实习 &amp; 校招全职均可</span>
-        <span class="lang-en">Available immediately · Internship &amp; Full-time</span>
-      </div>
-      <div class="resume-banner" style="flex:1; margin-top:0;">
-        <div class="resume-banner-text">
-          <h3><span class="lang-zh">📄 下载简历</span><span class="lang-en">📄 Download Resume</span></h3>
-          <p><span class="lang-zh">中英文版本均可提供，发邮件即可获取</span><span class="lang-en">Available in CN &amp; EN — send an email to request</span></p>
-        </div>
-        <div class="resume-btns">
-          <a class="btn btn-primary" href="mailto:2916552948@qq.com?subject=简历请求&body=您好，请发送中文简历">
-            <span class="lang-zh">中文版</span><span class="lang-en">CN Version</span>
-          </a>
-          <a class="btn btn-ghost" href="mailto:zhuxirui677@gmail.com?subject=Resume Request&body=Hi, please share your English resume.">
-            <span class="lang-zh">English Ver.</span><span class="lang-en">EN Version</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── EDUCATION ── -->
-<section id="education">
-  <div class="wrap">
-    <div class="sec-label">
-      <span class="lang-zh">教育背景</span><span class="lang-en">Education</span>
-    </div>
-    <h2 class="sec-title">
-      <span class="lang-zh">学术<em>背景</em></span>
-      <span class="lang-en">Academic <em>Background</em></span>
-    </h2>
-    <div class="edu-list">
-      <div class="edu-card reveal">
-        <div class="edu-icon">🎓</div>
-        <div class="edu-body">
-          <h3>
-            <span class="lang-zh">华盛顿大学 <small style="color:var(--muted);font-weight:400;font-size:13px;">QS #81</small></span>
-            <span class="lang-en">University of Washington <small style="color:var(--muted);font-weight:400;font-size:13px;">QS #81</small></span>
-          </h3>
-          <div class="edu-degree">
-            <span class="lang-zh">技术创新硕士（机器学习方向）· 美国西雅图</span>
-            <span class="lang-en">M.S. Technology Innovation · Machine Learning Track · Seattle, USA</span>
-          </div>
-          <div class="pill-row">
-            <span class="pill hi">Machine Learning</span>
-            <span class="pill">AI Systems</span>
-            <span class="pill">Product Design</span>
-          </div>
-        </div>
-        <div class="edu-date">2025.09 – 2027.03</div>
-      </div>
-
-      <div class="edu-card reveal">
-        <div class="edu-icon">🏛</div>
-        <div class="edu-body">
-          <h3>
-            <span class="lang-zh">厦门大学 <small style="color:var(--muted);font-weight:400;font-size:13px;">985 / 211</small></span>
-            <span class="lang-en">Xiamen University <small style="color:var(--muted);font-weight:400;font-size:13px;">985 / 211</small></span>
-          </h3>
-          <div class="edu-degree">
-            <span class="lang-zh">艺术教育 本科 · 厦门</span>
-            <span class="lang-en">B.A. Art Education · Xiamen, China</span>
-          </div>
-          <div class="pill-row">
-            <span class="pill hi">985 / 211</span>
-            <span class="pill"><span class="lang-zh">视觉设计</span><span class="lang-en">Visual Design</span></span>
-            <span class="pill"><span class="lang-zh">游戏开发</span><span class="lang-en">Game Dev</span></span>
-          </div>
-        </div>
-        <div class="edu-date">2021.09 – 2025.06</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── EXPERIENCE ── -->
-<section id="experience">
-  <div class="wrap">
-    <div class="sec-label">
-      <span class="lang-zh">实习经历</span><span class="lang-en">Experience</span>
-    </div>
-    <h2 class="sec-title">
-      <span class="lang-zh">工作<em>经历</em></span>
-      <span class="lang-en">Work &amp; <em>Internships</em></span>
-    </h2>
-    <div class="exp-list">
-
-      <!-- Xiaomi -->
-      <div class="exp-card reveal">
-        <div class="exp-header">
-          <div>
-            <div class="exp-co">
-              <span class="lang-zh">小米汽车 · 智能座舱团队</span>
-              <span class="lang-en">Xiaomi Auto · Intelligent Cockpit Team</span>
+        <div class="timeline" data-reveal>
+          <article class="timeline-item featured-exp">
+            <div class="timeline-meta">2026.05 - 2026.08<br>北京快手科技有限公司</div>
+            <div>
+              <div class="timeline-title-row"><h3 class="timeline-title">策略产品经理实习生 · 社区安全治理</h3><span class="tag ai">大模型治理</span></div>
+              <ul>
+                <li><strong>评论区氛围识别：</strong>将治理对象从单条评论升级为评论区整体；基于Top15覆盖82.9%曝光的分析设计四层识别链路，完成DeepSeek、Qwen模型选型与多模态消融，推动特定离线集识别准确率达到93%。</li>
+                <li><strong>自杀自残图评：</strong>搭建“前置圈选 + 大模型精判”两级方案，完成V1-V5 Prompt迭代与11类误判归因，推动压测、灰度和上线，识别准确率82.37%。</li>
+                <li><strong>AI Agent策略归因：</strong>设计接入RCP决策树与策略白盒的归因工作台，一键还原圈选、粗筛、机审和处置链路，输出补词、补样本及阈值优化建议。</li>
+              </ul>
             </div>
-            <div class="exp-role">
-              <span class="lang-zh">AI 产品经理实习生</span>
-              <span class="lang-en">AI Product Manager Intern</span>
-              <span class="feat-badge">★ Featured</span>
+          </article>
+          <article class="timeline-item">
+            <div class="timeline-meta">2026.02 - 2026.05<br>杭州和为电力设备有限公司</div>
+            <div>
+              <div class="timeline-title-row"><h3 class="timeline-title">AI产品实习生 · 海外社媒智能运营</h3><span class="tag pm">AI Skills</span></div>
+              <ul>
+                <li>将品牌知识、平台规则和输出检查封装为AI Skills与SOP，覆盖社区洞察、维修科普、一文多发和平台化文案。</li>
+                <li>设计“策划—素材适配—发布校验—定时发布—竞品追踪—数据复盘”工作台，并使用真实素材验证核心链路。</li>
+                <li>复盘30天177条内容、12,417次浏览和9,412个覆盖账户，识别高潜选题并反哺周度内容策略。</li>
+              </ul>
             </div>
-            <div class="exp-loc">📍 <span class="lang-zh">北京</span><span class="lang-en">Beijing, China</span></div>
-          </div>
-          <div class="exp-date">2024.07 – 2025.01</div>
-        </div>
-        <div class="exp-body">
-          <!-- Chinese bullets -->
-          <ul class="lang-zh">
-            <li><strong>产品从0到1：</strong>主导小米超级任务（Xiaomi HyperTask）核心产品设计，依托人车家生态构建智能座舱跨设备自动化能力，解决功能入口深、跨设备组合门槛高的核心痛点。</li>
-            <li><strong>用户调研：</strong>以行为切入法访谈 30 位用户，结合车机日志与语音数据，验证通勤、充电、车家联动为高频低风险场景。发现 60% 车主同时持有米家设备，锁定地理围栏触发米家设备为差异化场景。</li>
-            <li><strong>AI 流程设计：</strong>将「一句话创建任务」拆解为八环节 AI 管线——意图识别 → 槽位抽取 → 能力匹配 → 结构化 JSON 输出 → 缺失追问 → 风险标记 → 用户确认 → 规则执行与数据回收，确立<em>「创建时智能，执行时确定」</em>核心原则。</li>
-            <li><strong>安全边界设计：</strong>制定能力白名单机制（模型只能在已有能力内选择，不能自由生成动作）、五级风险分类及中高风险二次确认机制，一期聚焦高频低风险自动化任务。</li>
-            <li><strong>Badcase 归因体系：</strong>定义五类错误类型（意图边界错、对象识别错、动作超出能力库、高风险未识别、追问不充分），实现 badcase 精准路由至算法/能力库/交互/风控/数据不同团队，推动快速迭代。</li>
-            <li><strong>北极星指标：</strong>以「有效任务创建并执行率」取代任务创建数，聚焦任务真实履约价值。</li>
-          </ul>
-          <!-- English bullets -->
-          <ul class="lang-en">
-            <li><strong>0→1 Product Design:</strong> Led core design of Xiaomi HyperTask — AI-powered in-car automation leveraging the Xiaomi device ecosystem — solving deep feature entrances and complex cross-device orchestration.</li>
-            <li><strong>User Research:</strong> Behavioral-recall interviews with 30 users + cockpit log analysis validated commute, charging, and car-home linkage as top scenes. 60% of owners have Mi Home devices → geofence-triggered automation is the key differentiator.</li>
-            <li><strong>AI Pipeline:</strong> Decomposed "create a task in one sentence" into 8 steps: intent classification → slot extraction → capability matching → structured JSON → clarification loop → risk labeling → confirmation → rule execution &amp; logging. Core principle: <em>smart at creation, deterministic at execution</em>.</li>
-            <li><strong>Safety &amp; Boundaries:</strong> Capability whitelist (model selects from declared abilities only), 5-tier risk classification, mandatory confirmation gate for medium/high-risk actions.</li>
-            <li><strong>Badcase Framework:</strong> 5-category error taxonomy enabling precise routing to algorithm, capability, UX, risk, or data teams — replacing "model misunderstood" as a dead end.</li>
-            <li><strong>North Star Metric:</strong> <em>Task Created-and-Executed Rate</em> (not raw creation count) — success = task actually fulfilled.</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- TikTok -->
-      <div class="exp-card reveal">
-        <div class="exp-header">
-          <div>
-            <div class="exp-co">
-              <span class="lang-zh">厦门晨起时代网络科技有限公司 · TikTok 合作</span>
-              <span class="lang-en">Xiamen Chenqi Times Technology · TikTok Partnership</span>
+          </article>
+          <article class="timeline-item">
+            <div class="timeline-meta">2025.07 - 2025.09<br>小米汽车科技有限公司</div>
+            <div>
+              <div class="timeline-title-row"><h3 class="timeline-title">AI产品经理实习生 · 自然语言任务编排</h3><span class="tag ai">智能座舱</span></div>
+              <ul>
+                <li>设计自然语言到TCA规则JSON的八步处理管线，覆盖意图、槽位、能力召回、规则生成、风险标记、追问与确认。</li>
+                <li>搭建五层系统，定义37项原子能力和9字段规范；通过身份、权限、场景与风险动作四层校验约束执行。</li>
+                <li>建立固定集、挑战集和月度滚动集，并按理解、编排、安全、权限和执行五层归因Bad Case。</li>
+              </ul>
             </div>
-            <div class="exp-role">
-              <span class="lang-zh">产品运营实习生</span>
-              <span class="lang-en">Product Operations Intern</span>
-            </div>
-            <div class="exp-loc">📍 <span class="lang-zh">厦门</span><span class="lang-en">Xiamen, China</span></div>
-          </div>
-          <div class="exp-date">2025.06 – 2025.08</div>
-        </div>
-        <div class="exp-body">
-          <ul class="lang-zh">
-            <li>对接 TikTok 官方团队，完成国内商家跨境入驻英国市场从 0 到 1；开展竞品调研与受众画像分析，制定本土化运营策略，缩短新号冷启动周期。</li>
-            <li>执行短视频营销全链路（策划→剪辑→分发），2 个月内部署 <strong>20 条高转化短视频</strong>，单支均拉动 <strong>400+ 件销量</strong>，店铺综合评分跃升至 <strong>4.7/5.0</strong>。</li>
-            <li>监控广告投放链路，高频追踪曝光量、CTR、CVR、ROI；结合 A/B 测试反哺素材优化，严控 CPA 前提下保障效益最大化。</li>
-          </ul>
-          <ul class="lang-en">
-            <li>Partnered with TikTok's official team to onboard a domestic merchant into the UK market from scratch; competitive research + audience profiling to define account and category strategy.</li>
-            <li>Produced a full short-video marketing cycle — <strong>20 high-conversion videos in 2 months</strong>, each averaging <strong>400+ units</strong> sold; store rating climbed to <strong>4.7 / 5.0</strong>.</li>
-            <li>Monitored impressions, CTR, CVR, ROI; A/B tested creative assets to optimize CPA while maintaining positive ROI.</li>
-          </ul>
+          </article>
         </div>
       </div>
+    </section>
 
-      <!-- Qingye -->
-      <div class="exp-card reveal">
-        <div class="exp-header">
-          <div>
-            <div class="exp-co">
-              <span class="lang-zh">厦门青叶智能科技有限公司</span>
-              <span class="lang-en">Xiamen Qingye Intelligent Technology Co.</span>
-            </div>
-            <div class="exp-role">
-              <span class="lang-zh">AI 产品经理实习生</span>
-              <span class="lang-en">AI Product Manager Intern</span>
-            </div>
-            <div class="exp-loc">📍 <span class="lang-zh">厦门</span><span class="lang-en">Xiamen, China</span></div>
-          </div>
-          <div class="exp-date">2025.03 – 2025.06</div>
+    <section class="alt" id="projects">
+      <div class="wrap">
+        <div class="section-head">
+          <div><div class="section-kicker">Interactive Projects</div><h2>三个项目都有独立页面、演示界面和视频。</h2></div>
+          <p class="section-note">点击进入项目页，可查看系统结构、真实资料、交互演示和结果口径。</p>
         </div>
-        <div class="exp-body">
-          <ul class="lang-zh">
-            <li>参与腾讯联合技术研讨，梳理 LLM、Stable Diffusion、ControlNet、SAM 等模型能力边界，输出 <strong>5 份 AI 视觉产品规划书</strong>，覆盖市场痛点、竞品拆解、API 可行性与成本评估。</li>
-            <li>深度参与农产品视觉质检 AI 系统应用层设计；定义图像数据标注规则，推动标注体系标准化；重构数据可视化看板，降低误报率与用户使用门槛。</li>
-            <li>运用 Figma/墨刀输出 <strong>5 个中高保真原型</strong>及用户行为路径图，串联设计-研发工作流，推动前端按期交付。</li>
-          </ul>
-          <ul class="lang-en">
-            <li>Tencent joint seminar: mapped capability boundaries of LLMs, SD, ControlNet, SAM; produced <strong>5 AI vision product specs</strong> covering market analysis, feature teardowns, API feasibility and cost modeling.</li>
-            <li>Application-layer design for agricultural visual quality inspection AI; defined annotation rules (defect taxonomy, bounding-box standards, confidence thresholds); rebuilt data dashboard to reduce false-alert rate.</li>
-            <li>Delivered <strong>5 mid-to-high fidelity prototypes</strong> and user-flow diagrams in Figma/MockingBot, keeping frontend on schedule.</li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── PROJECTS ── -->
-<section id="projects">
-  <div class="wrap">
-    <div class="sec-label">
-      <span class="lang-zh">项目经历</span><span class="lang-en">Projects</span>
-    </div>
-    <h2 class="sec-title">
-      <span class="lang-zh">代表<em>项目</em></span>
-      <span class="lang-en">Selected <em>Work</em></span>
-    </h2>
-    <div class="proj-grid">
-
-      <!-- LegalAgentBench - featured -->
-      <div class="proj-card wide reveal">
-        <div class="proj-icon p-indigo">⚖️</div>
-        <div style="flex:1;">
-          <div class="proj-tags" style="margin-bottom:10px;">
-            <span class="ptag">Agent Systems</span><span class="ptag">A2A Protocol</span>
-            <span class="ptag">Hybrid-RAG</span><span class="ptag">DuckDB</span><span class="ptag">Docker</span>
-          </div>
-          <div class="proj-name" style="font-size:16px;">LegalAgentBench-A2A</div>
-          <div class="proj-desc" style="margin-top:6px;">
-            <span class="lang-zh">中文法律大模型 Agent 评测系统。搭建适配 A2A 协议的分层评测框架，转化 300 个法律任务为标准化 JSON；封装 37 项垂直工具组件；集成 Hybrid-RAG（Voyage 3/MRL 32k）+ Self-RAG 自我校验管道；以 Docker 镜像对接 AgentBeats 平台，基于 DuckDB 实现多维排行榜可视化。</span>
-            <span class="lang-en">Chinese legal LLM agent benchmark. Layered evaluation framework adapting to A2A protocol, 300 legal tasks → standardized JSON, 37 tool components, Hybrid-RAG + Self-RAG verification pipeline, Docker → GHCR → AgentBeats, multi-dimensional leaderboard via DuckDB.</span>
-          </div>
+        <div class="project-showcase" data-reveal>
+          <article class="project-feature mots-card">
+            <div class="project-number">01</div>
+            <div><span class="project-type">AI MEMORY PRODUCT</span><h3>MOTS Memory of the Soul</h3><p>把真实聊天记录转化为可控的人格记忆JSON，通过双阶段AI管线生成信件与后续对话；强调零注册、最少输入和人格稳定。</p></div>
+            <div class="project-stats"><span>5步问卷</span><span>2阶段管线</span><span>Gemini 2.5 Flash</span></div>
+            <div class="project-actions"><a class="btn primary" href="projects/mots.html">进入演示</a><a class="btn" href="assets/project-media/mots-demo.mp4">播放视频</a></div>
+          </article>
+          <article class="project-feature page-card">
+            <div class="project-number">02</div>
+            <div><span class="project-type">EMBODIED AI EVALUATION</span><h3>Bimanual PageTurner</h3><p>SO-100/101双臂翻页机器人；围绕ACT/LeRobot策略训练、30Hz真实Rollout、Telemetry和10阶段失败漏斗建立评测闭环。</p></div>
+            <div class="project-stats"><span>62次Baseline</span><span>10阶段评测</span><span>30Hz控制</span></div>
+            <div class="project-actions"><a class="btn primary" href="projects/pageturner.html">进入演示</a><a class="btn" href="assets/project-media/pageturner-demo.mp4">播放视频</a></div>
+          </article>
+          <article class="project-feature legal-card">
+            <div class="project-number">03</div>
+            <div><span class="project-type">AGENT EVALUATION INFRASTRUCTURE</span><h3>LegalAgentBench A2A</h3><p>面向中文法律Agent的可复现评测系统：标准化任务、工具约束、RAG证据、引用审计、过程评分和轨迹回放。</p></div>
+            <div class="project-stats"><span>300个任务</span><span>37项工具</span><span>4类评分</span></div>
+            <div class="project-actions"><a class="btn primary" href="projects/legalagent.html">运行交互演示</a><a class="btn" href="assets/project-media/legalagent-demo.mp4">播放视频</a></div>
+          </article>
         </div>
       </div>
+    </section>
 
-      <!-- Med Gamma -->
-      <div class="proj-card reveal">
-        <div class="proj-icon p-teal">🏥</div>
-        <div>
-          <div class="proj-tags"><span class="ptag">PTQ/QAT</span><span class="ptag">INT4/INT8</span><span class="ptag">Edge AI</span></div>
-          <div class="proj-name" style="margin-top:8px;">Med Gamma</div>
-          <div class="proj-desc">
-            <span class="lang-zh">医疗 AI 大模型量化与边缘部署。FP32→INT8/INT4 模型压缩，<strong>内存缩减4×、推理速度提升3–5×</strong>；设计消融实验确保量化后指标稳定在临床安全边界内。</span>
-            <span class="lang-en">Medical LLM quantization &amp; edge deployment. FP32→INT8/INT4 compression achieving <strong>4× memory reduction and 3–5× speedup</strong>; ablation experiments to verify clinical safety margins.</span>
-          </div>
+    <section id="method">
+      <div class="wrap">
+        <div class="section-head"><div><div class="section-kicker">Method</div><h2>我的AI产品工作方法。</h2></div><p class="section-note">模型决定能力上限，产品系统决定它能否可靠地服务用户。</p></div>
+        <div class="method-strip" data-reveal>
+          <div><b>01</b><strong>定义目标</strong><span>用户、业务和风险边界</span></div>
+          <div><b>02</b><strong>拆解任务</strong><span>意图、工具与决策节点</span></div>
+          <div><b>03</b><strong>组合能力</strong><span>模型、规则、RAG与Workflow</span></div>
+          <div><b>04</b><strong>建立评测</strong><span>基线、挑战集与护栏指标</span></div>
+          <div><b>05</b><strong>迭代落地</strong><span>灰度、Bad Case与数据回流</span></div>
         </div>
       </div>
+    </section>
 
-      <!-- Oops rhythm -->
-      <div class="proj-card reveal">
-        <div class="proj-icon p-pink">🎵</div>
-        <div>
-          <div class="proj-tags"><span class="ptag">VAE</span><span class="ptag">Librosa</span><span class="ptag">Snap Lens</span><span class="ptag">AIGC</span></div>
-          <div class="proj-name" style="margin-top:8px;">Oops! tap it again!</div>
-          <div class="proj-desc">
-            <span class="lang-zh">Snapchat 平台音游。自主设计 BF-VAE 弱节拍增强模型，将 Ambient/Drone 等弱节拍音频增强为节奏清晰的可用音频，自动转化为谱面数据并集成进 Snap Lens Studio。</span>
-            <span class="lang-en">Snapchat rhythm game. Custom BF-VAE weak-beat enhancement model converting Ambient/Drone audio into playable rhythm charts, auto-generating chart data integrated into Snap Lens Studio.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Yexian -->
-      <div class="proj-card reveal">
-        <div class="proj-icon p-orange">🌿</div>
-        <div>
-          <div class="proj-tags"><span class="ptag">Ren'Py</span><span class="ptag">Stable Diffusion</span><span class="ptag">独立开发</span></div>
-          <div class="proj-name" style="margin-top:8px;">《叶限》视觉小说</div>
-          <div class="proj-desc">
-            <span class="lang-zh">独立完成剧本、角色设计、场景绘画、UI 及游戏代码，已上线 dizzylab 平台并积累稳定粉丝群，多次参与线下同人展。引入 SD+ControlNet 加速美术出产，使用 Suno/MusicGen 制作原创 BGM。</span>
-            <span class="lang-en">Solo-developed visual novel: script, character art, scenes, UI, code (Ren'Py/Python). Published on dizzylab with a steady fanbase; exhibited at offline conventions. Used SD+ControlNet and Suno/MusicGen for AIGC-assisted production.</span>
-          </div>
-          <a class="proj-link" href="https://www.dizzylab.net/dYexian" target="_blank">
-            <span class="lang-zh">在 dizzylab 试玩 ↗</span><span class="lang-en">Play on dizzylab ↗</span>
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── SKILLS ── -->
-<section id="skills">
-  <div class="wrap">
-    <div class="sec-label">
-      <span class="lang-zh">技能</span><span class="lang-en">Skills</span>
-    </div>
-    <h2 class="sec-title">
-      <span class="lang-zh">工具与<em>专业能力</em></span>
-      <span class="lang-en">Tools &amp; <em>Expertise</em></span>
-    </h2>
-    <div class="sk-grid">
-      <div class="sk-block reveal">
-        <div class="sk-icon">📋</div>
-        <div class="sk-title"><span class="lang-zh">产品管理</span><span class="lang-en">Product Management</span></div>
-        <div class="sk-tags">
-          <span class="stag">PRD</span><span class="stag"><span class="lang-zh">用户旅程地图</span><span class="lang-en">User Journey</span></span>
-          <span class="stag">JTBD</span><span class="stag"><span class="lang-zh">竞品分析</span><span class="lang-en">Competitive Analysis</span></span>
-          <span class="stag">A/B Test</span><span class="stag">Agile / Scrum</span>
-        </div>
-      </div>
-      <div class="sk-block reveal">
-        <div class="sk-icon">🔬</div>
-        <div class="sk-title"><span class="lang-zh">用户研究</span><span class="lang-en">User Research</span></div>
-        <div class="sk-tags">
-          <span class="stag"><span class="lang-zh">用户访谈</span><span class="lang-en">Interviews</span></span>
-          <span class="stag"><span class="lang-zh">问卷设计</span><span class="lang-en">Surveys</span></span>
-          <span class="stag"><span class="lang-zh">可用性测试</span><span class="lang-en">Usability Testing</span></span>
-          <span class="stag"><span class="lang-zh">用户画像</span><span class="lang-en">Personas</span></span>
-          <span class="stag"><span class="lang-zh">数据驱动迭代</span><span class="lang-en">Data-driven</span></span>
-        </div>
-      </div>
-      <div class="sk-block reveal">
-        <div class="sk-icon">🤖</div>
-        <div class="sk-title">AIGC / AI</div>
-        <div class="sk-tags">
-          <span class="stag">PTQ / QAT</span><span class="stag">VAE</span>
-          <span class="stag">RAG</span><span class="stag">Agent Design</span>
-          <span class="stag">Prompt Engineering</span><span class="stag">CV</span>
-        </div>
-      </div>
-      <div class="sk-block reveal">
-        <div class="sk-icon">🎨</div>
-        <div class="sk-title"><span class="lang-zh">设计工具</span><span class="lang-en">Design Tools</span></div>
-        <div class="sk-tags">
-          <span class="stag">Figma</span><span class="stag"><span class="lang-zh">墨刀</span><span class="lang-en">MockingBot</span></span>
-          <span class="stag">Axure RP</span><span class="stag">Adobe XD</span>
-          <span class="stag">Blender</span><span class="stag">Stable Diffusion</span>
-        </div>
-      </div>
-      <div class="sk-block reveal">
-        <div class="sk-icon">💻</div>
-        <div class="sk-title"><span class="lang-zh">技术</span><span class="lang-en">Engineering</span></div>
-        <div class="sk-tags">
-          <span class="stag">Python</span><span class="stag">pandas / sklearn</span>
-          <span class="stag">librosa</span><span class="stag">SQL</span>
-          <span class="stag">HTML / CSS</span><span class="stag">Docker</span>
-        </div>
-      </div>
-      <div class="sk-block reveal">
-        <div class="sk-icon">🌏</div>
-        <div class="sk-title"><span class="lang-zh">语言 &amp; 软技能</span><span class="lang-en">Languages &amp; Soft Skills</span></div>
-        <div class="sk-tags">
-          <span class="stag"><span class="lang-zh">中文 · 母语</span><span class="lang-en">Chinese · Native</span></span>
-          <span class="stag"><span class="lang-zh">英语 · 流利</span><span class="lang-en">English · Fluent</span></span>
-          <span class="stag"><span class="lang-zh">跨职能协作</span><span class="lang-en">Cross-functional</span></span>
-          <span class="stag"><span class="lang-zh">技术写作</span><span class="lang-en">Technical Writing</span></span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── CONTACT ── -->
-<section id="contact">
-  <div class="wrap">
-    <div class="sec-label">
-      <span class="lang-zh">联系我</span><span class="lang-en">Contact</span>
-    </div>
-    <h2 class="sec-title">
-      <span class="lang-zh">欢迎<em>沟通</em></span>
-      <span class="lang-en">Let's <em>Connect</em></span>
-    </h2>
-
-    <div class="contact-split">
-
-      <div class="contact-intro reveal">
-        <h2>
-          <span class="lang-zh">期待与您合作 <em>↗</em></span>
-          <span class="lang-en">Open to opportunities <em>↗</em></span>
-        </h2>
-        <p style="margin-top:12px;">
-          <span class="lang-zh">
-            无论是 AI 产品经理岗位、AIGC 研究合作，还是 PhD 申请交流，我都很乐意聊聊。
-            国内可通过 <strong>Boss直聘</strong> 搜索「朱锡瑞」联系，或直接发邮件/微信。
-          </span>
-          <span class="lang-en">
-            Interested in AI PM roles, research collaborations, or PhD discussions.
-            Reach me via email for the US market, or Boss Zhipin / WeChat for China.
-          </span>
-        </p>
-        <p style="margin-top:10px; font-size:13px; color:var(--muted);">
-          <span class="lang-zh">📍 西雅图（美国在读）· 可远程/回国</span>
-          <span class="lang-en">📍 Seattle, WA · Available remote / relocate to CN</span>
-        </p>
-      </div>
-
-      <div class="reveal">
-
-        <!-- CN contacts -->
-        <div class="contact-market">
-          <div class="contact-market-title">
-            🇨🇳 <span class="lang-zh">国内联系方式</span><span class="lang-en">China Contacts</span>
-          </div>
-          <div class="clist">
-            <a class="citem" href="tel:+8613328785031">
-              <div class="cicon">📱</div>
-              <div>
-                <div class="clabel"><span class="lang-zh">手机 / 微信</span><span class="lang-en">Phone / WeChat</span></div>
-                <div class="cval">133-2878-5031</div>
-              </div>
-            </a>
-            <a class="citem" href="mailto:2916552948@qq.com">
-              <div class="cicon">✉️</div>
-              <div>
-                <div class="clabel">QQ Mail</div>
-                <div class="cval">2916552948@qq.com</div>
-              </div>
-            </a>
-            <div class="citem" style="cursor:default;">
-              <div class="cicon">💼</div>
-              <div>
-                <div class="clabel">Boss直聘</div>
-                <div class="cval"><span class="lang-zh">搜索「朱锡瑞」可找到我</span><span class="lang-en">Search "朱锡瑞" on Boss Zhipin</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- US contacts -->
-        <div class="contact-market" style="margin-top:18px;">
-          <div class="contact-market-title">
-            🇺🇸 <span class="lang-zh">美国联系方式</span><span class="lang-en">US Contacts</span>
-          </div>
-          <div class="clist">
-            <a class="citem" href="mailto:zhuxirui677@gmail.com">
-              <div class="cicon">📧</div>
-              <div>
-                <div class="clabel">Gmail</div>
-                <div class="cval">zhuxirui677@gmail.com</div>
-              </div>
-            </a>
-            <a class="citem" href="https://www.dizzylab.net/dYexian" target="_blank">
-              <div class="cicon">🎮</div>
-              <div>
-                <div class="clabel"><span class="lang-zh">作品 / Portfolio</span><span class="lang-en">Portfolio / Game</span></div>
-                <div class="cval">dizzylab.net — 《叶限》</div>
-              </div>
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    朱锡瑞 · Xirui Zhu &nbsp;·&nbsp;
-    <span class="lang-zh">AI 产品经理求职中</span><span class="lang-en">Open to AI PM Roles</span>
-    &nbsp;·&nbsp; 2025
-  </div>
-</footer>
-
-<script>
-  // ── Nav scroll ──
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 16);
-  }, { passive: true });
-
-  // ── Language toggle ──
-  const root = document.getElementById('html-root');
-  const btn  = document.getElementById('lang-toggle');
-  function toggleLang() {
-    const isEN = root.lang === 'en';
-    root.lang  = isEN ? 'zh-CN' : 'en';
-    btn.textContent = isEN ? 'EN' : '中文';
-  }
-
-  // ── Scroll reveal ──
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        // stagger siblings in the same parent
-        const group = e.target.parentElement.querySelectorAll('.reveal:not(.visible)');
-        group.forEach((el, idx) => {
-          setTimeout(() => el.classList.add('visible'), idx * 90);
-        });
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.08 });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+    <section class="alt" id="contact"><div class="wrap contact-panel"><div><div class="section-kicker">Contact</div><h2>寻找AI产品经理与Agent产品机会。</h2><p>北京、上海、杭州、深圳及国际化团队均可沟通。</p></div><div class="project-actions"><a class="btn primary" href="mailto:2916552948@qq.com">2916552948@qq.com</a><a class="btn" href="tel:+8613328785031">133 2878 5031</a></div></div></section>
+  </main>
+  <footer class="footer"><div class="wrap"><span>朱锡瑞 · AI Product Manager</span><span>University of Washington · Xiamen University</span></div></footer>
+  <script src="site.js"></script>
 </body>
 </html>
