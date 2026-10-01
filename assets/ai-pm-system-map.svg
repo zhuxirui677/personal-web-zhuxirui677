@@ -1,0 +1,46 @@
+<svg width="960" height="620" viewBox="0 0 960 620" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">AI product manager system map</title>
+  <desc id="desc">A structured product map connecting market signals, user journey, AI evaluation, product delivery, and business metrics.</desc>
+  <rect width="960" height="620" rx="28" fill="#F7FAFC"/>
+  <rect x="36" y="36" width="888" height="548" rx="24" fill="#FFFFFF" stroke="#D9E2EC"/>
+  <path d="M116 151H317" stroke="#1F7A8C" stroke-width="3" stroke-linecap="round"/>
+  <path d="M337 151H538" stroke="#D1495B" stroke-width="3" stroke-linecap="round"/>
+  <path d="M558 151H759" stroke="#3066BE" stroke-width="3" stroke-linecap="round"/>
+  <path d="M247 271C304 219 395 219 452 271" stroke="#1F7A8C" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 10"/>
+  <path d="M509 271C566 219 657 219 714 271" stroke="#D1495B" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 10"/>
+  <rect x="88" y="96" width="210" height="110" rx="14" fill="#E8F5F7" stroke="#9AD3DA"/>
+  <rect x="375" y="96" width="210" height="110" rx="14" fill="#FFF1F3" stroke="#F0B8C0"/>
+  <rect x="662" y="96" width="210" height="110" rx="14" fill="#EEF4FF" stroke="#B8CDF3"/>
+  <rect x="88" y="276" width="210" height="110" rx="14" fill="#FFF8E8" stroke="#EBCB83"/>
+  <rect x="375" y="276" width="210" height="110" rx="14" fill="#EEF9F4" stroke="#A7D7C5"/>
+  <rect x="662" y="276" width="210" height="110" rx="14" fill="#F4F0FF" stroke="#C8B9F4"/>
+  <rect x="206" y="454" width="548" height="74" rx="14" fill="#111827"/>
+  <text x="116" y="132" fill="#102A43" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Market Signal</text>
+  <text x="116" y="164" fill="#486581" font-family="Inter, Arial, sans-serif" font-size="14">AI PM JD + interview</text>
+  <text x="116" y="187" fill="#486581" font-family="Inter, Arial, sans-serif" font-size="14">signals from CN / US</text>
+  <text x="403" y="132" fill="#102A43" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">User Journey</text>
+  <text x="403" y="164" fill="#486581" font-family="Inter, Arial, sans-serif" font-size="14">Flight search, detail,</text>
+  <text x="403" y="187" fill="#486581" font-family="Inter, Arial, sans-serif" font-size="14">order, hotel attach</text>
+  <text x="690" y="132" fill="#102A43" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">AI Layer</text>
+  <text x="690" y="164" fill="#486581" font-family="Inter, Arial, sans-serif" font-size="14">Agent, RAG, prompt,</text>
+  <text x="690" y="187" fill="#486581" font-family="Inter, Arial, sans-serif" font-size="14">evaluation, safety</text>
+  <text x="116" y="312" fill="#102A43" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">MVP Direction</text>
+  <text x="116" y="344" fill="#486581" font-family="Inter, Arial, sans-serif" font-size="14">Prioritized needs, PRD,</text>
+  <text x="116" y="367" fill="#486581" font-family="Inter, Arial, sans-serif" font-size="14">prototype, business rules</text>
+  <text x="403" y="312" fill="#102A43" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Experiment</text>
+  <text x="403" y="344" fill="#486581" font-family="Inter, Arial, sans-serif" font-size="14">Event tracking, A/B,</text>
+  <text x="403" y="367" fill="#486581" font-family="Inter, Arial, sans-serif" font-size="14">acceptance, test cases</text>
+  <text x="690" y="312" fill="#102A43" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Outcome</text>
+  <text x="690" y="344" fill="#486581" font-family="Inter, Arial, sans-serif" font-size="14">Conversion, attach rate,</text>
+  <text x="690" y="367" fill="#486581" font-family="Inter, Arial, sans-serif" font-size="14">trust, task completion</text>
+  <text x="248" y="499" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="700">Product sense = user problem + feasible AI + measurable launch</text>
+  <circle cx="480" cy="241" r="52" fill="#FFFFFF" stroke="#111827" stroke-width="3"/>
+  <text x="451" y="236" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800">AI PM</text>
+  <text x="444" y="260" fill="#52616B" font-family="Inter, Arial, sans-serif" font-size="13">Xirui Zhu</text>
+  <circle cx="193" cy="151" r="8" fill="#1F7A8C"/>
+  <circle cx="480" cy="151" r="8" fill="#D1495B"/>
+  <circle cx="767" cy="151" r="8" fill="#3066BE"/>
+  <circle cx="193" cy="331" r="8" fill="#C9861A"/>
+  <circle cx="480" cy="331" r="8" fill="#278D6C"/>
+  <circle cx="767" cy="331" r="8" fill="#7557D6"/>
+</svg>

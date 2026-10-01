@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="LegalAgentBench published evaluation workbench using real AgentBeats artifacts.">
+  <title>LegalAgentBench Workbench</title>
+  <link rel="stylesheet" href="legalagent-platform.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="product-mark" href="legalagent.html" target="_top" aria-label="Back to LegalAgentBench case study">
+        <span class="mark-glyph">L</span>
+        <span><b>LegalAgentBench</b><small data-i18n="productSubtitle">A2A 评测工作台</small></span>
+      </a>
+      <div class="topbar-actions">
+        <span class="source-state"><i></i><span data-i18n="publishedData">已连接公开结果</span></span>
+        <button class="text-button" id="language-toggle" type="button">EN</button>
+        <a class="source-link" href="https://github.com/Green-agent-of-LegalAgentBench/Green-agent--optimize-LegalAgent-Bench" target="_blank" rel="noopener" data-i18n="viewSource">查看源码</a>
+      </div>
+    </header>
+
+    <aside class="sidebar" aria-label="Workbench navigation">
+      <div class="run-identity">
+        <span data-i18n="currentRun">当前运行</span>
+        <strong>5057f01</strong>
+        <small>task_5f47...106f0</small>
+      </div>
+      <nav class="view-nav" aria-label="Views">
+        <button class="nav-item active" type="button" data-view="overview"><span>01</span><b data-i18n="overview">总览</b></button>
+        <button class="nav-item" type="button" data-view="tasks"><span>02</span><b data-i18n="tasks">任务</b><em>3</em></button>
+        <button class="nav-item" type="button" data-view="trace"><span>03</span><b>Trace</b><em>6</em></button>
+        <button class="nav-item" type="button" data-view="artifacts"><span>04</span><b data-i18n="artifacts">产物</b><em>3</em></button>
+      </nav>
+      <div class="agent-pair">
+        <span data-i18n="agentPair">评测连接</span>
+        <div><i class="green-dot"></i><p><b>Green Agent</b><small>law-green-agent</small></p></div>
+        <div><i class="purple-dot"></i><p><b>Purple Agent</b><small>lawlawlaw</small></p></div>
+      </div>
+      <p class="data-note" data-i18n="dataNote">公开 smoke run，3 条样本。不是完整 300 题成绩。</p>
+    </aside>
+
+    <main class="workspace">
+      <div class="loading-state" id="loading-state" aria-live="polite">
+        <span></span><p data-i18n="loading">正在加载公开评测产物</p>
+      </div>
+
+      <section class="view active" id="view-overview" data-panel="overview">
+        <div class="page-heading">
+          <div><span class="eyebrow" data-i18n="assessmentRun">ASSESSMENT RUN</span><h1 data-i18n="runOverview">运行总览</h1><p data-i18n="runDescription">查看法律 Agent 的任务结果、审计判定与可回放过程。</p></div>
+          <div class="run-status"><i></i><span><b data-i18n="completed">已完成</b><small>2026.01.19</small></span></div>
+        </div>
+
+        <div class="score-strip" aria-label="Published evaluation scores">
+          <div class="primary-score"><span data-i18n="trafficLight">交通灯判定</span><strong><i></i>100% GREEN</strong><small data-i18n="threePassed">3 / 3 任务通过</small></div>
+          <div class="score-cell"><span>Success</span><strong id="score-success">1.0</strong></div>
+          <div class="score-cell"><span>Process</span><strong id="score-process">1.0</strong></div>
+          <div class="score-cell"><span>Citation</span><strong id="score-citation">1.0</strong></div>
+          <div class="score-cell"><span>Safety</span><strong id="score-safety">1.0</strong></div>
+        </div>
+
+        <div class="overview-grid">
+          <article class="panel task-panel">
+            <header><div><span class="panel-label" data-i18n="evaluatedTasks">已评任务</span><h2 data-i18n="publishedSamples">公开样本</h2></div><button class="inline-action" type="button" data-open-view="tasks" data-i18n="inspectAll">查看全部</button></header>
+            <div class="task-table" id="overview-task-list"></div>
+          </article>
+          <article class="panel trace-panel">
+            <header><div><span class="panel-label">RUN TRACE</span><h2 data-i18n="executionProgress">执行进程</h2></div><span class="event-count">6 EVENTS</span></header>
+            <ol class="mini-trace" id="overview-trace"></ol>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-tasks" data-panel="tasks">
+        <div class="page-heading compact">
+          <div><span class="eyebrow">PER ITEM AUDIT</span><h1 data-i18n="taskAudit">逐题审计</h1><p data-i18n="taskDescription">在问题、Agent 输出和评测理由之间进行核验。</p></div>
+          <span class="record-count" data-i18n="threeRecords">3 条公开记录</span>
+        </div>
+        <div class="audit-layout">
+          <aside class="audit-index" id="audit-index"></aside>
+          <article class="audit-detail">
+            <div class="audit-detail-head"><div><span class="signal"><i></i>GREEN</span><h2 id="detail-title">Loading</h2></div><button class="copy-button" id="copy-query" type="button" data-i18n="copyQuery">复制问题</button></div>
+            <div class="dimension-row" id="detail-scores"></div>
+            <div class="detail-section"><span data-i18n="inputQuery">输入问题</span><p id="detail-query"></p></div>
+            <div class="detail-section response"><span data-i18n="agentResponse">Agent 回答</span><p id="detail-response"></p></div>
+            <div class="detail-section audit-reason"><span data-i18n="auditReason">审计理由</span><p id="detail-notes"></p></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-trace" data-panel="trace">
+        <div class="page-heading compact">
+          <div><span class="eyebrow">A2A EVENT LOG</span><h1 data-i18n="runTrace">运行轨迹</h1><p data-i18n="traceDescription">按真实时间顺序回放公开评测的状态与进度。</p></div>
+          <code class="task-id">task_5f47ebce02274000abecb5e4b5e106f0</code>
+        </div>
+        <article class="event-log panel">
+          <div class="log-header"><span>#</span><span data-i18n="time">时间</span><span data-i18n="event">事件</span><span data-i18n="payload">载荷</span><span data-i18n="state">状态</span></div>
+          <div id="event-log-body"></div>
+        </article>
+      </section>
+
+      <section class="view" id="view-artifacts" data-panel="artifacts">
+        <div class="page-heading compact">
+          <div><span class="eyebrow">REPRODUCIBLE OUTPUT</span><h1 data-i18n="runArtifacts">运行产物</h1><p data-i18n="artifactDescription">下载结果、复核运行配置，或定位评测实现。</p></div>
+        </div>
+        <div class="artifact-list">
+          <a href="../assets/legalagent-evidence/agentbeats-results.json" download><span class="file-type">JSON</span><span><b>agentbeats-results.json</b><small data-i18n="resultFile">汇总、逐题审计与完整 Trace</small></span><em data-i18n="download">下载</em></a>
+          <a href="../assets/legalagent-evidence/scenario.toml" download><span class="file-type">TOML</span><span><b>scenario.toml</b><small data-i18n="scenarioFile">Green Agent 与 Purple Agent 配置</small></span><em data-i18n="download">下载</em></a>
+          <a href="https://github.com/zhuxirui677/Leaderboard/commit/5057f010f95be61a3af67c95a547bad18a91e0c7" target="_blank" rel="noopener"><span class="file-type">GIT</span><span><b>5057f010f95b</b><small data-i18n="commitFile">AgentBeats 公开提交记录</small></span><em data-i18n="open">打开</em></a>
+          <a href="https://github.com/Green-agent-of-LegalAgentBench/Green-agent--optimize-LegalAgent-Bench/blob/main/src/executor.py" target="_blank" rel="noopener"><span class="file-type">PY</span><span><b>src/executor.py</b><small data-i18n="executorFile">评分流程与 Artifact 生成逻辑</small></span><em data-i18n="open">打开</em></a>
+        </div>
+        <div class="repro-note"><span>REPRODUCIBILITY NOTE</span><p data-i18n="reproNote">界面直接读取公开 results.json。展示数据与下载产物来自同一个文件，避免作品集演示和真实结果口径不一致。</p></div>
+      </section>
+
+      <section class="error-state" id="error-state" hidden>
+        <span>DATA SOURCE ERROR</span><h1 data-i18n="loadFailed">公开结果加载失败</h1><p data-i18n="loadFailedHelp">请刷新页面，或直接下载 results.json 核验。</p><button type="button" id="retry-load" data-i18n="retry">重新加载</button>
+      </section>
+    </main>
+  </div>
+  <script src="legalagent-platform.js"></script>
+</body>
+</html>

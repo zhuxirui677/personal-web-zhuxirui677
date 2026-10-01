@@ -1,0 +1,1865 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HIITIO 社媒运营工作台 MVP</title>
+  <style>
+    :root {
+      --bg: #eef3f6;
+      --surface: #ffffff;
+      --surface-2: #f7f9fb;
+      --line: #d7dee7;
+      --line-strong: #aeb8c5;
+      --text: #18212d;
+      --muted: #667085;
+      --soft: #edf2f5;
+      --blue: #1f5fbf;
+      --blue-soft: #e8f1ff;
+      --green: #08756f;
+      --green-soft: #dcf6f1;
+      --orange: #c2410c;
+      --orange-soft: #fff1e7;
+      --red: #b42318;
+      --red-soft: #fff0f0;
+      --ink: #111827;
+      --shadow: 0 14px 36px rgba(24, 33, 45, 0.10);
+      --shadow-soft: 0 1px 2px rgba(24, 33, 45, 0.06);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0, rgba(255, 255, 255, 0) 260px),
+        var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft Yahei", sans-serif;
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+      letter-spacing: 0;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      min-height: 100dvh;
+      display: grid;
+      grid-template-columns: 268px minmax(0, 1fr);
+      min-width: 0;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      overflow: auto;
+      padding: 18px 16px;
+      border-right: 1px solid var(--line);
+      background: rgba(251, 253, 254, 0.94);
+      backdrop-filter: blur(10px);
+      min-width: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 2px 0 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mark {
+      width: 38px;
+      height: 38px;
+      border: 1px solid #8dd7ca;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, #f0fffb, var(--green-soft));
+      color: var(--green);
+      font-weight: 800;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .nav {
+      display: grid;
+      gap: 7px;
+      margin: 18px 0 20px;
+    }
+
+    .nav button {
+      min-height: 40px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 0 12px;
+      background: transparent;
+      text-align: left;
+      color: #3f4654;
+      font-weight: 700;
+      transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+    }
+
+    .nav button.active,
+    .nav button:hover {
+      background: var(--surface);
+      border-color: var(--line);
+      color: var(--ink);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .nav button.active {
+      border-color: #98d8d0;
+      background: linear-gradient(90deg, var(--green-soft), #fff);
+      color: var(--green);
+    }
+
+    .side-block {
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .side-label {
+      color: #475467;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .check {
+      display: flex;
+      min-height: 30px;
+      align-items: center;
+      gap: 8px;
+      color: #3f4654;
+      font-size: 13px;
+    }
+
+    .check input {
+      accent-color: var(--green);
+    }
+
+    main {
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: hidden;
+      padding: 22px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, #ffffff 0%, #f7fbfb 60%, #eef8f4 100%);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .topbar > div:first-child {
+      min-width: 0;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 26px;
+      line-height: 1.12;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    h2 {
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
+    h3 {
+      font-size: 13px;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .button {
+      min-height: 36px;
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      padding: 0 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--ink);
+      color: #fff;
+      white-space: nowrap;
+      font-weight: 800;
+      box-shadow: 0 1px 0 rgba(17, 24, 39, 0.08);
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    }
+
+    .button.secondary {
+      background: var(--surface);
+      color: var(--text);
+      border-color: var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .button.ghost {
+      background: transparent;
+      color: var(--text);
+      border-color: transparent;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button:hover {
+      box-shadow: 0 8px 18px rgba(24, 33, 45, 0.10);
+    }
+
+    .seg {
+      display: inline-grid;
+      grid-auto-flow: column;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+      min-height: 36px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .seg button {
+      border: 0;
+      min-width: 58px;
+      padding: 0 10px;
+      background: transparent;
+      color: #475467;
+    }
+
+    .seg button.active {
+      background: var(--green-soft);
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(120px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .kpi,
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+      min-width: 0;
+    }
+
+    .kpi {
+      padding: 12px;
+      min-height: 88px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+    }
+
+    .kpi strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(370px, 0.55fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 15px;
+      min-width: 0;
+      margin-bottom: 16px;
+    }
+
+    .panel-head,
+    .row-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .panel-head {
+      margin: -2px 0 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 5px;
+      color: #475467;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    input, select, textarea {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+      padding: 0 10px;
+      box-shadow: 0 1px 0 rgba(24, 33, 45, 0.02);
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus,
+    button:focus-visible {
+      outline: 2px solid rgba(8, 117, 111, 0.22);
+      outline-offset: 2px;
+    }
+
+    textarea {
+      min-height: 74px;
+      padding: 8px 10px;
+      resize: vertical;
+    }
+
+    input[type="range"] {
+      padding: 0;
+    }
+
+    input[type="file"] {
+      padding: 7px;
+      height: auto;
+    }
+
+    .calendar-scroll {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(132px, 1fr));
+      min-width: 1050px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--line);
+    }
+
+    .day-name,
+    .day {
+      background: var(--surface);
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .day-name:nth-child(7n),
+    .day:nth-child(7n) {
+      border-right: 0;
+    }
+
+    .day-name {
+      min-height: 36px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      background: #f8fafc;
+    }
+
+    .day {
+      min-height: 176px;
+      padding: 9px;
+    }
+
+    .day.drop-target {
+      outline: 2px solid var(--blue);
+      outline-offset: -3px;
+      background: #f5f9ff;
+    }
+
+    .date-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .post {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 8px;
+      background: #f8fbff;
+      padding: 8px;
+      margin-top: 8px;
+      min-height: 64px;
+      overflow-wrap: normal;
+      word-break: normal;
+      box-shadow: 0 1px 0 rgba(24, 33, 45, 0.04);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .post[draggable="true"] {
+      cursor: grab;
+    }
+
+    .post:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(24, 33, 45, 0.08);
+    }
+
+    .post.domestic {
+      border-left-color: var(--green);
+      background: #f5fffd;
+    }
+
+    .post.draft {
+      border-left-color: var(--orange);
+      background: #fffaf6;
+    }
+
+    .post.failed,
+    .post.blocked {
+      border-left-color: var(--red);
+      background: #fff8f8;
+    }
+
+    .post-title {
+      font-weight: 800;
+      margin-bottom: 2px;
+      line-height: 1.18;
+    }
+
+    .post-meta {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-top: 5px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      border-radius: 999px;
+      padding: 0 8px;
+      background: var(--blue-soft);
+      color: #1d4ed8;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .tag.green {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .tag.orange {
+      background: var(--orange-soft);
+      color: var(--orange);
+    }
+
+    .tag.red {
+      background: var(--red-soft);
+      color: var(--red);
+    }
+
+    .tag.gray {
+      background: var(--soft);
+      color: #475467;
+    }
+
+    .asset-grid {
+      display: grid;
+      grid-template-columns: minmax(270px, 0.75fr) minmax(0, 1.25fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .preview-stage {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)),
+        #101827;
+      min-height: 480px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+
+    .preview-stage img,
+    .preview-stage video {
+      max-width: 100%;
+      max-height: 620px;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: none;
+    }
+
+    .preview-empty {
+      color: #d0d5dd;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .crop-box {
+      position: absolute;
+      width: 58%;
+      height: 72%;
+      left: 21%;
+      top: 14%;
+      border: 2px solid #ff7a1a;
+      box-shadow: 0 0 0 999px rgba(17, 24, 39, 0.42);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .compare-box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface-2);
+      min-height: 156px;
+      padding: 10px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .compare-box img {
+      width: 100%;
+      max-height: 140px;
+      object-fit: contain;
+      background: #111827;
+      border-radius: 6px;
+      margin-top: 8px;
+    }
+
+    .meter {
+      height: 8px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #e5e7eb;
+    }
+
+    .meter span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: var(--green);
+      transition: width 180ms ease;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      padding: 10px 9px;
+      vertical-align: top;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    th {
+      color: var(--muted);
+      background: var(--surface-2);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .list {
+      display: grid;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .list-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      padding: 11px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .list-row:hover {
+      background: #fbfcfd;
+    }
+
+    .list-row:last-child {
+      border-bottom: 0;
+    }
+
+    .notice {
+      border-left: 4px solid var(--orange);
+      background: var(--orange-soft);
+      border-radius: 8px;
+      padding: 11px;
+      color: #7c2d12;
+      font-size: 13px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .account-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
+      gap: 8px;
+    }
+
+    .status-strip {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mini-chart {
+      display: grid;
+      gap: 8px;
+    }
+
+    .bar {
+      display: grid;
+      grid-template-columns: 92px minmax(120px, 1fr) 60px;
+      gap: 8px;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .bar-track {
+      height: 10px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .bar-track span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+    }
+
+    .toast {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      max-width: 360px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--ink);
+      color: #fff;
+      box-shadow: var(--shadow);
+      display: none;
+      z-index: 20;
+    }
+
+    .toast.show {
+      display: block;
+    }
+
+    .dialog {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0;
+      max-width: 620px;
+      width: calc(100% - 28px);
+      box-shadow: var(--shadow);
+    }
+
+    .dialog::backdrop {
+      background: rgba(17, 24, 39, 0.28);
+    }
+
+    .dialog-body {
+      padding: 16px;
+    }
+
+    .dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 12px 16px;
+      border-top: 1px solid var(--line);
+      background: var(--surface-2);
+    }
+
+    @media (max-width: 1240px) {
+      .app { grid-template-columns: minmax(0, 1fr); }
+      .sidebar {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .nav {
+        grid-template-columns: repeat(4, minmax(120px, 1fr));
+      }
+      .side-block {
+        display: none;
+      }
+      .shell {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .kpis {
+        grid-template-columns: repeat(3, minmax(130px, 1fr));
+      }
+    }
+
+    @media (max-width: 860px) {
+      main { padding: 12px; }
+      .topbar,
+      .panel-head,
+      .row-between {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      h1 {
+        font-size: 21px;
+      }
+      .topbar {
+        padding: 15px;
+      }
+      .topbar .muted {
+        max-width: 100%;
+        word-break: break-word;
+      }
+      .filters,
+      .tool-grid,
+      .asset-grid,
+      .compare,
+      .account-grid {
+        grid-template-columns: 1fr;
+      }
+      .kpis {
+        grid-template-columns: 1fr 1fr;
+      }
+      .day,
+      .day-name {
+        min-width: 140px;
+      }
+      .nav {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .kpis {
+        grid-template-columns: 1fr;
+      }
+      .button {
+        min-height: 38px;
+      }
+      .toolbar {
+        width: 100%;
+      }
+      .toolbar .button {
+        flex: 1 1 auto;
+        justify-content: center;
+      }
+      .seg {
+        width: 100%;
+      }
+      .seg button {
+        min-width: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="mark">H</div>
+        <div>
+          <div class="brand-title">HIITIO 社媒工作台</div>
+          <div class="muted">MVP product app</div>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="主导航">
+        <button class="active" data-jump="calendarPanel">全平台日历</button>
+        <button data-jump="assetPanel">素材裁剪压缩</button>
+        <button data-jump="competitorPanel">竞品爆款追踪</button>
+        <button data-jump="analyticsPanel">数据看板</button>
+      </nav>
+
+      <div class="side-block">
+        <div class="side-label">平台筛选</div>
+        <label class="check"><input type="checkbox" checked data-platform-filter="tiktok"> TikTok</label>
+        <label class="check"><input type="checkbox" checked data-platform-filter="instagram"> Instagram</label>
+        <label class="check"><input type="checkbox" checked data-platform-filter="youtube"> YouTube</label>
+        <label class="check"><input type="checkbox" checked data-platform-filter="linkedin"> LinkedIn</label>
+        <label class="check"><input type="checkbox" checked data-platform-filter="xiaohongshu"> 小红书</label>
+        <label class="check"><input type="checkbox" checked data-platform-filter="douyin"> 抖音</label>
+        <label class="check"><input type="checkbox" checked data-platform-filter="wechat_channels"> 视频号</label>
+      </div>
+
+      <div class="side-block">
+        <div class="side-label">MVP 强约束</div>
+        <div class="stack">
+          <div><span class="tag green">规则</span> 海外 10:00 UTC+8</div>
+          <div><span class="tag green">规则</span> 国内 18:00 UTC+8</div>
+          <div><span class="tag orange">硬校验</span> 视频号封面小于 512KB</div>
+          <div><span class="tag gray">V1</span> API 前使用 CSV/mock/manual package</div>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <div>
+          <h1>一个日历搞定全平台社媒运营</h1>
+          <div class="muted">排期 + 素材自适应压缩 + 竞品爆款追踪 + 数据看板；API 前先用 mock/manual package 跑闭环。</div>
+        </div>
+        <div class="toolbar">
+          <button class="button secondary" id="exportJsonBtn">导出 JSON</button>
+          <button class="button secondary" id="exportReportBtn">导出周报</button>
+          <button class="button" id="openDraftBtn">新建排期</button>
+        </div>
+      </div>
+
+      <section class="kpis" aria-label="核心指标">
+        <div class="kpi"><div class="muted">账号数</div><strong id="kpiAccounts">0</strong><div class="muted">国内 + 海外</div></div>
+        <div class="kpi"><div class="muted">本周排期</div><strong id="kpiScheduled">0</strong><div class="muted">目标 2-3 条/账号</div></div>
+        <div class="kpi"><div class="muted">发布风险</div><strong id="kpiRisk">0</strong><div class="muted">失败/阻塞/需人工</div></div>
+        <div class="kpi"><div class="muted">素材节省</div><strong id="kpiSaved">0%</strong><div class="muted">最近一次输出</div></div>
+        <div class="kpi"><div class="muted">竞品预警</div><strong id="kpiBreakouts">0</strong><div class="muted">breakout_high/medium</div></div>
+        <div class="kpi"><div class="muted">互动率</div><strong id="kpiEngagement">0%</strong><div class="muted">互动 / denominator</div></div>
+      </section>
+
+      <div class="shell">
+        <div>
+          <section class="panel" id="calendarPanel">
+            <div class="panel-head">
+              <div>
+                <h2>全平台排期日历</h2>
+                <div class="muted">拖动内容到其他日期即可改期；海外账号默认 10:00，国内账号默认 18:00。</div>
+              </div>
+              <div class="toolbar">
+                <div class="seg" aria-label="日历视图">
+                  <button class="active" data-calendar-view="week">周</button>
+                  <button data-calendar-view="month">月</button>
+                  <button data-calendar-view="day">日</button>
+                </div>
+                <button class="button secondary" id="runPreflightBtn">发布预检</button>
+              </div>
+            </div>
+
+            <div class="filters">
+              <label>区域
+                <select id="regionFilter">
+                  <option value="all">国内 + 海外</option>
+                  <option value="overseas">海外</option>
+                  <option value="domestic">国内</option>
+                </select>
+              </label>
+              <label>负责人
+                <select id="ownerFilter">
+                  <option value="all">全部负责人</option>
+                  <option value="social-ops">social-ops</option>
+                  <option value="video-team">video-team</option>
+                  <option value="content-cn">content-cn</option>
+                </select>
+              </label>
+              <label>状态
+                <select id="statusFilter">
+                  <option value="all">全部状态</option>
+                  <option value="draft">草稿</option>
+                  <option value="scheduled">已排期</option>
+                  <option value="queued">排队</option>
+                  <option value="published">已发布</option>
+                  <option value="failed">失败</option>
+                </select>
+              </label>
+              <label>产品线
+                <select id="productFilter">
+                  <option value="all">全部产品线</option>
+                  <option value="Solar">Solar</option>
+                  <option value="EV">EV</option>
+                  <option value="ESS">ESS</option>
+                  <option value="HVACR">HVACR</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="calendar-scroll">
+              <div class="calendar" id="calendarGrid"></div>
+            </div>
+          </section>
+
+          <section class="panel" id="assetPanel">
+            <div class="panel-head">
+              <div>
+                <h2>素材自适应裁剪压缩</h2>
+                <div class="muted">上传图片/视频，选择平台和比例，输出前后对比；视频号封面会执行 512KB 硬校验。</div>
+              </div>
+              <div class="seg" aria-label="压缩模式">
+                <button class="active" data-compress-mode="quality_first">画质优先</button>
+                <button data-compress-mode="size_first">体积优先</button>
+              </div>
+            </div>
+
+            <div class="asset-grid">
+              <div class="preview-stage" id="previewStage">
+                <div class="preview-empty" id="previewEmpty">上传素材后显示裁切预览</div>
+                <img id="imagePreview" alt="素材图片预览">
+                <video id="videoPreview" controls muted playsinline></video>
+                <div class="crop-box" id="cropBox" aria-hidden="true"></div>
+              </div>
+
+              <div class="stack">
+                <div class="tool-grid">
+                  <label>上传素材
+                    <input id="assetInput" type="file" accept="image/*,video/*">
+                  </label>
+                  <label>视频号封面
+                    <input id="coverInput" type="file" accept="image/*">
+                  </label>
+                  <label>目标平台
+                    <select id="assetPlatform">
+                      <option value="tiktok">TikTok / Reels</option>
+                      <option value="wechat_channels">视频号</option>
+                      <option value="xiaohongshu">小红书</option>
+                      <option value="youtube">YouTube</option>
+                      <option value="linkedin">LinkedIn</option>
+                    </select>
+                  </label>
+                  <label>输出比例
+                    <select id="ratioSelect">
+                      <option value="9:16">9:16 竖版</option>
+                      <option value="1:1">1:1 方形</option>
+                      <option value="16:9">16:9 横版</option>
+                      <option value="4:5">4:5 Feed</option>
+                    </select>
+                  </label>
+                  <label>裁切 X
+                    <input type="range" id="cropX" min="0" max="100" value="50">
+                  </label>
+                  <label>裁切 Y
+                    <input type="range" id="cropY" min="0" max="100" value="50">
+                  </label>
+                </div>
+
+                <div class="compare">
+                  <div class="compare-box">
+                    <h3>原文件</h3>
+                    <div class="muted" id="originalMeta">未上传</div>
+                    <img id="originalStill" alt="原图预览">
+                  </div>
+                  <div class="compare-box">
+                    <h3>输出版本</h3>
+                    <div class="muted" id="outputMeta">等待输出</div>
+                    <img id="outputStill" alt="输出预览">
+                  </div>
+                </div>
+
+                <table>
+                  <thead><tr><th>校验项</th><th>状态</th><th>说明</th></tr></thead>
+                  <tbody id="assetChecks"></tbody>
+                </table>
+
+                <div>
+                  <div class="row-between">
+                    <span class="muted">预计/实际体积下降</span>
+                    <strong id="savedText">0%</strong>
+                  </div>
+                  <div class="meter"><span id="savedMeter"></span></div>
+                </div>
+
+                <div class="toolbar">
+                  <button class="button secondary" id="simulateCompressBtn">生成压缩预览</button>
+                  <button class="button" id="attachAssetBtn">关联到选中排期</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" id="analyticsPanel">
+            <div class="panel-head">
+              <div>
+                <h2>数据看板</h2>
+                <div class="muted">统一 impressions/views/interactions；缺失 API 数据会标记为 mock/manual，不补假数。</div>
+              </div>
+              <div class="toolbar">
+                <button class="button secondary" id="loadMockMetricsBtn">刷新 mock 数据</button>
+              </div>
+            </div>
+            <div class="tool-grid">
+              <div>
+                <h3>平台表现</h3>
+                <div class="mini-chart" id="platformBars"></div>
+              </div>
+              <div>
+                <h3>素材表现</h3>
+                <div class="list" id="assetInsights"></div>
+              </div>
+            </div>
+            <div style="margin-top:12px">
+              <table>
+                <thead>
+                  <tr><th>Top/Weak</th><th>平台</th><th>内容</th><th>互动率</th><th>下一步</th></tr>
+                </thead>
+                <tbody id="postRanking"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <aside>
+          <section class="panel" id="accountPanel">
+            <div class="panel-head">
+              <div>
+                <h2>账号矩阵</h2>
+                <div class="muted">授权状态、区域、负责人、发布能力。</div>
+              </div>
+            </div>
+            <div class="list" id="accountList"></div>
+          </section>
+
+          <section class="panel" id="competitorPanel">
+            <div class="panel-head">
+              <div>
+                <h2>竞品爆款追踪</h2>
+                <div class="muted">只用公开/授权数据，生成原创跟进草稿。</div>
+              </div>
+              <button class="button secondary" id="analyzeCompetitorsBtn">分析</button>
+            </div>
+            <div class="list" id="competitorList"></div>
+          </section>
+
+          <section class="panel" id="preflightPanel">
+            <div class="panel-head">
+              <div>
+                <h2>发布前检查</h2>
+                <div class="muted">账号、内容、媒体、自动化、幂等和重试策略。</div>
+              </div>
+            </div>
+            <div class="list" id="preflightList"></div>
+          </section>
+
+          <section class="panel">
+            <h2>闭环说明</h2>
+            <div class="stack">
+              <div class="notice">竞品爆款可以一键进入日历草稿，但必须人工确认，不复制竞品素材、文案、Logo、水印或平台 UI。</div>
+              <div class="notice">真实 API/OAuth 未接入前，本 MVP 使用 CSV/mock/manual package 跑通完整运营链路。</div>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <dialog class="dialog" id="draftDialog">
+    <form method="dialog">
+      <div class="dialog-body">
+        <h2>新建排期</h2>
+        <div class="tool-grid" style="margin-top:12px">
+          <label>账号
+            <select id="draftAccount"></select>
+          </label>
+          <label>日期
+            <select id="draftDate"></select>
+          </label>
+          <label>产品线
+            <select id="draftProduct">
+              <option>Solar</option>
+              <option>EV</option>
+              <option>ESS</option>
+              <option>HVACR</option>
+            </select>
+          </label>
+          <label>内容格式
+            <select id="draftFormat">
+              <option>short_video</option>
+              <option>image</option>
+              <option>carousel</option>
+              <option>link</option>
+            </select>
+          </label>
+        </div>
+        <label style="margin-top:10px">主题
+          <input id="draftTopic" value="Solar protection checklist">
+        </label>
+        <label style="margin-top:10px">文案草稿
+          <textarea id="draftCaption">Original angle, platform-specific copy pending.</textarea>
+        </label>
+      </div>
+      <div class="dialog-actions">
+        <button class="button secondary" value="cancel">取消</button>
+        <button class="button" id="createDraftSubmit" value="default">创建</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const week = [
+      { date: "2026-07-13", label: "周一 7/13" },
+      { date: "2026-07-14", label: "周二 7/14" },
+      { date: "2026-07-15", label: "周三 7/15" },
+      { date: "2026-07-16", label: "周四 7/16" },
+      { date: "2026-07-17", label: "周五 7/17" },
+      { date: "2026-07-18", label: "周六 7/18" },
+      { date: "2026-07-19", label: "周日 7/19" }
+    ];
+
+    const state = {
+      selectedPostId: "p3",
+      compressionMode: "quality_first",
+      lastSavedPct: 0,
+      asset: null,
+      cover: null,
+      outputBlobUrl: null,
+      accounts: [
+        { id: "a1", platform: "tiktok", name: "Hiitio", handle: "hiitio_official", region: "overseas", owner: "social-ops", auth: "manual_package", capability: "manual_package_until_api_confirmed" },
+        { id: "a2", platform: "instagram", name: "Hiitio", handle: "hiitio_newenergy", region: "overseas", owner: "social-ops", auth: "manual_package", capability: "manual_package_until_api_confirmed" },
+        { id: "a3", platform: "youtube", name: "Hiitio", handle: "@hiitio", region: "overseas", owner: "video-team", auth: "manual_package", capability: "manual_package_until_api_confirmed" },
+        { id: "a4", platform: "linkedin", name: "Hiitio", handle: "company page", region: "overseas", owner: "social-ops", auth: "manual_package", capability: "manual_package_until_api_confirmed" },
+        { id: "a5", platform: "xiaohongshu", name: "浙江和诚电气", handle: "待确认", region: "domestic", owner: "content-cn", auth: "manual_package", capability: "manual_package_until_api_confirmed" },
+        { id: "a6", platform: "douyin", name: "浙江和诚电气", handle: "hiitio", region: "domestic", owner: "content-cn", auth: "manual_package", capability: "manual_package_until_api_confirmed" },
+        { id: "a7", platform: "wechat_channels", name: "浙江和诚电气", handle: "sphgxyNCfOtTkGS", region: "domestic", owner: "content-cn", auth: "permission_unknown", capability: "manual_package_until_api_confirmed" }
+      ],
+      posts: [
+        { id: "p1", date: "2026-07-13", accountId: "a1", topic: "Solar glass quick check", product: "Solar", format: "short_video", status: "queued", assetId: "asset-video-01", caption: "Fast checklist for solar protection.", source: "calendar" },
+        { id: "p2", date: "2026-07-13", accountId: "a5", topic: "储能保护图文", product: "ESS", format: "image", status: "draft", assetId: "", caption: "待补正文与话题。", source: "calendar" },
+        { id: "p3", date: "2026-07-15", accountId: "a2", topic: "EV fuse carousel", product: "EV", format: "carousel", status: "scheduled", assetId: "asset-image-ev", caption: "Why fuse selection matters.", source: "calendar" },
+        { id: "p4", date: "2026-07-15", accountId: "a7", topic: "ESS battery short", product: "ESS", format: "short_video", status: "scheduled", assetId: "asset-video-ess", caption: "视频号正文待复核。", source: "calendar", coverKb: 31.57 },
+        { id: "p5", date: "2026-07-17", accountId: "a1", topic: "Microinverter protection", product: "Solar", format: "short_video", status: "scheduled", assetId: "asset-video-01", caption: "Protection for microinverters.", source: "calendar" },
+        { id: "p6", date: "2026-07-17", accountId: "a7", topic: "Retry permission check", product: "ESS", format: "short_video", status: "failed", assetId: "asset-video-ess", caption: "授权待确认。", source: "calendar", failureReason: "missing_permission", coverKb: 640 },
+        { id: "p7", date: "2026-07-19", accountId: "a3", topic: "Solar FAQ short", product: "Solar", format: "short_video", status: "scheduled", assetId: "asset-video-01", caption: "Short FAQ for installers.", source: "calendar" }
+      ],
+      competitorPosts: [
+        { id: "c1", platform: "tiktok", account: "competitor_solar_a", url: "public/manual", views: 24000, likes: 1420, comments: 180, shares: 210, saves: 138, hours: 24, product: "Solar", format: "short_video", hook: "3 checks before installing BIPV", label: "pending" },
+        { id: "c2", platform: "youtube", account: "competitor_ev_b", url: "public/manual", views: 1800, likes: 55, comments: 9, shares: 4, saves: 0, hours: 48, product: "EV", format: "long_video", hook: "Fuse sizing explained", label: "pending" },
+        { id: "c3", platform: "linkedin", account: "competitor_factory_c", url: "public/manual", views: 620, likes: 18, comments: 4, shares: 2, saves: 0, hours: 72, product: "HVACR", format: "image", hook: "Factory QA behind the scenes", label: "pending" }
+      ],
+      metrics: [
+        { platform: "tiktok", account: "Hiitio", postId: "p1", assetId: "asset-video-01", product: "Solar", cropRatio: "9:16", compressionMode: "quality_first", status: "published", impressions: 0, views: 22000, likes: 1200, comments: 120, shares: 170, saves: 82 },
+        { platform: "instagram", account: "Hiitio", postId: "p3", assetId: "asset-image-ev", product: "EV", cropRatio: "1:1", compressionMode: "none", status: "published", impressions: 8400, views: 0, likes: 430, comments: 35, shares: 28, saves: 31 },
+        { platform: "youtube", account: "Hiitio", postId: "p7", assetId: "asset-video-01", product: "Solar", cropRatio: "9:16", compressionMode: "size_first", status: "published", impressions: 7600, views: 7600, likes: 130, comments: 18, shares: 16, saves: 0 },
+        { platform: "wechat_channels", account: "浙江和诚电气", postId: "p6", assetId: "asset-video-ess", product: "ESS", cropRatio: "9:16", compressionMode: "quality_first", status: "failed", impressions: null, views: null, likes: null, comments: null, shares: null, saves: null }
+      ]
+    };
+
+    const platformName = {
+      tiktok: "TikTok",
+      instagram: "Instagram",
+      youtube: "YouTube",
+      linkedin: "LinkedIn",
+      xiaohongshu: "小红书",
+      douyin: "抖音",
+      wechat_channels: "视频号"
+    };
+
+    const defaultTime = { overseas: "10:00", domestic: "18:00" };
+
+    function byId(id) {
+      return document.getElementById(id);
+    }
+
+    function accountFor(post) {
+      return state.accounts.find((account) => account.id === post.accountId);
+    }
+
+    function formatBytes(bytes) {
+      if (!bytes && bytes !== 0) return "待确认";
+      if (bytes >= 1024 * 1024) return (bytes / 1024 / 1024).toFixed(2) + " MB";
+      return (bytes / 1024).toFixed(1) + " KB";
+    }
+
+    function interactions(row) {
+      return ["likes", "comments", "shares", "saves"].reduce((sum, key) => sum + (Number(row[key]) || 0), 0);
+    }
+
+    function denominator(row) {
+      return Number(row.impressions) || Number(row.views) || 0;
+    }
+
+    function engagementRate(row) {
+      const den = denominator(row);
+      return den ? interactions(row) / den : null;
+    }
+
+    function toast(message) {
+      const el = byId("toast");
+      el.textContent = message;
+      el.classList.add("show");
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(() => el.classList.remove("show"), 2600);
+    }
+
+    function activePlatforms() {
+      return new Set([...document.querySelectorAll("[data-platform-filter]")]
+        .filter((item) => item.checked)
+        .map((item) => item.dataset.platformFilter));
+    }
+
+    function currentFilters() {
+      return {
+        platforms: activePlatforms(),
+        region: byId("regionFilter").value,
+        owner: byId("ownerFilter").value,
+        status: byId("statusFilter").value,
+        product: byId("productFilter").value
+      };
+    }
+
+    function postVisible(post, filters = currentFilters()) {
+      const account = accountFor(post);
+      if (!account) return false;
+      if (!filters.platforms.has(account.platform)) return false;
+      if (filters.region !== "all" && account.region !== filters.region) return false;
+      if (filters.owner !== "all" && account.owner !== filters.owner) return false;
+      if (filters.status !== "all" && post.status !== filters.status) return false;
+      if (filters.product !== "all" && post.product !== filters.product) return false;
+      return true;
+    }
+
+    function renderCalendar() {
+      const grid = byId("calendarGrid");
+      const filters = currentFilters();
+      grid.innerHTML = week.map((day) => `<div class="day-name">${day.label.split(" ")[0]}</div>`).join("");
+
+      week.forEach((day) => {
+        const dayPosts = state.posts.filter((post) => post.date === day.date && postVisible(post, filters));
+        const cell = document.createElement("div");
+        cell.className = "day";
+        cell.dataset.date = day.date;
+        cell.innerHTML = `<div class="date-row"><span>${day.label}</span><span>${dayPosts.length} 条</span></div>`;
+        cell.addEventListener("dragover", (event) => {
+          event.preventDefault();
+          cell.classList.add("drop-target");
+        });
+        cell.addEventListener("dragleave", () => cell.classList.remove("drop-target"));
+        cell.addEventListener("drop", (event) => {
+          event.preventDefault();
+          cell.classList.remove("drop-target");
+          const id = event.dataTransfer.getData("text/plain");
+          const post = state.posts.find((item) => item.id === id);
+          if (post) {
+            post.date = day.date;
+            const account = accountFor(post);
+            post.time = defaultTime[account.region];
+            toast(`已把「${post.topic}」移动到 ${day.label}`);
+            renderAll();
+          }
+        });
+
+        dayPosts.forEach((post) => cell.appendChild(renderPost(post)));
+        grid.appendChild(cell);
+      });
+    }
+
+    function renderPost(post) {
+      const account = accountFor(post);
+      const postEl = document.createElement("article");
+      const regionClass = account.region === "domestic" ? "domestic" : "";
+      postEl.className = `post ${regionClass} ${post.status}`;
+      postEl.draggable = true;
+      postEl.dataset.postId = post.id;
+      postEl.addEventListener("dragstart", (event) => event.dataTransfer.setData("text/plain", post.id));
+      postEl.addEventListener("click", () => {
+        state.selectedPostId = post.id;
+        toast(`已选中排期：${post.topic}`);
+      });
+      const time = post.time || defaultTime[account.region];
+      const coverTag = account.platform === "wechat_channels" && post.coverKb
+        ? `<span class="tag ${post.coverKb < 512 ? "green" : "red"}">封面 ${post.coverKb}KB</span>`
+        : "";
+      postEl.innerHTML = `
+        <div class="post-title">${platformName[account.platform]} · ${post.topic}</div>
+        <div class="muted">${time} UTC+8 · ${account.name} · ${account.owner}</div>
+        <div class="post-meta">
+          <span class="tag gray">${post.product}</span>
+          <span class="tag ${post.status === "failed" ? "red" : post.status === "draft" ? "orange" : "green"}">${post.status}</span>
+          <span class="tag gray">${post.format}</span>
+          ${coverTag}
+        </div>
+      `;
+      return postEl;
+    }
+
+    function renderAccounts() {
+      const list = byId("accountList");
+      list.innerHTML = "";
+      state.accounts.forEach((account) => {
+        const authClass = account.auth === "permission_unknown" ? "orange" : "green";
+        const row = document.createElement("div");
+        row.className = "list-row";
+        row.innerHTML = `
+          <div>
+            <h3>${platformName[account.platform]} · ${account.name}</h3>
+            <div class="muted">${account.handle} · ${account.region} · ${account.owner}</div>
+          </div>
+          <span class="tag ${authClass}">${account.auth}</span>
+        `;
+        list.appendChild(row);
+      });
+    }
+
+    function analyzeCompetitors() {
+      state.competitorPosts.forEach((item) => {
+        const totalInteractions = (item.likes || 0) + (item.comments || 0) + (item.shares || 0) + (item.saves || 0);
+        const er = item.views ? totalInteractions / item.views : 0;
+        const vph = item.hours ? item.views / item.hours : 0;
+        const shareSaveRate = item.views ? ((item.shares || 0) + (item.saves || 0)) / item.views : 0;
+        const rules = [];
+        if (item.views >= 1000 && er >= 0.03) rules.push("views+engagement");
+        if (vph >= 50) rules.push("velocity");
+        if (shareSaveRate >= 0.005 && item.views >= 500) rules.push("share/save");
+        item.rules = rules;
+        item.engagementRate = er;
+        item.viewsPerHour = vph;
+        item.label = rules.length >= 2 ? "breakout_high" : rules.length === 1 ? "breakout_medium" : "monitor";
+      });
+    }
+
+    function renderCompetitors() {
+      const list = byId("competitorList");
+      list.innerHTML = "";
+      state.competitorPosts.forEach((item) => {
+        const tagClass = item.label === "breakout_high" ? "red" : item.label === "breakout_medium" ? "orange" : "gray";
+        const row = document.createElement("div");
+        row.className = "list-row";
+        row.innerHTML = `
+          <div>
+            <h3>${platformName[item.platform] || item.platform} · ${item.account}</h3>
+            <div class="muted">${item.hook}</div>
+            <div class="muted">${item.views.toLocaleString()} views · ${((item.engagementRate || 0) * 100).toFixed(2)}% ER · ${(item.viewsPerHour || 0).toFixed(0)}/h</div>
+          </div>
+          <div class="stack" style="justify-items:end">
+            <span class="tag ${tagClass}">${item.label}</span>
+            <button class="button secondary" data-competitor-draft="${item.id}">入日历</button>
+          </div>
+        `;
+        list.appendChild(row);
+      });
+
+      document.querySelectorAll("[data-competitor-draft]").forEach((button) => {
+        button.addEventListener("click", () => competitorToCalendar(button.dataset.competitorDraft));
+      });
+    }
+
+    function competitorToCalendar(id) {
+      const item = state.competitorPosts.find((post) => post.id === id);
+      if (!item) return;
+      const account = state.accounts.find((candidate) => candidate.platform === item.platform) || state.accounts[0];
+      const post = {
+        id: "p" + Date.now(),
+        date: "2026-07-18",
+        accountId: account.id,
+        topic: `${item.product}: 原创跟进 ${item.hook}`,
+        product: item.product,
+        format: item.format,
+        status: "draft",
+        assetId: "",
+        caption: "Original follow-up idea. Do not copy competitor media, caption, logo, watermark, or platform UI.",
+        source: "competitor_breakout"
+      };
+      state.posts.push(post);
+      state.selectedPostId = post.id;
+      renderAll();
+      toast("已生成原创跟进草稿并放入 7/18 日历");
+    }
+
+    function renderAnalytics() {
+      const completeRows = state.metrics.filter((row) => denominator(row));
+      const totalDen = completeRows.reduce((sum, row) => sum + denominator(row), 0);
+      const totalInteractions = completeRows.reduce((sum, row) => sum + interactions(row), 0);
+      const er = totalDen ? totalInteractions / totalDen : 0;
+      byId("kpiEngagement").textContent = (er * 100).toFixed(2) + "%";
+
+      const byPlatform = {};
+      state.metrics.forEach((row) => {
+        if (!byPlatform[row.platform]) byPlatform[row.platform] = { den: 0, inter: 0, missing: 0 };
+        const den = denominator(row);
+        byPlatform[row.platform].den += den;
+        byPlatform[row.platform].inter += interactions(row);
+        if (!den) byPlatform[row.platform].missing += 1;
+      });
+      const maxDen = Math.max(1, ...Object.values(byPlatform).map((item) => item.den));
+      byId("platformBars").innerHTML = Object.entries(byPlatform).map(([platform, value]) => {
+        const pct = Math.round((value.den / maxDen) * 100);
+        const label = value.missing ? "缺数据" : formatNumber(value.den);
+        return `
+          <div class="bar">
+            <span>${platformName[platform] || platform}</span>
+            <div class="bar-track"><span style="width:${pct}%"></span></div>
+            <span>${label}</span>
+          </div>
+        `;
+      }).join("");
+
+      const byAsset = {};
+      state.metrics.forEach((row) => {
+        const key = row.assetId || "缺 asset_id";
+        if (!byAsset[key]) byAsset[key] = { den: 0, inter: 0, ratios: new Set(), modes: new Set() };
+        byAsset[key].den += denominator(row);
+        byAsset[key].inter += interactions(row);
+        if (row.cropRatio) byAsset[key].ratios.add(row.cropRatio);
+        if (row.compressionMode) byAsset[key].modes.add(row.compressionMode);
+      });
+      byId("assetInsights").innerHTML = Object.entries(byAsset).map(([assetId, value]) => {
+        const assetEr = value.den ? value.inter / value.den : null;
+        return `
+          <div class="list-row">
+            <div>
+              <h3>${assetId}</h3>
+              <div class="muted">${[...value.ratios].join(", ") || "ratio 待确认"} · ${[...value.modes].join(", ") || "mode 待确认"}</div>
+            </div>
+            <span class="tag ${assetEr && assetEr > 0.05 ? "green" : "orange"}">${assetEr ? (assetEr * 100).toFixed(2) + "% ER" : "缺数据"}</span>
+          </div>
+        `;
+      }).join("");
+
+      const ranked = [...state.metrics].map((row) => ({ ...row, er: engagementRate(row) }))
+        .sort((a, b) => (b.er || -1) - (a.er || -1));
+      const rows = [
+        ...ranked.slice(0, 2).map((row) => ({ type: "Top", row })),
+        ...ranked.slice(-2).map((row) => ({ type: "Weak", row }))
+      ];
+      byId("postRanking").innerHTML = rows.map(({ type, row }) => {
+        const post = state.posts.find((item) => item.id === row.postId);
+        const action = row.er === null ? "补齐平台导出/API" : row.er > 0.05 ? "复用素材比例和主题" : "调整开头钩子与素材";
+        return `
+          <tr>
+            <td><span class="tag ${type === "Top" ? "green" : "orange"}">${type}</span></td>
+            <td>${platformName[row.platform] || row.platform}</td>
+            <td>${post ? post.topic : row.postId || "待确认"}</td>
+            <td>${row.er === null ? "缺 denominator" : (row.er * 100).toFixed(2) + "%"}</td>
+            <td>${action}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderPreflight() {
+      const list = byId("preflightList");
+      const selected = state.posts.find((post) => post.id === state.selectedPostId) || state.posts[0];
+      const rows = preflight(selected);
+      list.innerHTML = rows.map((item) => `
+        <div class="list-row">
+          <div>
+            <h3>${item.title}</h3>
+            <div class="muted">${item.detail}</div>
+          </div>
+          <span class="tag ${item.status === "ready" ? "green" : item.status === "blocked" ? "red" : "orange"}">${item.status}</span>
+        </div>
+      `).join("");
+    }
+
+    function preflight(post) {
+      const account = accountFor(post);
+      const checks = [];
+      checks.push({
+        title: "账号权限",
+        status: account.auth === "permission_unknown" ? "manual_review" : "ready",
+        detail: `${platformName[account.platform]} · ${account.capability}`
+      });
+      checks.push({
+        title: "内容字段",
+        status: post.caption && post.product ? "ready" : "blocked",
+        detail: post.caption ? "文案、产品线存在；危险绝对化表述需人工复核。" : "缺少正文或产品线。"
+      });
+      checks.push({
+        title: "素材文件",
+        status: post.assetId ? "ready" : "manual_review",
+        detail: post.assetId ? `${post.assetId} 已关联` : "未关联素材，不能进入自动发布。"
+      });
+      const coverBlocked = account.platform === "wechat_channels" && Number(post.coverKb || 0) >= 512;
+      checks.push({
+        title: "视频号封面",
+        status: coverBlocked ? "blocked" : "ready",
+        detail: account.platform === "wechat_channels" ? `封面 ${post.coverKb || "待确认"} KB；必须小于 512KB。` : "非视频号，当前无内部硬性封面大小限制。"
+      });
+      checks.push({
+        title: "自动化发布",
+        status: "manual_review",
+        detail: "真实 API/OAuth 未接入；V1 以 manual package 导出。API 发布需 idempotency key、回执和 3 次重试。"
+      });
+      return checks;
+    }
+
+    function renderAssetChecks() {
+      const body = byId("assetChecks");
+      const checks = [];
+      if (state.asset) {
+        checks.push(["文件读取", "ready", `${state.asset.name} · ${formatBytes(state.asset.size)}`]);
+      } else {
+        checks.push(["文件读取", "blocked", "请上传图片或视频素材。"]);
+      }
+      checks.push(["原文件保留", "ready", "输出版本另存，不覆盖源素材。"]);
+      const platform = byId("assetPlatform").value;
+      if (platform === "wechat_channels") {
+        if (!state.cover) {
+          checks.push(["视频号封面", "manual_review", "请上传封面；封面必须小于 512KB。"]);
+        } else {
+          checks.push(["视频号封面", state.cover.size < 512 * 1024 ? "ready" : "blocked", `${formatBytes(state.cover.size)}，硬限制小于 512KB。`]);
+        }
+      } else {
+        checks.push(["平台规格", "ready", "除视频号封面外，当前按推荐规则和接口回写校验。"]);
+      }
+      checks.push(["压缩模式", "ready", state.compressionMode === "quality_first" ? "画质优先" : "体积优先"]);
+      body.innerHTML = checks.map(([title, status, detail]) => `
+        <tr>
+          <td>${title}</td>
+          <td><span class="tag ${status === "ready" ? "green" : status === "blocked" ? "red" : "orange"}">${status}</span></td>
+          <td>${detail}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderKpis() {
+      byId("kpiAccounts").textContent = state.accounts.length;
+      byId("kpiScheduled").textContent = state.posts.filter((post) => ["scheduled", "queued", "draft"].includes(post.status)).length;
+      byId("kpiRisk").textContent = state.posts.filter((post) => ["failed", "blocked"].includes(post.status) || preflight(post).some((row) => row.status === "blocked")).length;
+      byId("kpiSaved").textContent = state.lastSavedPct ? state.lastSavedPct.toFixed(1) + "%" : "0%";
+      byId("kpiBreakouts").textContent = state.competitorPosts.filter((post) => post.label === "breakout_high" || post.label === "breakout_medium").length;
+    }
+
+    function formatNumber(value) {
+      return Number(value || 0).toLocaleString("en-US");
+    }
+
+    function updateCropBox() {
+      const ratio = byId("ratioSelect").value;
+      const x = Number(byId("cropX").value);
+      const y = Number(byId("cropY").value);
+      const crop = byId("cropBox");
+      const ratios = { "9:16": [52, 78], "1:1": [62, 62], "16:9": [78, 44], "4:5": [62, 76] };
+      const [w, h] = ratios[ratio] || ratios["9:16"];
+      crop.style.width = w + "%";
+      crop.style.height = h + "%";
+      crop.style.left = Math.max(4, Math.min(96 - w, x - w / 2)) + "%";
+      crop.style.top = Math.max(4, Math.min(96 - h, y - h / 2)) + "%";
+    }
+
+    function handleAssetUpload(file) {
+      state.asset = file || null;
+      if (!file) return;
+      if (state.assetUrl) URL.revokeObjectURL(state.assetUrl);
+      state.assetUrl = URL.createObjectURL(file);
+      byId("previewEmpty").style.display = "none";
+      byId("imagePreview").style.display = "none";
+      byId("videoPreview").style.display = "none";
+      byId("originalStill").style.display = "none";
+      byId("outputStill").style.display = "none";
+      if (file.type.startsWith("image/")) {
+        byId("imagePreview").src = state.assetUrl;
+        byId("imagePreview").style.display = "block";
+        byId("originalStill").src = state.assetUrl;
+        byId("originalStill").style.display = "block";
+      } else if (file.type.startsWith("video/")) {
+        byId("videoPreview").src = state.assetUrl;
+        byId("videoPreview").style.display = "block";
+      }
+      byId("originalMeta").textContent = `${file.name} · ${file.type || "unknown"} · ${formatBytes(file.size)}`;
+      byId("outputMeta").textContent = "等待生成压缩预览";
+      renderAssetChecks();
+    }
+
+    function handleCoverUpload(file) {
+      state.cover = file || null;
+      renderAssetChecks();
+      if (!file) return;
+      toast(file.size < 512 * 1024 ? "视频号封面通过 512KB 校验" : "视频号封面超过 512KB，已标记阻塞");
+    }
+
+    function simulateCompression() {
+      if (!state.asset) {
+        toast("先上传一个素材");
+        return;
+      }
+      const modeFactor = state.compressionMode === "quality_first" ? 0.18 : 0.09;
+      const ratioBonus = byId("ratioSelect").value === "9:16" ? 1 : 0.92;
+      const outputSize = Math.max(48 * 1024, Math.round(state.asset.size * modeFactor * ratioBonus));
+      const saved = Math.max(0, 1 - outputSize / state.asset.size) * 100;
+      state.lastSavedPct = saved;
+      byId("savedText").textContent = saved.toFixed(1) + "%";
+      byId("savedMeter").style.width = Math.min(100, saved).toFixed(0) + "%";
+      byId("outputMeta").textContent = `${byId("ratioSelect").value} · ${state.compressionMode} · ${formatBytes(outputSize)}`;
+
+      if (state.asset.type.startsWith("image/")) {
+        compressImagePreview(outputSize);
+      } else {
+        byId("outputStill").style.display = "none";
+      }
+      renderKpis();
+      renderAssetChecks();
+      toast("已生成压缩预览和前后对比");
+    }
+
+    function compressImagePreview(outputSize) {
+      const img = byId("imagePreview");
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      const ratio = byId("ratioSelect").value;
+      const dims = { "9:16": [720, 1280], "1:1": [1080, 1080], "16:9": [1280, 720], "4:5": [1080, 1350] }[ratio] || [720, 1280];
+      canvas.width = dims[0];
+      canvas.height = dims[1];
+      ctx.fillStyle = "#111827";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const scale = Math.max(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
+      const dw = img.naturalWidth * scale;
+      const dh = img.naturalHeight * scale;
+      const xOffset = (Number(byId("cropX").value) - 50) / 100 * Math.max(0, dw - canvas.width);
+      const yOffset = (Number(byId("cropY").value) - 50) / 100 * Math.max(0, dh - canvas.height);
+      ctx.drawImage(img, (canvas.width - dw) / 2 - xOffset, (canvas.height - dh) / 2 - yOffset, dw, dh);
+      const quality = state.compressionMode === "quality_first" ? 0.82 : 0.58;
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        if (state.outputBlobUrl) URL.revokeObjectURL(state.outputBlobUrl);
+        state.outputBlobUrl = URL.createObjectURL(blob);
+        byId("outputStill").src = state.outputBlobUrl;
+        byId("outputStill").style.display = "block";
+        byId("outputMeta").textContent = `${ratio} · ${state.compressionMode} · ${formatBytes(blob.size)} · canvas output`;
+        const saved = Math.max(0, 1 - blob.size / state.asset.size) * 100;
+        state.lastSavedPct = saved;
+        byId("savedText").textContent = saved.toFixed(1) + "%";
+        byId("savedMeter").style.width = Math.min(100, saved).toFixed(0) + "%";
+        renderKpis();
+      }, "image/jpeg", quality);
+    }
+
+    function attachAssetToPost() {
+      const post = state.posts.find((item) => item.id === state.selectedPostId);
+      if (!post) {
+        toast("请先选中一个排期");
+        return;
+      }
+      if (!state.asset) {
+        toast("请先上传素材");
+        return;
+      }
+      post.assetId = "uploaded-" + Date.now();
+      if (accountFor(post).platform === "wechat_channels" && state.cover) {
+        post.coverKb = Math.round(state.cover.size / 1024);
+      }
+      toast(`素材已关联到「${post.topic}」`);
+      renderAll();
+    }
+
+    function exportJson() {
+      const data = JSON.stringify({
+        accounts: state.accounts,
+        posts: state.posts,
+        competitorPosts: state.competitorPosts,
+        metrics: state.metrics,
+        exportedAt: new Date().toISOString()
+      }, null, 2);
+      downloadText("hiitio-social-mvp-package.json", data, "application/json");
+    }
+
+    function exportReport() {
+      const report = [
+        "# HIITIO 社媒工作台 MVP 周报",
+        "",
+        `- 账号数：${state.accounts.length}`,
+        `- 本周排期：${state.posts.length}`,
+        `- 竞品预警：${state.competitorPosts.filter((post) => post.label !== "monitor").length}`,
+        `- 最近素材节省：${state.lastSavedPct ? state.lastSavedPct.toFixed(1) + "%" : "待生成"}`,
+        "",
+        "## 风险",
+        ...state.posts.filter((post) => preflight(post).some((row) => row.status === "blocked")).map((post) => `- ${post.topic}: 存在发布阻塞，请看 preflight。`),
+        "",
+        "## 下一步",
+        "- 接入真实平台 OAuth/API 前，继续使用 manual package 跑完整闭环。",
+        "- 优先把视频号封面 512KB 校验和素材压缩产物落到后端任务队列。"
+      ].join("\n");
+      downloadText("hiitio-social-mvp-weekly-report.md", report, "text/markdown");
+    }
+
+    function downloadText(filename, content, type) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function setupDraftDialog() {
+      byId("draftAccount").innerHTML = state.accounts.map((account) => `<option value="${account.id}">${platformName[account.platform]} · ${account.name}</option>`).join("");
+      byId("draftDate").innerHTML = week.map((day) => `<option value="${day.date}">${day.label}</option>`).join("");
+      byId("openDraftBtn").addEventListener("click", () => byId("draftDialog").showModal());
+      byId("createDraftSubmit").addEventListener("click", (event) => {
+        event.preventDefault();
+        const accountId = byId("draftAccount").value;
+        const post = {
+          id: "p" + Date.now(),
+          date: byId("draftDate").value,
+          accountId,
+          topic: byId("draftTopic").value || "Untitled draft",
+          product: byId("draftProduct").value,
+          format: byId("draftFormat").value,
+          status: "draft",
+          assetId: "",
+          caption: byId("draftCaption").value,
+          source: "manual"
+        };
+        state.posts.push(post);
+        state.selectedPostId = post.id;
+        byId("draftDialog").close();
+        renderAll();
+        toast("新排期已创建");
+      });
+    }
+
+    function bindEvents() {
+      document.querySelectorAll(".nav button").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll(".nav button").forEach((item) => item.classList.remove("active"));
+          button.classList.add("active");
+          byId(button.dataset.jump).scrollIntoView({ block: "start", behavior: "smooth" });
+        });
+      });
+      document.querySelectorAll("[data-platform-filter], #regionFilter, #ownerFilter, #statusFilter, #productFilter").forEach((item) => item.addEventListener("change", renderAll));
+      document.querySelectorAll("[data-calendar-view]").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll("[data-calendar-view]").forEach((item) => item.classList.remove("active"));
+          button.classList.add("active");
+          toast(`已切换到${button.textContent}视图；MVP 当前共用同一数据模型`);
+        });
+      });
+      document.querySelectorAll("[data-compress-mode]").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll("[data-compress-mode]").forEach((item) => item.classList.remove("active"));
+          button.classList.add("active");
+          state.compressionMode = button.dataset.compressMode;
+          renderAssetChecks();
+        });
+      });
+      ["ratioSelect", "cropX", "cropY"].forEach((id) => byId(id).addEventListener("input", updateCropBox));
+      byId("assetPlatform").addEventListener("change", renderAssetChecks);
+      byId("assetInput").addEventListener("change", (event) => handleAssetUpload(event.target.files[0]));
+      byId("coverInput").addEventListener("change", (event) => handleCoverUpload(event.target.files[0]));
+      byId("simulateCompressBtn").addEventListener("click", simulateCompression);
+      byId("attachAssetBtn").addEventListener("click", attachAssetToPost);
+      byId("analyzeCompetitorsBtn").addEventListener("click", () => {
+        analyzeCompetitors();
+        renderAll();
+        toast("已按 views、engagement、velocity、share/save 规则完成分析");
+      });
+      byId("runPreflightBtn").addEventListener("click", () => {
+        renderPreflight();
+        byId("preflightPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      byId("exportJsonBtn").addEventListener("click", exportJson);
+      byId("exportReportBtn").addEventListener("click", exportReport);
+      byId("loadMockMetricsBtn").addEventListener("click", () => {
+        renderAnalytics();
+        toast("mock/manual 指标已刷新");
+      });
+      setupDraftDialog();
+    }
+
+    function renderAll() {
+      renderCalendar();
+      renderAccounts();
+      renderCompetitors();
+      renderAnalytics();
+      renderPreflight();
+      renderAssetChecks();
+      renderKpis();
+    }
+
+    analyzeCompetitors();
+    bindEvents();
+    updateCropBox();
+    renderAll();
+  </script>
+</body>
+</html>

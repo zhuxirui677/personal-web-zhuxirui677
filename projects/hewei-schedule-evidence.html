@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>社媒排期与真实素材测试结果</title>
+  <style>
+    :root {
+      --ink: #18212f;
+      --muted: #64748b;
+      --line: #d8e0ea;
+      --soft: #f6f8fb;
+      --domestic: #0f766e;
+      --overseas: #1d4ed8;
+      --ok: #15803d;
+      --warn: #b45309;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background: #fff;
+      line-height: 1.55;
+    }
+    header {
+      padding: 30px 36px 22px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #f8fafc, #fff);
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 28px 56px;
+    }
+    h1 { margin: 0 0 8px; font-size: 30px; letter-spacing: 0; }
+    h2 { margin: 34px 0 14px; font-size: 22px; letter-spacing: 0; }
+    h3 { margin: 0 0 8px; font-size: 16px; letter-spacing: 0; }
+    p { margin: 6px 0; color: var(--muted); }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+    }
+    .metric strong { display: block; font-size: 24px; color: var(--ok); }
+    .metric span { color: var(--muted); font-size: 13px; }
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .day {
+      min-height: 230px;
+      border-right: 1px solid var(--line);
+      background: #fff;
+    }
+    .day:last-child { border-right: 0; }
+    .day-head {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      background: var(--soft);
+      font-weight: 700;
+    }
+    .slot {
+      margin: 12px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-left-width: 5px;
+      border-radius: 8px;
+    }
+    .slot.overseas { border-left-color: var(--overseas); }
+    .slot.domestic { border-left-color: var(--domestic); }
+    .time {
+      display: inline-flex;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 12px;
+      background: #eef2ff;
+      color: var(--overseas);
+    }
+    .slot.domestic .time { background: #ecfdf5; color: var(--domestic); }
+    .platform { margin-top: 8px; font-size: 18px; font-weight: 750; }
+    .meta { margin-top: 4px; color: var(--muted); font-size: 13px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 10px 12px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--soft); white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    td:last-child, th:last-child { border-right: 0; }
+    .tag {
+      display: inline-flex;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid currentColor;
+      white-space: nowrap;
+    }
+    .ok { color: var(--ok); background: #f0fdf4; }
+    .warn { color: var(--warn); background: #fffbeb; }
+    .note {
+      padding: 14px 16px;
+      border-left: 4px solid var(--ok);
+      background: #f0fdf4;
+      color: #14532d;
+      border-radius: 4px;
+      margin: 16px 0;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: #f1f5f9;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    @media (max-width: 960px) {
+      header { padding: 24px 20px 18px; }
+      main { padding: 20px 16px 40px; }
+      .summary { grid-template-columns: 1fr 1fr; }
+      .calendar { grid-template-columns: 1fr; }
+      .day { border-right: 0; border-bottom: 1px solid var(--line); }
+      .day:last-child { border-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>社媒排期与真实素材测试结果</h1>
+    <p>这页展示真实文件测试结果，以及 2026-07-06 当周的中文可视化排期。</p>
+    <div class="summary">
+      <div class="metric"><strong>6</strong><span>当周排期卡片</span></div>
+      <div class="metric"><strong>10:00 / 18:00</strong><span>海外 / 国内默认时间</span></div>
+      <div class="metric"><strong>2</strong><span>真实网络素材</span></div>
+      <div class="metric"><strong>100%</strong><span>真实素材脚本测试通过</span></div>
+    </div>
+  </header>
+
+  <main>
+    <h2>一、2026-07-06 当周排期预览</h2>
+    <p>规则：海外账号 UTC+8 上午 10:00；国内账号 UTC+8 下午 18:00；每周 3 更。当前脚本按账号矩阵轮转平台。</p>
+    <div class="calendar">
+      <section class="day">
+        <div class="day-head">周一<br>2026-07-06</div>
+        <div class="slot overseas">
+          <span class="time">10:00 海外</span>
+          <div class="platform">TikTok</div>
+          <div class="meta">账号：Hiitio<br>产品线：EV<br>主题：EV/ESS content</div>
+        </div>
+        <div class="slot domestic">
+          <span class="time">18:00 国内</span>
+          <div class="platform">小红书</div>
+          <div class="meta">账号：浙江和诚电气<br>产品线：EV<br>主题：EV/ESS content</div>
+        </div>
+      </section>
+      <section class="day">
+        <div class="day-head">周二<br>2026-07-07</div>
+      </section>
+      <section class="day">
+        <div class="day-head">周三<br>2026-07-08</div>
+        <div class="slot overseas">
+          <span class="time">10:00 海外</span>
+          <div class="platform">Instagram</div>
+          <div class="meta">账号：Hiitio<br>产品线：EV<br>主题：EV/ESS content</div>
+        </div>
+        <div class="slot domestic">
+          <span class="time">18:00 国内</span>
+          <div class="platform">抖音</div>
+          <div class="meta">账号：浙江和诚电气<br>产品线：EV<br>主题：EV/ESS content</div>
+        </div>
+      </section>
+      <section class="day">
+        <div class="day-head">周四<br>2026-07-09</div>
+      </section>
+      <section class="day">
+        <div class="day-head">周五<br>2026-07-10</div>
+        <div class="slot overseas">
+          <span class="time">10:00 海外</span>
+          <div class="platform">Facebook</div>
+          <div class="meta">账号：Hiitio<br>产品线：EV<br>主题：EV/ESS content</div>
+        </div>
+        <div class="slot domestic">
+          <span class="time">18:00 国内</span>
+          <div class="platform">视频号</div>
+          <div class="meta">账号：浙江和诚电气<br>产品线：EV<br>主题：EV/ESS content</div>
+        </div>
+      </section>
+    </div>
+
+    <h2>二、真实网络素材测试</h2>
+    <div class="note">这轮不再用缺失文件做主测试。图片来自 Placehold.co，视频来自 Samplelib sample MP4；下载到本地后生成了实际适配文件，并通过脚本检查。</div>
+    <table>
+      <thead>
+        <tr>
+          <th>素材</th>
+          <th>来源</th>
+          <th>原始文件</th>
+          <th>适配后文件</th>
+          <th>脚本结果</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>图片</td>
+          <td><code>https://placehold.co/1200x800.jpg</code></td>
+          <td>11.8KB，1200x800</td>
+          <td>8.67KB，600x400</td>
+          <td><span class="tag ok">comparison_ready: true</span><br>体积下降 26.53%，无阻断项</td>
+        </tr>
+        <tr>
+          <td>视频</td>
+          <td><code>https://samplelib.com/sample-mp4.html</code></td>
+          <td>2781.45KB，1920x1080，码率 3,956,841</td>
+          <td>147.89KB，540x304，码率 210,399</td>
+          <td><span class="tag ok">comparison_ready: true</span><br>体积下降 94.68%，无阻断项</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>三、这轮测试说明</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>测试项</th>
+          <th>结果</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>排期生成</td>
+          <td><span class="tag ok">通过</span></td>
+          <td>国内 18:00、海外 10:00、一周 3 更，已画成上方周历。</td>
+        </tr>
+        <tr>
+          <td>图片素材检查</td>
+          <td><span class="tag ok">通过</span></td>
+          <td>真实图片文件存在，尺寸和大小可读取，视频号封面用途下小于 512KB。</td>
+        </tr>
+        <tr>
+          <td>视频素材检查</td>
+          <td><span class="tag ok">通过</span></td>
+          <td>真实 MP4 文件存在，ffprobe 可读取时长、码率、编码、分辨率。</td>
+        </tr>
+        <tr>
+          <td>压缩前后对比</td>
+          <td><span class="tag ok">通过</span></td>
+          <td>图片和视频都返回 <code>comparison_ready: true</code>。</td>
+        </tr>
+        <tr>
+          <td>缺失文件阻断</td>
+          <td><span class="tag warn">仍保留</span></td>
+          <td>之前的 missing 测试是负向测试，用来证明缺文件会被阻断；现在已补充正向真实文件测试。</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

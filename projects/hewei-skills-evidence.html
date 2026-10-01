@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HIITIO 社媒 Skills 封装结果</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17202a;
+      --muted: #5f6b7a;
+      --line: #d9e1ea;
+      --soft: #f5f7fa;
+      --brand: #0f766e;
+      --ok: #15803d;
+      --warn: #b45309;
+      --block: #b91c1c;
+      --blue: #1d4ed8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background: #ffffff;
+      line-height: 1.55;
+    }
+    header {
+      padding: 32px 40px 24px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 28px 56px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 30px;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 34px 0 14px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+    h3 {
+      margin: 22px 0 10px;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+    p {
+      margin: 8px 0;
+      color: var(--muted);
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+    }
+    .metric strong {
+      display: block;
+      font-size: 24px;
+      color: var(--brand);
+    }
+    .metric span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .note {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--brand);
+      background: #ecfdf5;
+      color: #064e3b;
+      border-radius: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-size: 14px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      background: var(--soft);
+      font-weight: 650;
+      white-space: nowrap;
+    }
+    tr:last-child td { border-bottom: 0; }
+    td:last-child, th:last-child { border-right: 0; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 650;
+      white-space: nowrap;
+      border: 1px solid currentColor;
+    }
+    .ok { color: var(--ok); background: #f0fdf4; }
+    .warn { color: var(--warn); background: #fffbeb; }
+    .block { color: var(--block); background: #fef2f2; }
+    .info { color: var(--blue); background: #eff6ff; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fff;
+    }
+    .panel h3 { margin-top: 0; }
+    ul { margin: 8px 0 0; padding-left: 20px; }
+    li { margin: 4px 0; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: #f1f5f9;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    @media (max-width: 900px) {
+      header { padding: 24px 20px 18px; }
+      main { padding: 20px 16px 40px; }
+      .summary, .grid { grid-template-columns: 1fr; }
+      table { font-size: 13px; }
+      th, td { padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>HIITIO / 浙江和诚电气 社媒 Skills 封装结果</h1>
+    <p>中文查看版。重点回答：现在做了哪些 skills？哪些平台能进入“一键发布”流程？还差什么才算真正生产可直发？</p>
+    <div class="summary">
+      <div class="metric"><strong>8</strong><span>已封装 Skills</span></div>
+      <div class="metric"><strong>9</strong><span>覆盖平台</span></div>
+      <div class="metric"><strong>2-3</strong><span>每账号每周发布频率</span></div>
+      <div class="metric"><strong>512KB</strong><span>视频号封面强校验</span></div>
+    </div>
+    <div class="note">
+      结论：系统已经具备“排期、素材校验、发布前检查、进入一键发布队列”的能力封装；但真实直连平台 API 发布仍需要各平台账号授权、开发者权限、平台接口适配器和 dry-run 回执测试。
+    </div>
+  </header>
+
+  <main>
+    <h2>一、一键发布能力现状</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>平台</th>
+          <th>账号</th>
+          <th>区域</th>
+          <th>当前能力</th>
+          <th>能否一键发布</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>小红书</td>
+          <td>浙江和诚电气</td>
+          <td>国内</td>
+          <td><span class="tag info">可生成发布包</span></td>
+          <td><span class="tag warn">暂不直发</span></td>
+          <td>已提供主页链接。发布 API 权限未确认，当前按人工发布包/半自动处理。</td>
+        </tr>
+        <tr>
+          <td>抖音</td>
+          <td>浙江和诚电气</td>
+          <td>国内</td>
+          <td><span class="tag info">可排期与校验</span></td>
+          <td><span class="tag warn">待授权</span></td>
+          <td>需要补充账号 ID、开放平台权限和发布能力确认。</td>
+        </tr>
+        <tr>
+          <td>视频号</td>
+          <td>浙江和诚电气</td>
+          <td>国内</td>
+          <td><span class="tag info">可校验封面</span></td>
+          <td><span class="tag warn">待授权</span></td>
+          <td>已强制封面小于 512KB；真实发布接口能力和账号授权待确认。</td>
+        </tr>
+        <tr>
+          <td>TikTok</td>
+          <td>Hiitio / hiitio_official</td>
+          <td>海外</td>
+          <td><span class="tag info">可入队</span></td>
+          <td><span class="tag warn">待 API 权限</span></td>
+          <td>可生成 caption、hashtag、素材检查和发布任务；需要 Content Posting API 权限。</td>
+        </tr>
+        <tr>
+          <td>Instagram</td>
+          <td>Hiitio / hiitio_newenergy</td>
+          <td>海外</td>
+          <td><span class="tag info">可入队</span></td>
+          <td><span class="tag warn">待 API 权限</span></td>
+          <td>已提供主页链接；需要 Meta 账号类型、Page 绑定和内容发布权限确认。</td>
+        </tr>
+        <tr>
+          <td>Facebook</td>
+          <td>Hiitio</td>
+          <td>海外</td>
+          <td><span class="tag info">可规划</span></td>
+          <td><span class="tag warn">待账号信息</span></td>
+          <td>需要 Page URL / Page ID 和发布权限。</td>
+        </tr>
+        <tr>
+          <td>X</td>
+          <td>Hiitio</td>
+          <td>海外</td>
+          <td><span class="tag info">可规划</span></td>
+          <td><span class="tag warn">待账号信息</span></td>
+          <td>需要 handle、API 权限和媒体上传能力确认。</td>
+        </tr>
+        <tr>
+          <td>YouTube</td>
+          <td>Hiitio</td>
+          <td>海外</td>
+          <td><span class="tag info">可规划</span></td>
+          <td><span class="tag warn">待账号信息</span></td>
+          <td>需要 Channel ID、上传权限、视频处理回执和发布时间策略。</td>
+        </tr>
+        <tr>
+          <td>LinkedIn</td>
+          <td>Hiitio</td>
+          <td>海外</td>
+          <td><span class="tag info">可规划</span></td>
+          <td><span class="tag warn">待账号信息</span></td>
+          <td>需要 Company Page URL、组织发帖权限和 API scope。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>二、现在已经做好的 Skills</h2>
+    <div class="grid">
+      <section class="panel">
+        <h3>1. 总控路由</h3>
+        <p><code>hiitio-social-ops-orchestrator</code></p>
+        <ul>
+          <li>识别用户任务类型。</li>
+          <li>把排期、文案、素材、发布前校验、一键发布、视频生成监督路由到专用 skill。</li>
+          <li>账号矩阵已写入配置。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h3>2. 排期日历</h3>
+        <p><code>social-calendar-planner</code></p>
+        <ul>
+          <li>国内默认 UTC+8 18:00。</li>
+          <li>海外默认 UTC+8 10:00。</li>
+          <li>每周 2-3 更。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h3>3. 文案 / Hashtag / CTA</h3>
+        <p><code>social-copy-hashtag-writer</code></p>
+        <ul>
+          <li>海外默认带 <code>#HIITIO</code>、<code>#HIITIOElectric</code>；国内默认带 <code>#喜拓</code>、<code>#喜拓新能源</code>。</li>
+          <li>覆盖 EV、ESS、Solar、HVACR 产品线标签。</li>
+          <li>内置常用 CTA。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h3>4. 素材适配</h3>
+        <p><code>social-asset-adapter</code></p>
+        <ul>
+          <li>支持图片、短视频、长视频、Logo、模板。</li>
+          <li>视频号封面小于 512KB 强校验。</li>
+          <li>已新增压缩前后对比脚本。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h3>5. 发布前校验</h3>
+        <p><code>social-publish-preflight</code></p>
+        <ul>
+          <li>检查账号、授权、文案、素材、封面、发布时间。</li>
+          <li>AI 视频没有人工确认时阻断。</li>
+          <li>失败重试和站内通知规则已写入。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h3>6. 一键发布执行监督</h3>
+        <p><code>social-scheduled-publisher</code></p>
+        <ul>
+          <li>生成发布 outbox。</li>
+          <li>生成 idempotency key，避免重复发布。</li>
+          <li>记录平台回执、失败、部分失败和重试。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h3>7. 预算门禁</h3>
+        <p><code>social-budget-guard</code></p>
+        <ul>
+          <li>控制 AI 生成次数、视频生成成本、发布重试次数。</li>
+          <li>80% 预算预警，100% 预算阻断。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h3>8. AI 视频生成监督</h3>
+        <p><code>social-video-generation-supervisor</code></p>
+        <ul>
+          <li>生成 brief、脚本、分镜、prompt pack。</li>
+          <li>检查危险电气画面、错误产品形态、水印、假 Logo。</li>
+          <li>未人工确认不得进入发布。</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>三、生产化结论</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>能力</th>
+          <th>现在状态</th>
+          <th>是否达到 MVP</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>一个日历管理全平台排期</td>
+          <td><span class="tag ok">已封装</span></td>
+          <td>是，已能按国内/海外规则生成排期。</td>
+        </tr>
+        <tr>
+          <td>素材自适应压缩和对比预览</td>
+          <td><span class="tag info">基础完成</span></td>
+          <td>已做元数据对比脚本；视觉滑杆预览需要前端实现。</td>
+        </tr>
+        <tr>
+          <td>一键多平台分发</td>
+          <td><span class="tag warn">流程已封装，直发待授权</span></td>
+          <td>半达到。可以进队列和校验，真实直发要平台 API adapter。</td>
+        </tr>
+        <tr>
+          <td>发布失败自动重试</td>
+          <td><span class="tag ok">已封装</span></td>
+          <td>是，默认 5/15/30 分钟，最多 3 次，站内通知。</td>
+        </tr>
+        <tr>
+          <td>AI 文案 / hashtag / CTA</td>
+          <td><span class="tag ok">已封装</span></td>
+          <td>是，已覆盖品牌标签、产品线标签和 CTA。</td>
+        </tr>
+        <tr>
+          <td>AI 视频生成</td>
+          <td><span class="tag info">监督流程完成</span></td>
+          <td>不是自动成片系统；目前是脚本、分镜、prompt 和 QA 监督。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>四、还需要补的生产资料</h2>
+    <ul>
+      <li>Facebook Page URL / Page ID。</li>
+      <li>X handle 或主页链接。</li>
+      <li>YouTube Channel URL / Channel ID。</li>
+      <li>LinkedIn Company Page URL。</li>
+      <li>抖音账号 ID、视频号 ID。</li>
+      <li>各平台开发者应用、发布权限、token 存储方案。</li>
+      <li>真实素材样例，用来测试压缩、封面和发布前校验。</li>
+    </ul>
+
+    <p class="small">生成时间：2026-07-03。文件位置：outputs/social-media-skills-result-cn.html</p>
+  </main>
+</body>
+</html>
