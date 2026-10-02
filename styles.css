@@ -20,3 +20,31 @@ main{overflow:hidden}.hero{max-width:var(--max);margin:auto;padding:72px 32px 64
 @media(max-width:900px){.internship-showcase-head{align-items:flex-start;flex-direction:column}.internship-card-grid{grid-template-columns:1fr;grid-template-rows:auto}.internship-card:first-child{grid-row:auto}.internship-card>a,.internship-card:not(:first-child)>a{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.internship-card>a,.internship-card:not(:first-child)>a{grid-template-columns:1fr}.internship-card-visual{min-height:230px}}
 @media(prefers-color-scheme:dark){.internship-card{background:#171b20}}
+
+/* 2026 portfolio system: white and blue */
+:root{color-scheme:light;--bg:#f5f8fd;--surface:#eaf2ff;--ink:#14213d;--muted:#63738a;--line:#d5e1f0;--accent:#2f63e9;--radius:12px}
+html,body{background:var(--bg)}
+.nav{background:rgba(248,251,255,.9);border-color:rgba(188,207,232,.78);box-shadow:0 8px 28px rgba(39,81,146,.06)}
+.nav-cta,.button.primary{background:var(--accent);border-color:var(--accent);color:#f9fbff;border-radius:8px}
+.nav-cta:hover,.button.primary:hover{background:#234fc8;border-color:#234fc8}
+.button{border-radius:8px}
+.button.secondary{background:#fff;border-color:#b9cbe3}
+.button.secondary:hover{background:#eaf2ff;color:var(--accent);border-color:#9cb8dd}
+.hero{position:relative}
+.hero::before{content:"";position:absolute;left:-8%;top:8%;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(90,154,255,.16),rgba(90,154,255,0) 68%);pointer-events:none}
+.hero-copy,.hero-media{position:relative}
+.hero-media{background:#dfeaff;border:1px solid #ccdaed;border-radius:18px;box-shadow:0 28px 70px rgba(42,87,157,.14)}
+.proof p{border-top-color:#9db9e1}
+.work,.experience{position:relative}
+.case,.internship-card{background:#fff;border:1px solid #d6e2f1;border-radius:14px;overflow:hidden;box-shadow:0 16px 42px rgba(42,84,150,.08)}
+.case:hover,.internship-card:hover{outline-color:transparent;box-shadow:0 22px 54px rgba(42,84,150,.13)}
+.case-visual{background:#eaf2ff}
+.method{background:#eaf2ff;color:var(--ink);border-top:1px solid #d5e1f0;border-bottom:1px solid #d5e1f0}
+.method-grid p{border-top-color:#9db9e1}
+.method-grid span{color:var(--muted)}
+.role:hover{background:#eaf2ff}
+.contact{position:relative}
+.internship-card-visual{background:linear-gradient(145deg,#2359d8,#6da4ff);color:#fff}
+.kuaishou-cover .internship-card-visual,.hewei-cover .internship-card-visual,.xiaomi-cover .internship-card-visual{background:linear-gradient(145deg,#2359d8,#6da4ff);color:#fff}
+.internship-card-copy{background:#fff}
+@media(prefers-color-scheme:dark){:root{color-scheme:light;--bg:#f5f8fd;--surface:#eaf2ff;--ink:#14213d;--muted:#63738a;--line:#d5e1f0;--accent:#2f63e9}.case,.internship-card{background:#fff}.case-visual,.hero-media{background:#eaf2ff}.button.primary{color:#f9fbff;background:var(--accent)}.button.secondary:hover{background:#eaf2ff;color:var(--accent)}.method{background:#eaf2ff}.nav-cta{background:var(--accent);color:#f9fbff}.internship-card{background:#fff}}

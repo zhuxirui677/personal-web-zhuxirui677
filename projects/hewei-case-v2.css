@@ -214,3 +214,46 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--mint); outline-
   html { scroll-behavior: auto; }
   .evidence-card { transition: none; }
 }
+
+/* Portfolio case shell: white and blue */
+:root {
+  color-scheme: light;
+  --ink: #14213d;
+  --muted: #63738a;
+  --bg: #f5f8fd;
+  --panel: #ffffff;
+  --panel-2: #eaf2ff;
+  --line: #d4e1f0;
+  --mint: #2f63e9;
+  --mint-soft: #315bc6;
+  --amber: #b76414;
+  --danger: #c84a56;
+  --paper: #eef5ff;
+}
+html, body { background: var(--bg); color: var(--ink); }
+.hw-nav { background: rgba(248, 251, 255, .92); border-color: var(--line); box-shadow: 0 8px 28px rgba(39, 81, 146, .06); }
+.hw-nav-links a { border-radius: 8px; border-color: #b8cbe4; }
+.hw-nav-links a:last-child { background: var(--mint); color: #f9fbff; border-color: var(--mint); }
+.hw-button { border-radius: 8px; }
+.hw-button.primary { color: #f9fbff; background: var(--mint); border-color: var(--mint); }
+.system-card { background: linear-gradient(145deg, #ffffff 0%, #eef5ff 100%); box-shadow: 20px 20px 0 #dbe8f8; border-radius: 14px; overflow: hidden; }
+.system-card-head { color: #6f829b; }
+.live-dot::before { box-shadow: none; }
+.route-grid div { background: #f8fbff; }
+.truth-strip { background: #eaf2ff; }
+.hw-section.soft { background: #eaf2ff; border-color: #d4e1f0; }
+.workbench-frame { border-color: #bfd1e8; background: #eaf2ff; box-shadow: 0 28px 70px rgba(42, 84, 150, .14); border-radius: 14px; overflow: hidden; }
+.frame-bar { color: #52657d; background: #dfeaff; border-color: #bfd1e8; }
+.traffic i { background: #9eb3cd; }
+.frame-meta code { color: #637891; }
+.app-caption { color: #5f7188; background: #f7faff; border-color: #d4e1f0; }
+.app-caption strong { color: #14213d; }
+.app-caption span { color: #2f63e9; }
+.orchestrator { border-color: #b8cbe4; background: linear-gradient(90deg, rgba(47,99,233,.10), transparent); }
+.skill-grid details { background: #fff; }
+.skill-grid details[open] { border-color: #9bb7dd; background: #eef5ff; }
+.skill-grid p { color: #52657d; }
+.transfer-note { background: #fff8ee; }
+.transfer-note p { color: #786852; }
+.evidence-card { background: #fff; border-radius: 12px; box-shadow: 0 12px 30px rgba(42,84,150,.06); }
+.problem-grid,.workflow,.sample-metrics,.validation-notes,.role-panel { background: #fff; }

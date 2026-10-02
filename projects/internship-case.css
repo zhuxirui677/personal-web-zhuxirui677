@@ -50,3 +50,29 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 @media(max-width:980px){.intern-hero{grid-template-columns:1fr;min-height:auto}.hero-product{min-height:440px}.interactive-product{grid-template-columns:1fr}.product-nav{border-right:0;border-bottom:1px solid var(--line);flex-direction:row;overflow:auto}.product-nav>span,.product-nav .nav-footnote{display:none}.tab-trigger{min-width:150px}.workflow-lane{grid-template-columns:repeat(3,1fr)}.workflow-lane div:nth-child(3){border-right:0}.workflow-lane div:nth-child(-n+3){border-bottom:1px solid var(--line)}.system-map{grid-template-columns:1fr 1fr}.system-map .architecture-node{border-bottom:1px solid var(--line)}.governance-grid{grid-template-columns:1fr}.case-selector{display:flex;overflow:auto}.detail-trigger{min-width:220px;margin:0 8px 0 0}.decision-path{grid-template-columns:1fr 1fr}.impact-band{grid-template-columns:1fr 1fr}.impact-band>div{border-bottom:1px solid var(--line)}}
 @media(max-width:660px){.intern-nav{padding:0 15px}.intern-nav-actions a:first-child{display:none}.intern-wrap{width:min(100% - 30px,1240px)}.intern-hero{padding:48px 0;gap:38px}.intern-hero h1{font-size:46px}.hero-facts{grid-template-columns:1fr}.hero-facts div{padding:13px 0;border-bottom:1px solid var(--line)}.hero-product{min-height:auto}.surface-body{padding:16px}.hero-output,.content-grid,.analytics-layout,.intent-demo,.architecture-detail{grid-template-columns:1fr}.intern-section{padding:68px 0}.interactive-product{min-height:0}.product-panel{padding:18px}.canvas-heading{flex-direction:column}.workflow-lane,.system-map,.guardrail-grid,.model-pipeline,.decision-path,.impact-band{grid-template-columns:1fr}.workflow-lane div,.system-map .architecture-node,.guardrail-grid div,.model-pipeline div,.decision-path div,.impact-band>div{border-right:0;border-bottom:1px solid var(--line)}.workflow-lane div:last-child,.system-map .architecture-node:last-child,.guardrail-grid div:last-child,.model-pipeline div:last-child,.decision-path div:last-child,.impact-band>div:last-child{border-bottom:0}.skill-matrix,.metric-cluster{grid-template-columns:1fr}.metric-cluster div{border-right:0}.metric-cluster div:nth-last-child(-n+2){border-bottom:1px solid var(--line)}.metric-cluster div:last-child{border-bottom:0}.decision-list{grid-template-columns:1fr}.decision-list article,.decision-list article:nth-child(2n){padding:24px 0;border-left:0}.intern-footer{flex-direction:column}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.product-panel.active{animation:none}}
+
+/* Portfolio case shell: white and blue */
+:root{color-scheme:light;--bg:#f5f8fd;--surface:#fff;--surface-2:#eaf2ff;--line:#d4e1f0;--text:#14213d;--muted:#63738a;--accent:#2f63e9;--accent-ink:#f9fbff}
+body.hewei-case,body.xiaomi-case,body.kuaishou-case{--accent:#2f63e9;--accent-ink:#f9fbff}
+html,body{background:var(--bg);color:var(--text)}
+.intern-nav{background:rgba(248,251,255,.92);border-color:var(--line);box-shadow:0 8px 28px rgba(39,81,146,.06)}
+.intern-nav-actions a{border-color:#b8cbe4;border-radius:8px}.intern-nav-actions a:last-child{background:var(--accent);color:#f9fbff;border-color:var(--accent)}
+.intern-hero{position:relative}
+.intern-hero::before{content:"";position:absolute;left:-10%;top:4%;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(91,157,255,.15),rgba(91,157,255,0) 68%);pointer-events:none}
+.intern-hero-copy,.hero-product{position:relative}
+.hero-product,.interactive-product,.content-block,.utterance,.json-output,.case-selector,.attribution-output,.impact-band{background:#fff;border-color:var(--line)}
+.hero-product,.interactive-product{border-radius:14px;overflow:hidden;box-shadow:0 20px 54px rgba(42,84,150,.11)}
+.surface-bar{color:#6d7f97;background:#f7faff}
+.hero-flow div,.workflow-lane div.active-stage,.architecture-node.active,.detail-trigger.active,.decision-path .path-hit{background:#eaf2ff}
+.hero-output div,.content-block{background:#f8fbff}
+.disclosure{background:#eaf2ff;border-color:var(--line)}.disclosure .intern-wrap{color:#61738b}
+.intern-section.alt{background:#eaf2ff}
+.product-nav{background:#f8fbff}.product-nav>span{color:#6d7f97}
+.tab-trigger:hover{background:#eaf2ff}.tab-trigger.active{background:#dfeaff}
+.skill-matrix button,.architecture-node,.detail-trigger{background:#f8fbff}
+.json-output pre{color:#253956}
+.canvas-status,.decision-status{background:#eef5ff}
+.architecture-detail{background:#fff}
+.attribution-launch{background:#eef5ff}.attribution-launch:hover{background:#2f63e9;color:#fff}
+.platform-showcase{background:linear-gradient(180deg,#f8fbff 0%,#eaf2ff 100%)}
+.intern-footer{background:#f8fbff}
