@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="AI Agent 社区治理策略归因平台脱敏交互演示。">
+  <title>策略归因平台 · 脱敏演示</title>
+  <link rel="stylesheet" href="kuaishou-attribution-platform.css">
+</head>
+<body>
+  <header class="attr-topbar">
+    <div class="attr-brand">
+      <span class="brand-mark">RCP</span>
+      <div><b>策略归因平台</b><small>DECISION ATTRIBUTION</small></div>
+    </div>
+    <nav class="top-nav" aria-label="平台导航">
+      <button class="active" data-view="single">单案归因</button>
+      <button data-view="batch">批量洞察</button>
+      <button data-view="knowledge">策略知识</button>
+      <button data-view="history">归因记录</button>
+    </nav>
+    <div class="topbar-meta">
+      <span class="demo-badge">PORTFOLIO DEMO</span>
+      <span class="analyst"><i>朱</i>策略分析员</span>
+    </div>
+  </header>
+
+  <main class="attr-main">
+    <section class="app-section active" data-section="single">
+      <div class="quick-guide">
+        <div class="guide-title"><strong>便捷 <em>3 步</em></strong><span>让一个治理 Case 从黑盒变成结论</span></div>
+        <div class="guide-step"><b>1</b><div><strong>输入治理对象</strong><span>评论 / 用户 / 视频 ID</span></div></div>
+        <div class="guide-step"><b>2</b><div><strong>Agent 自动归因</strong><span>还原 RCP 决策路径与证据</span></div></div>
+        <div class="guide-step"><b>3</b><div><strong>生成闭环方案</strong><span>补词、补样本、调策略、做验证</span></div></div>
+      </div>
+
+      <div class="hero-grid">
+        <article class="welcome-card">
+          <small>GOVERNANCE CONTROL DESK</small>
+          <h1>下午好，<br>开始一次归因。</h1>
+          <p>平台回答的不是“内容有没有问题”，而是“它为什么被拦、为什么漏放，以及下一步该改什么”。</p>
+          <div class="welcome-tags"><span>决策链还原</span><span>策略白盒核验</span><span>漏放 / 误伤</span><span>优化建议生成</span></div>
+        </article>
+
+        <article class="query-card">
+          <span class="card-eyebrow">ONE-CLICK ATTRIBUTION</span>
+          <h2>输入对象 ID，一键还原判定路径</h2>
+          <p>当前为公开作品集中的脱敏原型，使用下方演示 ID 体验完整链路。</p>
+          <form class="query-bar" id="query-form">
+            <select id="query-type" aria-label="对象类型">
+              <option value="comment">评论 ID</option>
+              <option value="image">图评 ID</option>
+              <option value="video">视频 ID</option>
+              <option value="user">用户 ID</option>
+            </select>
+            <input id="query-input" value="CMT-DEMO-240918-A" autocomplete="off" aria-label="对象 ID">
+            <button class="run-button" type="submit">开始归因 →</button>
+          </form>
+          <div class="query-error" id="query-error" role="alert"></div>
+          <div class="demo-id-list" id="demo-id-list">
+            <button class="active" data-case="CMT-DEMO-240918-A"><b>评论漏放</b><span>CMT-DEMO-240918-A</span></button>
+            <button data-case="IMG-DEMO-240918-B"><b>图评误伤</b><span>IMG-DEMO-240918-B</span></button>
+            <button data-case="VID-DEMO-240918-C"><b>处置异常</b><span>VID-DEMO-240918-C</span></button>
+            <button data-case="USR-DEMO-240918-D"><b>正确拦截</b><span>USR-DEMO-240918-D</span></button>
+          </div>
+        </article>
+
+        <article class="snapshot-card">
+          <h2>本次归因快照</h2>
+          <p>证据完整度与综合置信度随 Case 实时更新</p>
+          <div class="ring-row">
+            <div class="ring"><div class="ring-visual" id="evidence-ring"><b id="evidence-value">86%</b></div><span>证据完整度</span></div>
+            <div class="ring"><div class="ring-visual blue" id="confidence-ring"><b id="confidence-value">91%</b></div><span>归因置信度</span></div>
+          </div>
+          <div class="snapshot-foot"><div><strong>7</strong><span>RCP 决策节点</span></div><div><strong>9</strong><span>白盒核验字段</span></div></div>
+        </article>
+      </div>
+
+      <div class="case-strip" id="case-strip" aria-label="脱敏演示案例">
+        <button class="demo-case active" data-case="CMT-DEMO-240918-A"><small>CASE A <em>漏放</em></small><b>隐晦表达未被候选池覆盖</b><span>定位：候选分流 / 粗筛词库</span></button>
+        <button class="demo-case" data-case="IMG-DEMO-240918-B"><small>CASE B <em>误伤</em></small><b>科普图像被错误识别为风险</b><span>定位：机审判断 / 豁免策略</span></button>
+        <button class="demo-case" data-case="VID-DEMO-240918-C"><small>CASE C <em>异常</em></small><b>识别正确但处置等级不一致</b><span>定位：策略匹配 / 处置执行</span></button>
+        <button class="demo-case" data-case="USR-DEMO-240918-D"><small>CASE D <em>基线</em></small><b>完整链路正确完成拦截</b><span>定位：全链路基准样本</span></button>
+      </div>
+
+      <div class="loading-mask" id="loading-mask" aria-live="polite"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+      <div class="analysis-content" id="analysis-content">
+        <div class="analysis-layout">
+          <article class="panel">
+            <div class="panel-head"><div><span class="panel-kicker">ATTRIBUTION RESULT</span><h2>归因结论与 RCP 决策链</h2><p>从召回到处置逐层定位第一个异常节点</p></div><span class="result-chip" id="result-chip">初筛漏放</span></div>
+            <div class="verdict-grid">
+              <div class="verdict-main"><strong id="verdict-title">候选池未覆盖隐晦表达</strong><p id="verdict-summary">单条内容未呈现显式风险，但聚合上下文已形成一致指向；候选分流只依赖显式词信号，导致后续模型与策略均未被触发。</p></div>
+              <div class="verdict-stat"><span>问题域</span><b id="verdict-domain">评论区氛围</b></div>
+              <div class="verdict-stat"><span>根因层级</span><b class="red" id="verdict-layer">候选分流</b></div>
+              <div class="verdict-stat"><span>综合置信</span><b id="verdict-confidence">91%</b></div>
+            </div>
+            <div class="rcp-wrap">
+              <div class="section-minihead"><h3>RCP 真实决策树映射</h3><span>点击节点查看依据</span></div>
+              <div class="rcp-path" id="rcp-path"></div>
+              <div class="node-detail"><span id="node-status">异常节点 · 候选分流</span><p id="node-detail">分流规则未召回依赖上下文才能成立的隐晦表达，事件在进入语义模型前已被放行。</p><code id="node-source">source: routing_log</code></div>
+            </div>
+          </article>
+
+          <aside class="panel">
+            <div class="panel-head"><div><span class="panel-kicker">EVIDENCE STACK</span><h3>证据链</h3><p>每条结论都可回溯到数据来源</p></div></div>
+            <div class="evidence-stack" id="evidence-stack"></div>
+          </aside>
+        </div>
+
+        <div class="lower-grid">
+          <article class="panel">
+            <div class="panel-head"><div><span class="panel-kicker">STRATEGY WHITEBOX</span><h3>策略白盒九字段核验</h3><p>当前 Case 与候选策略逐字段比对</p></div><span class="result-chip" id="whitebox-result">3 项不一致</span></div>
+            <div class="table-scroll"><table class="whitebox-table"><thead><tr><th>字段</th><th>当前 Case</th><th>策略要求</th><th>核验</th></tr></thead><tbody id="whitebox-body"></tbody></table></div>
+            <div class="table-note">演示字段结构 · 已按产品逻辑抽象，不代表任何公司内部字段、策略名称或真实数据。</div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head"><div><span class="panel-kicker">AGENT TRACE</span><h3>Agent 归因轨迹</h3><p>把人工翻事件表变成可解释步骤</p></div></div>
+            <div class="agent-trace" id="agent-trace"></div>
+          </article>
+        </div>
+
+        <article class="panel recommendations">
+          <div class="panel-head"><div><span class="panel-kicker">CLOSED-LOOP ACTIONS</span><h3>从归因结论到策略闭环</h3><p>建议不会直接生效；需经过样本验证、风险评审和灰度观察</p></div></div>
+          <div class="action-grid" id="action-grid"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="app-section" data-section="batch">
+      <div class="page-heading"><div><p>BATCH INSIGHT</p><h1>批量归因洞察</h1></div><p class="heading-note">聚合单案结果，识别重复出现的系统性缺口。以下为脱敏演示统计，不代表真实业务规模。</p></div>
+      <article class="panel"><div class="metric-row"><div><span>演示 Case</span><strong>128</strong></div><div><span>可定位根因</span><strong>91.4%</strong></div><div><span>高频缺口层</span><strong>粗筛词库</strong></div><div><span>待验证动作</span><strong>17</strong></div></div></article>
+      <article class="panel" style="margin-top:12px"><div class="panel-head"><div><span class="panel-kicker">ROOT CAUSE DISTRIBUTION</span><h3>问题层级分布</h3><p>用于决定策略迭代优先级，而非替代人工复核</p></div></div><div class="table-scroll"><table class="issue-table"><thead><tr><th>根因层</th><th>占比</th><th>主要表现</th><th>推荐动作</th></tr></thead><tbody><tr><td>候选分流 / 粗筛</td><td class="bar-cell"><div class="mini-bar"><i style="width:68%"></i></div></td><td>隐晦语义未召回</td><td>补上下文样本、扩充语境知识</td></tr><tr><td>机审判断</td><td class="bar-cell"><div class="mini-bar"><i style="width:47%"></i></div></td><td>主体或图文关系误判</td><td>补豁免样本、拆分目标评测</td></tr><tr><td>策略匹配</td><td class="bar-cell"><div class="mini-bar"><i style="width:34%"></i></div></td><td>条件与风险等级不一致</td><td>调整条件、版本与优先级</td></tr><tr><td>处置执行</td><td class="bar-cell"><div class="mini-bar"><i style="width:19%"></i></div></td><td>识别结果与动作断层</td><td>核验映射、增加回执校验</td></tr></tbody></table></div></article>
+    </section>
+
+    <section class="app-section" data-section="knowledge">
+      <div class="page-heading"><div><p>STRATEGY KNOWLEDGE</p><h1>策略知识与白盒字段</h1></div><p class="heading-note">九字段将模型信号、策略条件和处置动作放进同一个可比结构，是 Agent 给出可执行结论的基础。</p></div>
+      <article class="panel"><div class="schema-grid"><article><span>01 / DOMAIN</span><h3>问题域</h3><p>风险属于哪一治理领域，用于限制候选策略范围。</p></article><article><span>02 / OBJECT</span><h3>识别对象</h3><p>评论、图评、视频、用户或评论区整体。</p></article><article><span>03 / CONDITION</span><h3>管控条件</h3><p>策略生效需满足的内容、行为与上下文条件。</p></article><article><span>04 / SIGNAL</span><h3>识别信号</h3><p>词库、模型、OCR、ASR、画像等证据来源。</p></article><article><span>05 / VERSION</span><h3>模型 / 策略版本</h3><p>回放时锁定当时实际生效的配置版本。</p></article><article><span>06 / RISK</span><h3>风险等级</h3><p>统一高、中、低风险的判断与升级条件。</p></article><article><span>07 / RESULT</span><h3>策略结果</h3><p>命中、未命中、豁免或信息不足。</p></article><article><span>08 / ACTION</span><h3>处置动作</h3><p>放行、折叠、拦截、送审或二次确认。</p></article><article><span>09 / SCOPE</span><h3>生效范围</h3><p>人群、场景、流量、时间与实验桶约束。</p></article></div><div class="table-note">候选策略排序逻辑：问题域一致性 → 对象一致性 → 条件满足度 → 版本与范围有效性 → 处置映射。</div></article>
+    </section>
+
+    <section class="app-section" data-section="history">
+      <div class="page-heading"><div><p>ATTRIBUTION HISTORY</p><h1>归因记录</h1></div><p class="heading-note">保存结论、证据版本和后续动作，确保每次调整都能被复盘。记录均为演示数据。</p></div>
+      <article class="panel"><div class="table-scroll"><table class="history-table"><thead><tr><th>对象 ID</th><th>类型</th><th>归因结论</th><th>根因层</th><th>置信度</th><th>状态</th></tr></thead><tbody><tr><td>CMT-DEMO-240918-A</td><td>评论</td><td>初筛漏放</td><td>候选分流</td><td>91%</td><td><span class="field-status mismatch">待验证</span></td></tr><tr><td>IMG-DEMO-240918-B</td><td>图评</td><td>机审误伤</td><td>机审判断</td><td>88%</td><td><span class="field-status unknown">待补样本</span></td></tr><tr><td>VID-DEMO-240918-C</td><td>视频</td><td>处置不一致</td><td>策略匹配</td><td>94%</td><td><span class="field-status mismatch">待灰度</span></td></tr><tr><td>USR-DEMO-240918-D</td><td>用户</td><td>链路正确</td><td>—</td><td>97%</td><td><span class="field-status match">已闭环</span></td></tr></tbody></table></div></article>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status">已加入演示验证任务</div>
+  <script src="kuaishou-attribution-platform.js"></script>
+</body>
+</html>
