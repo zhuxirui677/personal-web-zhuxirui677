@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="评论区氛围大模型产品方案脱敏交互展示。">
+  <title>评论区氛围识别 · 产品证据页</title>
+  <link rel="stylesheet" href="kuaishou-attribution-platform.css">
+  <link rel="stylesheet" href="kuaishou-atmosphere-model.css">
+</head>
+<body>
+  <header class="attr-topbar model-topbar">
+    <div class="attr-brand"><span class="brand-mark">CTX</span><div><b>评论区氛围识别</b><small>CONTEXT MODEL LAB</small></div></div>
+    <nav class="top-nav" aria-label="模型方案导航">
+      <button class="active" data-view="overview">方案总览</button>
+      <button data-view="experiment">模型实验</button>
+      <button data-view="diagnosis">漏放诊断</button>
+      <button data-view="roadmap">迭代路线</button>
+    </nav>
+    <div class="topbar-meta"><span class="demo-badge">DE-IDENTIFIED CASE</span><a class="back-link" href="kuaishou-governance.html">返回案例</a></div>
+  </header>
+
+  <main class="attr-main model-main">
+    <section class="app-section active" data-section="overview">
+      <div class="quick-guide model-guide">
+        <div class="guide-title"><strong>判断对象升级</strong><span>从单条评论转向评论区整体语境</span></div>
+        <div class="guide-step"><b>1</b><div><strong>发现聚集信号</strong><span>单条无害，组合后风险成立</span></div></div>
+        <div class="guide-step"><b>2</b><div><strong>理解语义重写</strong><span>结合视频与评论区上下文判断</span></div></div>
+        <div class="guide-step"><b>3</b><div><strong>按浓度分级</strong><span>高、中、低浓度对应不同动作</span></div></div>
+      </div>
+
+      <div class="model-hero">
+        <article class="model-statement panel">
+          <span class="card-eyebrow">PROBLEM DEFINITION</span>
+          <h1>风险不总在一条评论里，<br>有时存在于评论之间。</h1>
+          <p>将评论治理的判断对象从单条升级为整个评论区，通过识别聚集性与隐蔽性，补足单条模型无法覆盖的上下文风险。</p>
+          <div class="scope-line"><span>视频信息</span><i>+</i><span>Top15 评论</span><i>→</i><strong>氛围类型 / 倾向 / 浓度</strong></div>
+        </article>
+        <article class="panel scope-dashboard">
+          <div class="panel-head"><div><span class="panel-kicker">SCOPE DECISION</span><h2>为什么取 Top15</h2><p>覆盖收益、推理成本与时延之间的产品平衡</p></div></div>
+          <div class="scope-chart" aria-label="评论位次与累计曝光覆盖示意">
+            <div class="coverage-copy"><strong>82.9%</strong><span>累计曝光覆盖</span></div>
+            <div class="rank-bars"><i style="height:92%"></i><i style="height:78%"></i><i style="height:69%"></i><i style="height:58%"></i><i style="height:51%"></i><i style="height:45%"></i><i style="height:38%"></i><i style="height:33%"></i><i style="height:29%"></i><i style="height:25%"></i><i style="height:21%"></i><i style="height:18%"></i><i style="height:15%"></i><i style="height:12%"></i><i style="height:10%"></i><i class="tail" style="height:6%"></i><i class="tail" style="height:4%"></i><i class="tail" style="height:3%"></i></div>
+            <div class="axis-note"><span>Top1</span><b>Top15 决策点</b><span>后续单次增益 &lt;2%</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="risk-patterns">
+        <article class="pattern-card aggregate"><span>聚集性风险</span><h2>单条无害，聚集成灾</h2><p>每条评论单独看都不足以命中，但大量相似隐喻聚集后形成一致攻击或影射方向。</p><div class="pattern-demo"><i>中性词 A</i><i>历史指代</i><i>相似表述</i><b>聚合语境产生风险</b></div></article>
+        <article class="pattern-card rewrite"><span>隐蔽性风险</span><h2>语义在评论区内部被重写</h2><p>视频原始主题正常，但评论互动逐步形成新的交易、攻击或暗语语境。</p><div class="rewrite-flow"><i>正常视频主题</i><i>评论互动偏移</i><b>风险语义形成</b></div></article>
+      </div>
+
+      <article class="panel pipeline-panel">
+        <div class="panel-head"><div><span class="panel-kicker">PRODUCT PIPELINE</span><h2>四层产品链路</h2><p>每一层都定义输入、输出和失败后的归因方向</p></div><span class="result-chip success">P0 验证中</span></div>
+        <div class="model-pipeline light-pipeline">
+          <div><span>ROUTING</span><b>分流层</b><p>用规则、语境信号和历史相似样本圈定候选视频池。</p><small>控制调用量与成本</small></div>
+          <div><span>INPUT</span><b>输入层</b><p>评论文本、标题、OCR、ASR、视频帧与知识库按实验配置组合。</p><small>保证上下文可用</small></div>
+          <div><span>OUTPUT</span><b>输出层</b><p>输出氛围类型、倾向、浓度和单条标签，必要时拆分模型验证。</p><small>减少联合目标干扰</small></div>
+          <div><span>ACTION</span><b>处置层</b><p>按照高、中、低浓度进行分级处置，并保留人工复核入口。</p><small>控制误伤与业务风险</small></div>
+        </div>
+      </article>
+
+      <div class="value-grid">
+        <article class="panel value-lead"><span class="panel-kicker">BUSINESS VALUE</span><h2>价值不只是多识别一类内容。</h2><p>它把治理单元从离散评论扩展到上下文空间，使策略团队能够发现聚集冲塔、语义漂移和文图互相掩护等结构性缺口。</p></article>
+        <article class="metric-tile"><strong>约六成</strong><span>重点问题来自评论区聚集表达</span></article>
+        <article class="metric-tile"><strong>3 类</strong><span>涉政、公序良俗、违法违规场景验证</span></article>
+        <article class="metric-tile"><strong>2 级</strong><span>涉政 P0 验证，网暴 P1 排期</span></article>
+      </div>
+    </section>
+
+    <section class="app-section" data-section="experiment">
+      <div class="page-heading stacked-heading"><div><p>MODEL EXPERIMENT</p><h1>用消融实验决定输入，而不是堆模态。</h1></div><p class="heading-note">公开作品集仅展示实验逻辑和相对结论。模型名称与数据均按脱敏方案呈现。</p></div>
+      <div class="experiment-layout">
+        <article class="panel input-lab">
+          <div class="panel-head"><div><span class="panel-kicker">INPUT ABLATION</span><h3>输入组合消融</h3><p>点击配置查看产品判断</p></div></div>
+          <div class="config-list" id="config-list">
+            <button data-config="text"><b>文本基线</b><span>评论 + 标题</span></button>
+            <button class="active" data-config="ocr"><b>OCR 方案</b><span>文本 + OCR</span></button>
+            <button data-config="asr"><b>OCR + ASR</b><span>补充语音上下文</span></button>
+            <button data-config="frame"><b>视频抽帧</b><span>加入视觉语境</span></button>
+          </div>
+        </article>
+        <article class="panel config-result">
+          <div class="panel-head"><div><span class="panel-kicker">EXPERIMENT READOUT</span><h3 id="config-title">OCR 方案</h3><p id="config-subtitle">当前首期落地配置</p></div><span class="result-chip success" id="config-chip">SELECTED</span></div>
+          <div class="config-score"><div><span>召回表现</span><strong id="config-recall">最优</strong></div><div><span>推理成本</span><strong id="config-cost">中</strong></div><div><span>工程复杂度</span><strong id="config-complexity">低</strong></div></div>
+          <p class="config-insight" id="config-insight">OCR 对视频画面中的标题、截图文字和隐晦指代提供关键补充，在召回增益与调用成本之间最平衡，因此进入首期方案。</p>
+        </article>
+      </div>
+
+      <article class="panel model-comparison">
+        <div class="panel-head"><div><span class="panel-kicker">BASE MODEL SELECTION</span><h3>基座模型选型</h3><p>比较语义理解、复杂输出稳定性、成本与链路适配性</p></div></div>
+        <div class="model-table-wrap"><table class="model-table"><thead><tr><th>候选方案</th><th>上下文理解</th><th>联合输出稳定性</th><th>推理成本</th><th>产品结论</th></tr></thead><tbody><tr><td>DeepSeek-V3</td><td>强</td><td>中</td><td>高</td><td>效果基线</td></tr><tr><td>Qwen 大参数版</td><td>强</td><td>中</td><td>高</td><td>对照方案</td></tr><tr><td>Qwen 轻量版</td><td>中</td><td>中</td><td>低</td><td>成本备选</td></tr><tr class="selected"><td>DeepSeek Flash + OCR</td><td>强</td><td>较稳</td><td>中</td><td><b>首期选择</b></td></tr></tbody></table></div>
+      </article>
+
+      <div class="experiment-findings">
+        <article class="panel"><span>已验证</span><h3>OCR 是首期最优增量</h3><p>仅加 OCR 的召回表现最优，同时不引入视频抽帧的高成本和链路复杂度。</p></article>
+        <article class="panel"><span>有收益</span><h3>ASR 与抽帧值得继续验证</h3><p>ASR 对语音语境有明显补充，视频帧对文图关联场景也能带来增益。</p></article>
+        <article class="panel warning"><span>核心限制</span><h3>联合目标互相干扰</h3><p>类型与浓度联合输出 F1 仅 0.35，下一步缩减维度并分模型独立评测。</p></article>
+      </div>
+    </section>
+
+    <section class="app-section" data-section="diagnosis">
+      <div class="page-heading stacked-heading"><div><p>BAD CASE DIAGNOSIS</p><h1>先解释漏在哪里，再决定加什么能力。</h1></div><p class="heading-note">归因不是给模型失败贴标签，而是把问题映射到知识、输入、Prompt 或任务拆分。</p></div>
+      <div class="diagnosis-grid">
+        <article class="panel diagnosis-chart">
+          <div class="panel-head"><div><span class="panel-kicker">MISS DISTRIBUTION</span><h3>涉政场景主要漏放来源</h3><p>样本复核后的结构化归因</p></div></div>
+          <div class="horizontal-bars"><div><span>涉外冲突情绪宣泄</span><b style="--bar:30.4%">30.4%</b></div><div><span>依赖视频语境</span><b style="--bar:25%">25.0%</b></div><div><span>历史事件影射</span><b style="--bar:15.2%">15.2%</b></div><div><span>其他复杂语境</span><b style="--bar:29.4%">29.4%</b></div></div>
+        </article>
+        <article class="panel diagnosis-focus"><span class="panel-kicker">CROSS-MODAL GAP</span><strong>41.67%</strong><h3>网暴漏放来自文图结合攻击</h3><p>单独识别文本或图片都可能安全，攻击含义依赖两者之间的指代和组合关系。</p><div class="focus-route"><span>评论文本</span><span>图片内容</span><b>跨模态关系判断</b></div></article>
+      </div>
+
+      <article class="panel cause-map">
+        <div class="panel-head"><div><span class="panel-kicker">CAUSE TO ACTION</span><h3>从漏放类型到产品解法</h3><p>不同问题需要不同能力，不能统一归因成“模型理解不足”</p></div></div>
+        <div class="cause-grid"><article><span>语境知识缺失</span><h3>语境与暗语知识库</h3><p>建立样本入库、审核、过期与周级迭代机制。</p><small>解决：新暗语、历史影射</small></article><article><span>上下文输入不足</span><h3>跨模态理解</h3><p>增加 OCR、ASR 与图文关联，按收益逐步扩展。</p><small>解决：文图组合、视频依赖</small></article><article><span>任务定义过重</span><h3>拆分输出目标</h3><p>缩减一次输出维度，对类型与浓度分别建立评测。</p><small>解决：联合输出 F1 偏低</small></article><article><span>判断边界模糊</span><h3>Prompt 与难例迭代</h3><p>将漏放原因转写为明确规则，并同步补充正负样本。</p><small>解决：相似语境误判</small></article></div>
+      </article>
+    </section>
+
+    <section class="app-section" data-section="roadmap">
+      <div class="page-heading stacked-heading"><div><p>ITERATION ROADMAP</p><h1>从可用模型走向稳定治理能力。</h1></div><p class="heading-note">路线按照风险价值、效果确定性、成本与工程依赖排序。</p></div>
+      <div class="priority-board">
+        <article class="priority-column p0"><header><span>P0</span><h2>涉政氛围</h2><b>验证中</b></header><div><h3>当前目标</h3><p>先稳定识别类型，再独立验证高浓度判断与处置边界。</p></div><div><h3>关键任务</h3><p>Top15 排序消融、OCR 方案固化、语境知识迭代。</p></div><div><h3>上线门槛</h3><p>召回与误伤达到场景门槛，调用成本满足候选池预算。</p></div></article>
+        <article class="priority-column p1"><header><span>P1</span><h2>网暴氛围</h2><b>待排期</b></header><div><h3>当前问题</h3><p>文图结合攻击占主要漏放，需要跨模态关系识别。</p></div><div><h3>前置条件</h3><p>补齐图评样本、定义攻击主体并建立独立评测集。</p></div><div><h3>探索方向</h3><p>图文关联模型、图片语义结构化和上下文重排。</p></div></article>
+      </div>
+      <article class="panel delivery-list">
+        <div class="panel-head"><div><span class="panel-kicker">NEXT DELIVERABLES</span><h3>下一阶段交付物</h3><p>每个待办都有明确的决策产出</p></div></div>
+        <div class="delivery-grid"><div><strong>Top15 排序消融</strong><span>比较热度、时间、互动与混合排序</span><b>产出：最优输入策略</b></div><div><strong>知识库周级迭代</strong><span>建立新增、审核、过期与回归流程</span><b>产出：稳定知识闭环</b></div><div><strong>模型任务拆分</strong><span>类型、倾向、浓度分开验证</span><b>产出：独立评测矩阵</b></div><div><strong>上线链路联调</strong><span>完成鉴权、限流、回执与异常降级</span><b>产出：可灰度服务链路</b></div></div>
+      </article>
+    </section>
+  </main>
+  <script src="kuaishou-atmosphere-model.js"></script>
+</body>
+</html>
