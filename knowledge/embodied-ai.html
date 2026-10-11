@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>具身智能与世界模型 | 朱锡瑞知识库</title>
+  <meta name="description" content="具身智能、VLA、机器人评测、世界模型和智能座舱的产品知识。">
+  <link rel="stylesheet" href="../styles.css?v=20261010-blue">
+  <link rel="stylesheet" href="../knowledge-detail.css?v=20261010-split">
+</head>
+<body class="knowledge-detail">
+  <nav class="nav kd-nav"><a class="wordmark" href="../index.html">XIRUI ZHU</a><div class="nav-links"><a href="evaluation.html">评测</a><a href="agent-harness.html">Agent</a><a aria-current="page" href="embodied-ai.html">具身智能</a><a href="kuaishou-cases.html">项目讲述</a><a class="nav-cta" href="../knowledge.html">知识总览</a></div></nav>
+  <main>
+    <header class="kd-hero">
+      <div class="kd-hero-copy"><div class="kd-breadcrumb"><a href="../knowledge.html">知识库</a><span>/</span><span>具身智能与世界模型</span></div><h1>具身智能<br>与世界模型</h1><p>从感知、语言落地和规划，到动作控制、恢复与真实世界验收。</p></div>
+      <aside class="kd-hero-note"><strong>一句话记忆</strong><p>机器人能力必须用真实任务结果，而不是展示视频证明。</p><span>离线模型分数、仿真结果和真实环境成功率需要分层验证。</span></aside>
+    </header>
+    <div class="kd-body">
+      <aside class="kd-toc"><strong>本页目录</strong><a href="#stack">能力栈</a><a href="#eval">评测体系</a><a href="#data">数据闭环</a><a href="#pageturner">PageTurner</a><a href="#world">世界模型</a><a href="#cockpit">智能座舱</a><a href="#answer">面试回答</a><a class="kd-back" href="../knowledge.html">返回总览</a></aside>
+      <article class="kd-content">
+        <section class="kd-section" id="stack">
+          <header class="kd-section-head"><span>能力栈</span><h2>具身智能是感知到行动的闭环。</h2><p>每一层都可能造成最终失败，因此必须保留过程数据并支持分层归因。</p></header>
+          <div class="kd-flow">
+            <article><b>Perception</b><h3>感知</h3><p>对象、空间、状态、多视角和环境变化。</p></article>
+            <article><b>Grounding</b><h3>语言落地</h3><p>把指令映射到对象、位置、属性和动作。</p></article>
+            <article><b>Planning</b><h3>规划</h3><p>任务拆解、顺序、约束和动态重规划。</p></article>
+            <article><b>Control</b><h3>控制</h3><p>轨迹、力度、速度、同步和动作稳定性。</p></article>
+            <article><b>Recovery</b><h3>恢复</h3><p>发现失败、回退、重试并安全结束。</p></article>
+          </div>
+          <div class="kd-callout"><h3>VLA是什么</h3><p>Vision-Language-Action模型把视觉观察和语言任务映射为机器人动作。产品侧仍需定义输入传感器、动作空间、任务边界、安全约束和评测协议。</p></div>
+        </section>
+
+        <section class="kd-section" id="eval">
+          <header class="kd-section-head"><span>机器人评测</span><h2>三层证据逐步接近真实世界。</h2><p>离线、仿真和真机各自回答不同问题，不能相互替代。</p></header>
+          <div class="kd-grid">
+            <article><b>Offline</b><h3>离线数据评测</h3><p>动作预测误差、轨迹偏差、感知准确率和固定数据集表现。适合快速回归，不代表真实执行成功。</p></article>
+            <article><b>Simulation</b><h3>仿真评测</h3><p>扩大环境和任务覆盖，测试稀有故障和安全边界。核心风险是Sim-to-Real差异。</p></article>
+            <article><b>Real-world</b><h3>真实环境Rollout</h3><p>在真实对象、光照、摩擦、遮挡和噪声中评任务成功率、恢复和人工介入。</p></article>
+            <article><b>Long-horizon</b><h3>长程任务评测</h3><p>观察误差累积、状态漂移、计划失效和中途恢复，而非只测单个原子动作。</p></article>
+          </div>
+          <div class="kd-table-wrap kd-gap-top"><table class="kd-table"><thead><tr><th>指标</th><th>回答的问题</th><th>注意事项</th></tr></thead><tbody>
+            <tr><td>Task Success Rate</td><td>完整任务最终是否成功</td><td>必须明确成功条件和允许的重试次数</td></tr>
+            <tr><td>Milestone Pass Rate</td><td>失败集中在哪个阶段</td><td>用于产品和策略归因</td></tr>
+            <tr><td>Intervention Rate</td><td>需要多少次人工接管</td><td>成功但频繁接管不能算自主完成</td></tr>
+            <tr><td>Recovery Success</td><td>遇到异常后能否恢复</td><td>区分主动恢复和人工重置</td></tr>
+            <tr><td>Safety Violation</td><td>是否碰撞、越界或产生危险动作</td><td>通常应设硬门槛</td></tr>
+            <tr><td>Time / Steps</td><td>完成效率是否可接受</td><td>需与人类或规则基线比较</td></tr>
+          </tbody></table></div>
+        </section>
+
+        <section class="kd-section" id="data">
+          <header class="kd-section-head"><span>数据闭环</span><h2>真实Rollout必须留下可归因证据。</h2><p>只有成功或失败标签无法指导下一轮数据采集和策略训练。</p></header>
+          <div class="kd-steps">
+            <div class="kd-step"><strong>任务与环境版本</strong><div>记录对象、页面、光照、初始姿态、模型Checkpoint、设备和控制频率。</div></div>
+            <div class="kd-step"><strong>连续Telemetry</strong><div>同步保存相机、关节、动作、置信度、时间戳和系统状态。</div></div>
+            <div class="kd-step"><strong>人工事件标注</strong><div>标记Unsafe、Recovery、Manual Reset、阶段完成和异常原因。</div></div>
+            <div class="kd-step"><strong>阶段漏斗</strong><div>将完整任务拆成Milestone，定位误差最早出现的位置。</div></div>
+            <div class="kd-step"><strong>失败聚类</strong><div>按感知、规划、控制、硬件、环境和数据不足归因，形成Bad Case库。</div></div>
+            <div class="kd-step"><strong>训练与回归</strong><div>针对高价值失败补采数据或调整策略，新Checkpoint必须在固定回归集复测。</div></div>
+          </div>
+        </section>
+
+        <section class="kd-section" id="pageturner">
+          <header class="kd-section-head"><span>项目映射</span><h2>PageTurner怎样讲成评测产品。</h2><p>重点不是双臂机器人看起来能翻页，而是怎样定义、记录和改善成功。</p></header>
+          <div class="kd-case"><div class="kd-case-head"><div><span>Bimanual Robot Evaluation</span><h3>PageTurner</h3></div></div><p>基于双腕部摄像头、RealSense顶视相机与30Hz控制链路完成真实Rollout，并用10阶段Milestone协议、Telemetry和人工事件标注构建评测闭环。</p><div class="kd-metrics"><div><strong>62</strong><span>Baseline Trials</span></div><div><strong>10</strong><span>阶段评测协议</span></div><div><strong>75.7%</strong><span>20K Checkpoint成功率</span></div><div><strong>3</strong><span>核心瓶颈阶段</span></div></div></div>
+          <div class="kd-grid kd-gap-top">
+            <article><b>问题定位</b><h3>Convex page</h3><p>纸张形变影响感知和接触点，导致后续动作基础不稳定。</p></article>
+            <article><b>问题定位</b><h3>Insert</h3><p>插入阶段需要更精细的对位、深度判断与双臂协同。</p></article>
+            <article><b>问题定位</b><h3>Grab</h3><p>夹取时机、力度与页面分离状态共同决定是否抓取成功。</p></article>
+            <article><b>产品价值</b><h3>从结果转向漏斗</h3><p>将失败映射到阶段、传感器和策略版本，指导补采与训练优先级。</p></article>
+          </div>
+        </section>
+
+        <section class="kd-section" id="world">
+          <header class="kd-section-head"><span>世界模型</span><h2>评预测未来，而不是只评画面。</h2><p>世界模型需要理解环境状态、动作影响和时间演化，并服务规划、训练或安全验证。</p></header>
+          <div class="kd-code"><strong>输入</strong> Observation + Action + Context<br><strong>输出</strong> Future State / Future Observation<br><strong>产品价值</strong> <em>模拟、规划、反事实、安全测试、合成训练数据</em></div>
+          <div class="kd-grid kd-gap-top">
+            <article><b>Controllability</b><h3>可控性</h3><p>给定动作后，未来状态是否按照动作语义变化。</p></article>
+            <article><b>Physics</b><h3>物理一致性</h3><p>重力、碰撞、摩擦、遮挡、对象关系和运动轨迹是否可信。</p></article>
+            <article><b>Temporal</b><h3>时序一致性</h3><p>长时间预测中身份、位置、状态和因果关系是否漂移。</p></article>
+            <article><b>Counterfactual</b><h3>反事实覆盖</h3><p>能否生成稀有、危险和假设性场景，而非只复刻训练分布。</p></article>
+            <article><b>Downstream</b><h3>下游有效性</h3><p>合成环境是否真正提升策略训练、规划或安全发现能力。</p></article>
+            <article><b>Sim-to-Real</b><h3>真实迁移</h3><p>在世界模型中有效的策略，是否在真实机器人或道路环境中保持效果。</p></article>
+          </div>
+        </section>
+
+        <section class="kd-section" id="cockpit">
+          <header class="kd-section-head"><span>智能座舱</span><h2>多域模型仍需分模块评测。</h2><p>端到端体验不能掩盖语音、意图、工具和安全链路中的具体问题。</p></header>
+          <div class="kd-flow">
+            <article><b>Speech</b><h3>语音输入</h3><p>识别准确率、噪声、口音、打断。</p></article>
+            <article><b>NLU</b><h3>意图槽位</h3><p>意图、参数、多轮上下文、追问。</p></article>
+            <article><b>Planning</b><h3>任务编排</h3><p>能力召回、顺序、依赖和条件。</p></article>
+            <article><b>Safety</b><h3>安全校验</h3><p>身份、权限、场景和风险动作。</p></article>
+            <article><b>Execution</b><h3>真实执行</h3><p>任务成功、误触发、时延和反馈。</p></article>
+          </div>
+          <div class="kd-callout warning"><h3>关键判断</h3><p>一个模型覆盖语音、车控、地图和车家互联，不代表只需要一个总准确率。模块指标用于归因，端到端指标用于验证用户目标。</p></div>
+        </section>
+
+        <section class="kd-section" id="answer">
+          <header class="kd-section-head"><span>面试口述</span><h2>怎样评测一个具身智能产品？</h2><p>一段可以用于机器人产品经理面试的回答。</p></header>
+          <div class="kd-script"><div class="kd-script-head"><h3>60秒回答</h3><button class="kd-copy" data-copy-target="embodied-answer">复制</button></div><p id="embodied-answer">我会把具身智能评测拆成分层能力和端到端任务两部分。分层上分别看感知、语言Grounding、规划、动作控制和失败恢复，定位问题发生在哪一层；端到端则用真实任务成功率、安全违规、人工介入、恢复成功率和完成效率验收。评测环境会分为离线数据、仿真和真机Rollout，三者逐步接近真实世界，但不能相互替代。每次Rollout需要同步记录传感器、动作、模型版本和人工事件，并用Milestone漏斗找到最早失败点。最终我会把Bad Case转成补采数据、策略调整或安全规则，并在固定回归集和真实场景中重新验证。</p></div>
+        </section>
+
+        <section class="kd-section"><div class="kd-next"><div><h2>下一专题：快手项目讲述</h2><p>把评测方法真正落到两个治理项目中。</p></div><a href="kuaishou-cases.html">继续阅读</a></div></section>
+      </article>
+    </div>
+  </main>
+  <div class="copy-toast" role="status" aria-live="polite">已复制回答</div>
+  <footer><span>朱锡瑞 | AI产品知识库</span><span>具身智能与世界模型</span><a href="../knowledge.html">返回总览</a></footer>
+  <script src="../knowledge.js"></script>
+</body>
+</html>

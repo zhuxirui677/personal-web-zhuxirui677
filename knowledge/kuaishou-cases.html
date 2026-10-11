@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>快手AI治理项目讲述 | 朱锡瑞知识库</title>
+  <meta name="description" content="评论区氛围大模型识别与自杀自残图评识别的面试讲述、测试集、指标口径和追问。">
+  <link rel="stylesheet" href="../styles.css?v=20261010-blue">
+  <link rel="stylesheet" href="../knowledge-detail.css?v=20261010-split">
+</head>
+<body class="knowledge-detail">
+  <nav class="nav kd-nav"><a class="wordmark" href="../index.html">XIRUI ZHU</a><div class="nav-links"><a href="evaluation.html">评测</a><a href="agent-harness.html">Agent</a><a href="embodied-ai.html">具身智能</a><a aria-current="page" href="kuaishou-cases.html">项目讲述</a><a class="nav-cta" href="../knowledge.html">知识总览</a></div></nav>
+  <main>
+    <header class="kd-hero">
+      <div class="kd-hero-copy"><div class="kd-breadcrumb"><a href="../knowledge.html">知识库</a><span>/</span><span>快手项目讲述</span></div><h1>快手AI治理<br>项目讲述</h1><p>用业务问题、评估标准、测试数据和上线决策，讲清产品经理的真实贡献。</p></div>
+      <aside class="kd-hero-note"><strong>一句话记忆</strong><p>不要讲“用了什么模型”，要讲“怎样证明方案值得上线”。</p><span>所有数据都要说明分母、样本来源、评测阶段和适用范围。</span></aside>
+    </header>
+    <div class="kd-body">
+      <aside class="kd-toc"><strong>本页目录</strong><a href="#framework">讲述骨架</a><a href="#atmosphere">氛围识别</a><a href="#selfharm">自杀自残</a><a href="#dataset">测试集</a><a href="#metrics">指标口径</a><a href="#qa">压力追问</a><a href="#wording">表达检查</a><a class="kd-back" href="../knowledge.html">返回总览</a></aside>
+      <article class="kd-content">
+        <section class="kd-section" id="framework">
+          <header class="kd-section-head"><span>讲述骨架</span><h2>六个问题讲清一个AI项目。</h2><p>每一部分都要体现你的判断，而不是重复算法团队的工作。</p></header>
+          <div class="kd-steps">
+            <div class="kd-step"><strong>业务背景</strong><div>部门做什么，用户是谁，原链路为什么失效，造成什么风险。</div></div>
+            <div class="kd-step"><strong>个人目标</strong><div>你负责提升什么指标，同时必须守住哪些成本和安全边界。</div></div>
+            <div class="kd-step"><strong>评估标准</strong><div>你怎样定义正例、反例、严重程度、豁免和处置边界。</div></div>
+            <div class="kd-step"><strong>测试数据</strong><div>样本从哪里来，怎样分层、标注、仲裁、拆分和防止泄漏。</div></div>
+            <div class="kd-step"><strong>关键迭代</strong><div>你根据什么Bad Case调整召回、Prompt、规则、模型和策略组合。</div></div>
+            <div class="kd-step"><strong>结果与不足</strong><div>离线与线上结果分别是什么，仍有哪些口径缺失和下一步计划。</div></div>
+          </div>
+        </section>
+
+        <section class="kd-section" id="atmosphere">
+          <header class="kd-section-head"><span>项目一</span><h2>评论区氛围大模型识别。</h2><p>将治理对象从单条评论升级为评论区整体，补齐聚集性和隐蔽性风险。</p></header>
+          <div class="kd-case"><div class="kd-case-head"><div><span>业务问题</span><h3>单条无害，聚集成灾</h3></div></div><p>原治理逻辑默认评论区风险等于单条风险之和，但隐语聚集、上下文影射和评论区语义重写无法被单条模型稳定识别。</p><div class="kd-metrics"><div><strong>82.9%</strong><span>Top15曝光覆盖</span></div><div><strong>&lt;2%</strong><span>后续边际收益</span></div><div><strong>93%</strong><span>目标场景准确率</span></div><div><strong>F1 0.35</strong><span>联合任务早期表现</span></div></div></div>
+          <div class="kd-script kd-gap-top-lg"><div class="kd-script-head"><h3>60秒口述</h3><button class="kd-copy" data-copy-target="atmosphere-answer">复制</button></div><p id="atmosphere-answer">我在快手社区治理团队负责评论区氛围识别项目。原有治理主要判断单条评论，但我们发现两类缺口：一类是单条无害、聚集后形成风险，另一类是评论区把原视频语义重新改写。我的目标不是简单接一个模型，而是定义什么叫风险氛围，并建立可验证、成本可控的识别链路。我先和业务侧明确氛围类型、倾向、浓度和豁免边界，再从审核问题、举报和线上样本中构建分层测试集，补充相似负样本与跨模态难例。之后围绕输入范围、Prompt和候选模型做控制变量实验。我们发现Top15评论覆盖82.9%的曝光，继续增加评论的边际收益低于2%，因此采用视频信息加Top15作为输入，并通过Bad Case归因持续迭代。最终目标场景准确率达到93%。</p></div>
+          <div class="kd-grid kd-gap-top">
+            <article><b>产品判断</b><h3>为什么取Top15</h3><p>不是拍脑袋限制长度，而是在曝光覆盖、边际收益、Token成本和实时性之间做选择。</p></article>
+            <article><b>评估标准</b><h3>类型、倾向、浓度</h3><p>分别判断是什么风险、指向谁、聚集程度多高，并保留单条证据和豁免条件。</p></article>
+            <article><b>错误归因</b><h3>主要漏放切片</h3><p>涉外冲突情绪宣泄、依赖视频语境、历史事件影射和文图结合攻击。</p></article>
+            <article><b>策略改进</b><h3>拆分联合目标</h3><p>类型与浓度联合F1偏低，因此缩减输出维度，并对不同目标独立验证。</p></article>
+          </div>
+        </section>
+
+        <section class="kd-section" id="selfharm">
+          <header class="kd-section-head"><span>项目二</span><h2>自杀自残图评识别。</h2><p>把多路候选召回和小模型精判组合起来，同时评估旧策略能否被替代。</p></header>
+          <div class="kd-case"><div class="kd-case-head"><div><span>业务问题</span><h3>旧策略无法稳定覆盖新型案例</h3></div></div><p>线上连续出现图片、图文组合和隐晦文本案例，原有模型与策略召回不稳定，需要建立统一精判能力，并系统盘点历史策略。</p><div class="kd-metrics"><div><strong>169.6万</strong><span>周候选调用量</span></div><div><strong>86.5%</strong><span>旧命中样本覆盖</span></div><div><strong>81.6%</strong><span>前期抽样准确率</span></div><div><strong>82.37%</strong><span>放量后准确率</span></div></div></div>
+          <div class="kd-script kd-gap-top-lg"><div class="kd-script-head"><h3>60秒口述</h3><button class="kd-copy" data-copy-target="selfharm-answer">复制</button></div><p id="selfharm-answer">这个项目的背景是线上连续出现多批自杀自残图片、图文组合和隐晦文本案例，原有策略与模型无法稳定召回和识别。我的任务是设计一套多路召回加统一小模型精判的新链路，同时盘点旧策略，判断哪些能力可以被新模型替代。召回层组合六类自杀风险信号、视频反圈、高危词和三个历史相似库通道，把候选量控制在每周169.6万以内。精判层先定义主体、意图、图文关系和豁免边界，再构建包含真实漏放、随机负样本和难负例的测试集。我推动五轮Prompt迭代，新增七条核心规则，集中解决文本单独误触发、豁免翻案和主体误识别等十一类问题。新方案对旧策略命中样本的覆盖率为86.5%，随机抽样准确率为81.6%，压测放量后的准确率为82.37%。最终新模型可以替换旧的非图片模型部分，同时保留具有独特高精度价值的图片相似库。</p></div>
+          <div class="kd-grid kd-gap-top">
+            <article><b>召回层</b><h3>扩大候选覆盖</h3><p>组合文本信号、视频反圈、高危词和历史相似库，不让单一路径承担全部召回。</p></article>
+            <article><b>精判层</b><h3>统一边界判断</h3><p>小模型处理高量级候选，重点判断主体、意图、图文关系和豁免。</p></article>
+            <article><b>替代评估</b><h3>逐策略比较独特价值</h3><p>除了覆盖率，还要看新增召回、独特样本、误伤、成本、稳定性和降级能力。</p></article>
+            <article><b>上线方式</b><h3>压测、灰度、再放量</h3><p>验证容量与时延，监控准确率和Bad Case，保留高精度相似库作为补充。</p></article>
+          </div>
+        </section>
+
+        <section class="kd-section" id="dataset">
+          <header class="kd-section-head"><span>测试集</span><h2>两个项目需要不同的样本结构。</h2><p>氛围识别强调上下文聚集，自杀自残强调召回覆盖、图文关系和豁免边界。</p></header>
+          <div class="kd-table-wrap"><table class="kd-table"><thead><tr><th>样本层</th><th>氛围识别</th><th>自杀自残</th><th>目的</th></tr></thead><tbody>
+            <tr><td>真实问题</td><td>VIP问题、举报、审核漏放</td><td>线上漏放和投诉案例</td><td>覆盖真实业务损失</td></tr>
+            <tr><td>正常流量</td><td>同主题但无聚集风险的评论区</td><td>日常图片和普通情绪表达</td><td>估计误伤和总体表现</td></tr>
+            <tr><td>相似负样本</td><td>历史讨论、科普引用、正常群体表达</td><td>医学科普、影视台词、劝阻与求助</td><td>检验语义边界</td></tr>
+            <tr><td>挑战样本</td><td>隐语、影射、跨模态、低浓度</td><td>主体模糊、图文互补、隐晦意图</td><td>检验能力上限</td></tr>
+            <tr><td>回归样本</td><td>每次Prompt迭代修复的Bad Case</td><td>十一类误判与新增线上问题</td><td>防止旧问题复发</td></tr>
+            <tr><td>Holdout</td><td>开发阶段不可见的评论区</td><td>不可见的图文组合和文本</td><td>检验泛化而非记忆</td></tr>
+          </tbody></table></div>
+          <div class="kd-callout"><h3>标注必须先于Prompt</h3><p>先通过标注分歧发现Rubric缺口，再修订标准、复标样本，最后迭代Prompt。否则模型表现变化无法被正确解释。</p></div>
+        </section>
+
+        <section class="kd-section" id="metrics">
+          <header class="kd-section-head"><span>指标口径</span><h2>每个数字先说分母。</h2><p>这是两个项目最容易被追问，也最容易说错的部分。</p></header>
+          <div class="kd-table-wrap"><table class="kd-table"><thead><tr><th>数字</th><th>正确含义</th><th>不能怎样说</th></tr></thead><tbody>
+            <tr><td>82.9%</td><td>Top15评论的曝光覆盖</td><td>不能说是模型召回率</td></tr>
+            <tr><td>93%</td><td>氛围目标场景准确率</td><td>没有同口径数据时不能说从58.91%提升到93%</td></tr>
+            <tr><td>58.91%</td><td>早期某氛围类型召回口径</td><td>不能与准确率直接比较</td></tr>
+            <tr><td>169.6万/周</td><td>进入精判的候选调用量</td><td>不能说是风险内容量</td></tr>
+            <tr><td>86.5%</td><td>新粗召对旧策略命中样本的覆盖率</td><td>不能说是真实风险召回率</td></tr>
+            <tr><td>81.6%</td><td>前期随机抽样测试集准确率</td><td>不能代表全量线上精度</td></tr>
+            <tr><td>82.37%</td><td>压测放量后的识别准确率</td><td>不能替代Recall与误伤切片</td></tr>
+          </tbody></table></div>
+          <div class="kd-callout warning"><h3>目前仍需补齐</h3><p>测试集规模、正负样本比例、标注一致率、真实风险Recall、关键类别Precision与Recall、置信区间，以及上线后的业务风险下降。</p></div>
+        </section>
+
+        <section class="kd-section" id="qa">
+          <header class="kd-section-head"><span>压力追问</span><h2>面试官真正想确认什么。</h2><p>每个问题都在判断你是否真正做过标准、数据和产品决策。</p></header>
+          <div class="kd-qa">
+            <details><summary>93%的准确率来自什么测试集？</summary><p>需要先说明样本来源、规模、正负比例、时间窗口、是否独立Holdout、标注方式和对应场景。若暂时无法核对，应明确说这是目标场景准确率，其他口径仍需补齐。</p></details>
+            <details><summary>Prompt差还是模型差，怎么区分？</summary><p>先固定强基线模型迭代Rubric和Prompt，再固定成熟Prompt比较候选模型。全程使用相同Holdout和评审方式，避免同时改两个变量。</p></details>
+            <details><summary>为什么不是直接用更强模型？</summary><p>先用强模型验证能力上限，再根据高频流量的效果门槛、P95时延和成本选择可上线方案。分类边界稳定时，小模型可能具有更高性价比。</p></details>
+            <details><summary>怎样测真实Recall？</summary><p>从目标流量中构建可信的正样本分母，可以结合随机抽样审核、多路高召回并集和延迟回溯，再计算模型找出的真实正例比例。</p></details>
+            <details><summary>怎样判断可以替代旧策略？</summary><p>逐条比较覆盖率、独特命中、新增召回、误伤、时延、成本、稳定性和降级能力。保留具有独特高价值切片的旧策略。</p></details>
+            <details><summary>产品经理具体贡献是什么？</summary><p>定义问题和目标，制定Rubric，设计测试集与指标，拆解错误，组织控制变量实验，决定策略组合和上线门槛，并推动算法、审核、研发闭环。</p></details>
+          </div>
+        </section>
+
+        <section class="kd-section" id="wording">
+          <header class="kd-section-head"><span>表达检查</span><h2>把技术名词放回产品主线。</h2><p>下面的转换能避免项目听起来像算法工作汇报。</p></header>
+          <div class="kd-table-wrap"><table class="kd-table"><thead><tr><th>不要只说</th><th>应该说</th></tr></thead><tbody>
+            <tr><td>比较了DeepSeek和Qwen</td><td>固定评测标准和Prompt，在相同Holdout上比较效果、成本与时延</td></tr>
+            <tr><td>加入OCR和ASR</td><td>通过输入模态消融判断哪些上下文真正提升关键切片</td></tr>
+            <tr><td>迭代了五版Prompt</td><td>根据十一类误判归因修订Rubric与Prompt，并用固定回归集验证</td></tr>
+            <tr><td>准确率达到82.37%</td><td>说明测试阶段、样本来源、分母，并补充Recall和误伤口径</td></tr>
+            <tr><td>新模型替代旧策略</td><td>逐策略比较独特价值后，替换可覆盖部分，保留高精度补充链路</td></tr>
+          </tbody></table></div>
+        </section>
+
+        <section class="kd-section"><div class="kd-next"><div><h2>回到知识总览</h2><p>继续查看评测、Agent和具身智能之间的完整关系。</p></div><a href="../knowledge.html">返回总览</a></div></section>
+      </article>
+    </div>
+  </main>
+  <div class="copy-toast" role="status" aria-live="polite">已复制回答</div>
+  <footer><span>朱锡瑞 | AI产品知识库</span><span>快手项目讲述</span><a href="../knowledge.html">返回总览</a></footer>
+  <script src="../knowledge.js"></script>
+</body>
+</html>

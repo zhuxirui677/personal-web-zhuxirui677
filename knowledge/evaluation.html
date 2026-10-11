@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI评测体系 | 朱锡瑞知识库</title>
+  <meta name="description" content="从业务目标、Rubric、测试集和指标到模型上线决策的AI产品评测方法。">
+  <link rel="stylesheet" href="../styles.css?v=20261010-blue">
+  <link rel="stylesheet" href="../knowledge-detail.css?v=20261010-split">
+</head>
+<body class="knowledge-detail">
+  <nav class="nav kd-nav">
+    <a class="wordmark" href="../index.html">XIRUI ZHU</a>
+    <div class="nav-links"><a aria-current="page" href="evaluation.html">评测</a><a href="agent-harness.html">Agent</a><a href="embodied-ai.html">具身智能</a><a href="kuaishou-cases.html">项目讲述</a><a class="nav-cta" href="../knowledge.html">知识总览</a></div>
+  </nav>
+  <main>
+    <header class="kd-hero">
+      <div class="kd-hero-copy">
+        <div class="kd-breadcrumb"><a href="../knowledge.html">知识库</a><span>/</span><span>AI评测体系</span></div>
+        <h1>AI评测<br>体系</h1>
+        <p>把“感觉模型不错”转成可复现、可比较、可上线的产品判断。</p>
+      </div>
+      <aside class="kd-hero-note"><strong>一句话记忆</strong><p>先定义业务成功，再定义模型成功。</p><span>评测不是独立的技术考试，而是上线决策系统。</span></aside>
+    </header>
+
+    <div class="kd-body">
+      <aside class="kd-toc"><strong>本页目录</strong><a href="#framework">评测闭环</a><a href="#methods">四种方法</a><a href="#dataset">测试集构建</a><a href="#metrics">指标选择</a><a href="#experiment">实验设计</a><a href="#launch">上线门槛</a><a href="#answer">面试回答</a><a class="kd-back" href="../knowledge.html">返回总览</a></aside>
+      <article class="kd-content">
+        <section class="kd-section" id="framework">
+          <header class="kd-section-head"><span>评测闭环</span><h2>评测从业务问题开始。</h2><p>每一步都要能解释为什么存在，以及它将支持什么产品决策。</p></header>
+          <div class="kd-flow">
+            <article><b>Business</b><h3>业务目标</h3><p>用户问题、收益、风险和成本边界。</p></article>
+            <article><b>Capability</b><h3>能力拆解</h3><p>模型与系统必须具备哪些可观察能力。</p></article>
+            <article><b>Rubric</b><h3>评估标准</h3><p>什么算正确，什么算失败，如何分级。</p></article>
+            <article><b>Dataset</b><h3>测试数据</h3><p>用什么样本覆盖真实流量和关键风险。</p></article>
+            <article><b>Decision</b><h3>产品决策</h3><p>上线、灰度、回滚、替代或继续迭代。</p></article>
+          </div>
+          <div class="kd-callout"><h3>产品经理的产出</h3><p>不是只报一个准确率，而是交付评测标准、数据口径、分层结果、错误归因，以及对应的上线建议。</p></div>
+        </section>
+
+        <section class="kd-section" id="methods">
+          <header class="kd-section-head"><span>评测方法</span><h2>四种方法解决不同问题。</h2><p>同一个AI产品通常需要组合使用，不应只依赖单一总分。</p></header>
+          <div class="kd-grid">
+            <article><b>Ground Truth Benchmark</b><h3>有标准答案的数据集</h3><p>适合分类、抽取、代码执行和工具调用等可验证任务。优点是稳定，风险是覆盖不足和测试集泄漏。</p></article>
+            <article><b>Rubric Scoring</b><h3>按维度评分</h3><p>适合开放式输出。将正确性、完整性、安全性和表达边界拆成可判定标准。</p></article>
+            <article><b>Pairwise Comparison</b><h3>两两对比</h3><p>适合答案没有唯一标准的体验问题。隐藏模型身份，让人或评审模型判断哪一个更好。</p></article>
+            <article><b>Online Experiment</b><h3>真实业务验证</h3><p>通过灰度和A/B实验观察任务完成率、投诉、人工接管、时延、成本和留存。</p></article>
+          </div>
+        </section>
+
+        <section class="kd-section" id="dataset">
+          <header class="kd-section-head"><span>测试集构建</span><h2>测试集是一套分层资产。</h2><p>它既要反映真实分布，也要放大少量但代价极高的风险场景。</p></header>
+          <div class="kd-steps">
+            <div class="kd-step"><strong>定义总体与目标</strong><div>先明确评测对象、时间窗口、流量范围和决策用途。<b>不能先抓一批数据再解释它代表什么。</b></div></div>
+            <div class="kd-step"><strong>建立场景分层</strong><div>按国家、语言、问题类型、风险等级、模态、难度和新旧表达切片，明确各层占比。</div></div>
+            <div class="kd-step"><strong>设计抽样组合</strong><div>真实随机样本反映总体表现，历史漏放和误伤构成难例，相似负样本检验边界，线上新流量识别漂移。</div></div>
+            <div class="kd-step"><strong>标注与仲裁</strong><div>先写Rubric和示例，再双人独立标注。分歧样本由资深审核仲裁，并记录分歧原因。</div></div>
+            <div class="kd-step"><strong>拆分并冻结</strong><div>开发集用于Prompt迭代，验证集用于中间选择，Holdout只在最终验收使用，防止人为过拟合。</div></div>
+            <div class="kd-step"><strong>版本与回流</strong><div>记录样本来源、标签版本和适用范围。线上Bad Case进入Regression Set，最新流量进入Rolling Set。</div></div>
+          </div>
+          <div class="kd-callout warning"><h3>最常见的问题</h3><p>只使用历史正例会高估召回，只使用随机流量会稀释风险样本，只在开发集上反复调Prompt会高估泛化能力。</p></div>
+        </section>
+
+        <section class="kd-section" id="metrics">
+          <header class="kd-section-head"><span>指标选择</span><h2>先看错误成本，再选指标。</h2><p>准确率只有在类别相对均衡、错误代价接近时才具有足够解释力。</p></header>
+          <div class="kd-table-wrap"><table class="kd-table"><thead><tr><th>指标</th><th>计算与含义</th><th>适合场景</th><th>面试提醒</th></tr></thead><tbody>
+            <tr><td>Precision</td><td>TP / (TP + FP)，被判风险的内容中有多少是真的</td><td>直接处罚、误伤代价高</td><td>高精度不代表漏放少</td></tr>
+            <tr><td>Recall</td><td>TP / (TP + FN)，真实风险中有多少被找到</td><td>前置召回、有人审兜底</td><td>需要可信的全量正样本分母</td></tr>
+            <tr><td>F1</td><td>Precision与Recall的调和平均</td><td>需要平衡两类错误</td><td>必须继续看关键切片</td></tr>
+            <tr><td>Macro-F1</td><td>先算各类别F1再等权平均</td><td>多分类、类别不均衡</td><td>避免大类掩盖小类</td></tr>
+            <tr><td>Task Success</td><td>系统是否完成用户目标</td><td>Agent与端到端链路</td><td>同时审查过程安全性</td></tr>
+            <tr><td>Cost / Latency</td><td>单次成本、P95时延和资源消耗</td><td>高频线上服务</td><td>效果达标后仍要过工程门槛</td></tr>
+          </tbody></table></div>
+          <div class="kd-callout warning"><h3>不要混用</h3><p>旧策略覆盖率只说明新链路能覆盖多少旧策略命中样本，不等于真实风险召回率。随机样本准确率也不能替代风险场景的召回和误伤分析。</p></div>
+        </section>
+
+        <section class="kd-section" id="experiment">
+          <header class="kd-section-head"><span>实验设计</span><h2>Prompt与模型必须分开比较。</h2><p>否则无法判断效果差来自模型能力，还是来自Rubric与Prompt质量。</p></header>
+          <div class="kd-code"><strong>第一步</strong> 固定强基线模型，迭代Rubric与Prompt，直到开发集趋于稳定<br><strong>第二步</strong> 固定Prompt，在同一Holdout上比较候选模型<br><strong>第三步</strong> 按场景切片分析，不只看总体均值<br><strong>第四步</strong> 在达到效果门槛的方案中比较<em>成本、时延、稳定性</em><br><strong>第五步</strong> 灰度验证线上分布、人工接管和业务结果</div>
+          <div class="kd-grid kd-gap-top">
+            <article><b>控制变量</b><h3>比较Prompt版本</h3><p>固定模型、温度、输入格式、样本和评审方式，只改变Prompt或Rubric。</p></article>
+            <article><b>控制变量</b><h3>比较候选模型</h3><p>固定Prompt、数据集和参数，再比较整体和关键场景切片。</p></article>
+          </div>
+        </section>
+
+        <section class="kd-section" id="launch">
+          <header class="kd-section-head"><span>上线决策</span><h2>离线高分不等于可以上线。</h2><p>上线门槛需要同时覆盖效果、安全、成本、稳定性和可回滚性。</p></header>
+          <div class="kd-grid">
+            <article><b>效果门槛</b><h3>关键切片达标</h3><p>总体指标、重点风险、国家语言、长尾和新表达都要满足最低要求。</p></article>
+            <article><b>安全门槛</b><h3>越权与误伤可控</h3><p>高风险动作必须有人审、二次确认、阻断或更严格阈值。</p></article>
+            <article><b>工程门槛</b><h3>时延与稳定性达标</h3><p>观察P95时延、超时、降级、重试、依赖失败和峰值容量。</p></article>
+            <article><b>运营门槛</b><h3>可灰度、可解释、可回滚</h3><p>明确监控面板、报警阈值、人工兜底、回滚条件和责任人。</p></article>
+          </div>
+        </section>
+
+        <section class="kd-section" id="answer">
+          <header class="kd-section-head"><span>面试口述</span><h2>测试集怎么构建？</h2><p>一段可以直接使用的产品经理回答。</p></header>
+          <div class="kd-script"><div class="kd-script-head"><h3>60秒回答</h3><button class="kd-copy" data-copy-target="evaluation-answer">复制</button></div><p id="evaluation-answer">我不会先随意抓一批样本，而是先从业务目标倒推测试集。第一步明确模型服务的流量范围、错误成本和上线决策；第二步按场景、风险、语言、模态和难度建立样本分层；第三步组合真实随机样本、历史漏放误伤、相似负样本和对抗难例；第四步先写Rubric和边界案例，再通过双人标注加仲裁保证Ground Truth质量；第五步把数据拆成开发集、固定回归集和不可见Holdout，避免Prompt对测试集过拟合。上线后我还会持续把Bad Case沉淀到回归集，并用Rolling Set监控新表达和分布漂移。</p></div>
+        </section>
+
+        <section class="kd-section"><div class="kd-next"><div><h2>下一专题：Agent与Harness</h2><p>理解模型之外，产品系统还需要提供什么。</p></div><a href="agent-harness.html">继续阅读</a></div></section>
+      </article>
+    </div>
+  </main>
+  <div class="copy-toast" role="status" aria-live="polite">已复制回答</div>
+  <footer><span>朱锡瑞 | AI产品知识库</span><span>评测体系</span><a href="../knowledge.html">返回总览</a></footer>
+  <script src="../knowledge.js"></script>
+</body>
+</html>
